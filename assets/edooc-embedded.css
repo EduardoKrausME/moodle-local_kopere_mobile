@@ -1,0 +1,7 @@
+.pagelayout-embedded #page {
+    margin: 6px 6px 60px !important
+}
+.pagelayout-embedded#page-mod-scorm-player #page {
+    margin: 0 !important
+}
+/*# sourceMappingURL=edooc-embedded.css.map */

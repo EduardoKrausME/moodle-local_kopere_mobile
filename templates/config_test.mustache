@@ -1,0 +1,44 @@
+<div style='padding: 0 0 20px 19px'>
+    <h3>Status das configurações necessárias para o funcionamento do APP</h3>
+    {{^is_moodle_cookie_secure}}
+        <div>
+            <strong>is_moodle_cookie_secure</strong>:
+            <a style="color:#E91E63"
+               href="{{{config.wwwroot}}}/admin/search.php?query=cookiesecure"
+               target="_blank">Valor está incorreto para funcionamento do APP</a>
+        </div>
+    {{/is_moodle_cookie_secure}}
+    {{^allowframembedding}}
+        <div>
+            <strong>allowframembedding</strong>:
+            <a style="color:#E91E63"
+               href="{{{config.wwwroot}}}/admin/search.php?query=allowframembedding"
+               target="_blank">Valor está incorreto para funcionamento do APP</a>
+        </div>
+    {{/allowframembedding}}
+    {{^enablemobilewebservice}}
+        <div>
+            <strong>enablemobilewebservice</strong>:
+            <a style="color:#E91E63"
+               href="{{{config.wwwroot}}}/admin/search.php?query=allowframembedding"
+               target="_blank">Valor está incorreto para funcionamento do APP</a>
+        </div>
+    {{/enablemobilewebservice}}
+    {{^external_services_moodle_mobile_app}}
+        <div>
+            <strong>external_services -> moodle_mobile_app</strong>:
+            <a style="color:#E91E63"
+               href="{{{config.wwwroot}}}/admin/settings.php?section=externalservices"
+               target="_blank">Valor está incorreto para funcionamento do APP</a>
+        </div>
+    {{/external_services_moodle_mobile_app}}
+
+    {{#userapp}}
+        <div>
+            <strong>user-validate_login</strong>:
+            <a style='color:#E91E63'
+               href='{{{userapp_url}}}'
+               target='_blank'>{{{userapp}}}</a>
+        </div>
+    {{/userapp}}
+</div>

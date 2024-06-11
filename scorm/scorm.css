@@ -1,0 +1,52 @@
+body {
+    margin-left: 0 !important;
+}
+#page {
+    margin-top: 0 !important;
+}
+#banner,
+#navbar,
+#nav-drawer,
+#course-navigation,
+#page-header {
+    display: none !important;
+}
+[data-region=drawer-toggle],
+div[vw].enabled {
+    display: none !important;
+}
+#scormpage {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+#scorm_layout {
+    margin-bottom: 0 !important;
+}
+#page-mod-scorm-player #scormpage #scorm_object {
+    width: 100% !important;
+    height: 100% !important;
+}
+/**
+ * remove botões do player
+ */
+body {
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+#scorm_toc,
+#scorm_toc_toggle,
+#scorm_toc_toggle_btn,
+#scorm_navpanel,
+#maincontent {
+    display: none !important;
+}
+#scorm_content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#page-mod-scorm-player #scormpage div.yui3-u-3-4 {
+    width: 100% !important;
+}

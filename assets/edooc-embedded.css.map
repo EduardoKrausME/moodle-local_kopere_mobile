@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "sourceRoot": "",
+  "sources": [
+    "edooc-embedded.scss"
+  ],
+  "names": [],
+  "mappings": "AACI,2BACI,+BAEJ,iDACI",
+  "file": "edooc-embedded.css"
+}
