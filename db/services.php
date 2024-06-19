@@ -27,8 +27,8 @@ defined('MOODLE_INTERNAL') || die;
 $functions = [
 
     'local_kopere_mobile_public_config' => [
-        'classname' => '\local_kopere_mobile\external\config',
-        'classpath' => 'local/kopere_mobile/classes/external/config.php',
+        'classname' => '\local_kopere_mobile\external\public_config',
+        'classpath' => 'local/kopere_mobile/classes/external/public_config.php',
         'methodname' => 'public_config',
         'description' => 'Returns a list of the site public settings, those not requiring authentication.',
         'type' => 'read',

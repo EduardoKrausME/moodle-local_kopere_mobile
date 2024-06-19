@@ -104,5 +104,4 @@ class format_card extends \external_api {
             'cards' => data_request_exporter::get_read_structure(),
         ]);
     }
-
 }

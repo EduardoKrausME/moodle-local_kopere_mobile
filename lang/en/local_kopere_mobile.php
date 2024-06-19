@@ -59,6 +59,8 @@ $string['customizationapphome_default'] = 'Imagem ao lado';
 $string['customizationapphome_background'] = 'Imagem de fundo';
 $string['customizationappcss'] = 'CSS de personalização do APP';
 $string['customizationappcss_desc'] = 'Este arquivo contém o CSS personalizado que será aplicado ao aplicativo, permitindo ajustes visuais de acordo com as necessidades específicas do projeto.';
+$string['htmllogin'] = 'HTML extra do Login';
+$string['htmllogin_desc'] = 'Esta configuração permite adicionar código HTML personalizado à página de login. Pode ser utilizado para incluir informações adicionais de contato e suporte, como e-mails, telefones, ou links úteis para os usuários. O HTML inserido aqui será exibido diretamente na interface de login.';
 
 $string['app_title'] = 'Dados do APP nas lojas';
 $string['iosappid'] = 'ID numérico do aplicativo IOS';
