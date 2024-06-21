@@ -81,4 +81,13 @@ $functions = [
         'type' => 'write',
         'services' => [MOODLE_OFFICIAL_MOBILE_SERVICE],
     ],
+
+    'local_kopere_mobile_mod_scorm_files' => [
+        'classname' => '\local_kopere_mobile\external\mod_scorm',
+        'classpath' => 'local/kopere_mobile/classes/external/mod_scorm.php',
+        'methodname' => 'files',
+        'description' => 'mod_scorm files',
+        'type' => 'write',
+        'services' => [MOODLE_OFFICIAL_MOBILE_SERVICE],
+    ],
 ];
