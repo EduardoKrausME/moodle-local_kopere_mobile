@@ -51,12 +51,12 @@ class mod_scorm extends \external_api {
      * @return array
      * @throws \dml_exception
      */
-    public static function icon($cmid) {
+    public static function files($cmid) {
         global $DB, $CFG;
 
         $context = \context_module::instance($cmid);
 
-        $sql = "SELECT filepath, filename, filesize, itemid, mimetype
+        $sql = "SELECT id, filepath, filename, filesize, itemid, mimetype
                   FROM {files} 
                  WHERE component = 'mod_scorm'
                    AND filearea  = 'content'
