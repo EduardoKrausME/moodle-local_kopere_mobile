@@ -83,7 +83,7 @@ $string['lgpd_text_msgdefault'] = '<p>Em conformidade com a Lei Geral de Proteç
 $string['lgpd_okok'] = 'Mensagem de confirmação de envio';
 $string['lgpd_okok_desc'] = 'Mensagem após os dados serem enviados ao responsável';
 $string['lgpd_okok_msgdefault'] = '<p>Agradecemos por enviar sua solicitação de exclusão de dados. Estamos comprometidos em garantir a segurança e privacidade das informações dos nossos usuários.</p>
-<p>Sua solicitação foi recebida com sucesso e será processada pela nossa equipe de proteção de dados. Ressaltamos que, de acordo com a legislação vigente, apenas dados não obrigatórios serão excluídos, preservando as informações essenciais exigidas pelos orgãos legais.</p>
+<p>Sua solicitação foi recebida com sucesso e será processada pela nossa equipe de proteção de dados. Ressaltamos que, de acordo com a legislação vigente, apenas dados não obrigatórios serão excluídos, preservando as informações essenciais exigidas pelos órgãos legais.</p>
 <p>Caso haja necessidade de informações adicionais ou se tiver alguma dúvida, nossa equipe entrará em contato com você dentro do prazo estipulado pela lei. Mantenha seus dados de contato atualizados para facilitar a comunicação.</p>
 <p>Agradecemos pela compreensão e confiança em nossa plataforma. Estamos aqui para garantir uma experiência segura e transparente.</p>';
 
