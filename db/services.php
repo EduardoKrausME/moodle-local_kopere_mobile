@@ -29,7 +29,7 @@ $functions = [
     'local_kopere_mobile_public_config' => [
         'classname' => '\local_kopere_mobile\external\public_config',
         'classpath' => 'local/kopere_mobile/classes/external/public_config.php',
-        'methodname' => 'public_config',
+        'methodname' => 'settings',
         'description' => 'Returns a list of the site public settings, those not requiring authentication.',
         'type' => 'read',
         'services' => [MOODLE_OFFICIAL_MOBILE_SERVICE],
@@ -87,6 +87,15 @@ $functions = [
         'classpath' => 'local/kopere_mobile/classes/external/mod_scorm.php',
         'methodname' => 'files',
         'description' => 'mod_scorm files',
+        'type' => 'write',
+        'services' => [MOODLE_OFFICIAL_MOBILE_SERVICE],
+    ],
+
+    'local_kopere_mobile_mod_subcourse_mobile' => [
+        'classname' => '\local_kopere_mobile\external\mod_subcourse',
+        'classpath' => 'local/kopere_mobile/classes/external/mod_subcourse.php',
+        'methodname' => 'mobile',
+        'description' => 'mod_subcourse mobile',
         'type' => 'write',
         'services' => [MOODLE_OFFICIAL_MOBILE_SERVICE],
     ],

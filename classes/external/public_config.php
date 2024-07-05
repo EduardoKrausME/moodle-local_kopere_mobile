@@ -24,8 +24,6 @@
 
 namespace local_kopere_mobile\external;
 
-defined('MOODLE_INTERNAL') || die();
-
 global $CFG;
 require_once("{$CFG->libdir}/externallib.php");
 require_once("$CFG->dirroot/webservice/lib.php");
@@ -38,21 +36,20 @@ use context_system;
 use moodle_exception;
 use moodle_url;
 use coding_exception;
-use stored_file;
 
 /**
  * Class config
  *
  * @package local_kopere_mobile\external
  */
-class config extends external_api {
+class public_config extends external_api {
 
     /**
-     * Returns description of get_public_config() parameters.
+     * Returns description of get_settings() parameters.
      *
      * @return external_function_parameters
      */
-    public static function public_config_parameters() {
+    public static function settings_parameters() {
         return new external_function_parameters([]);
     }
 
@@ -64,7 +61,7 @@ class config extends external_api {
      * @throws coding_exception
      * @throws moodle_exception
      */
-    public static function public_config() {
+    public static function settings() {
         global $CFG, $SITE, $PAGE, $OUTPUT;
         require_once($CFG->libdir . '/authlib.php');
 
@@ -76,7 +73,7 @@ class config extends external_api {
         // Check if contacting site support is available to all visitors.
         $sitesupportavailable = (isset($CFG->supportavailability) && $CFG->supportavailability == CONTACT_SUPPORT_ANYONE);
 
-        $settings = [
+        return [
             'sitename' => external_format_string($SITE->fullname, $context->id, true),
             'rememberusername' => $CFG->rememberusername,
             'authloginviaemail' => $CFG->authloginviaemail,
@@ -99,44 +96,42 @@ class config extends external_api {
             'htmllogin' => get_config('local_kopere_mobile', 'htmllogin'),
             'customizationapphome' => get_config('local_kopere_mobile', 'customizationapphome'),
             'customfieldpicture' => json_encode(self::setting_customfieldpicture()),
+            'block_myoverview_hidden_course' => json_encode(self::block_myoverview_hidden_course()),
         ];
-
-        return $settings;
     }
 
     /**
-     * Returns description of get_public_config() result value.
+     * Returns description of get_settings() result value.
      */
-    public static function public_config_returns() {
-        return new external_single_structure(
-            [
-                'sitename' => new external_value(PARAM_RAW, 'Site name.'),
-                'rememberusername' => new external_value(PARAM_INT, 'Values: 0 for No, 1 for Yes, 2 for optional.'),
-                'authloginviaemail' => new external_value(PARAM_INT, 'Whether log in via email is enabled.'),
-                'registerauth' => new external_value(PARAM_PLUGIN, 'Authentication method for user registration.'),
-                'forgottenpasswordurl' => new external_value(PARAM_URL, 'Forgotten password URL.'),
-                'authinstructions' => new external_value(PARAM_RAW, 'Authentication instructions.'),
-                'maintenanceenabled' => new external_value(PARAM_INT, 'Whether site maintenance is enabled.'),
-                'maintenancemessage' => new external_value(PARAM_RAW, 'Maintenance message.'),
-                'country' => new external_value(PARAM_NOTAGS, 'Default site country', VALUE_OPTIONAL),
-                'supportpage' => new external_value(PARAM_URL, 'Site support page link.', VALUE_OPTIONAL),
-                'supportavailability' => new external_value(PARAM_INT,
-                    'Determines who has access to contact site support.', VALUE_OPTIONAL),
-                'autolang' => new external_value(PARAM_INT,
-                    'Whether to detect default language from browser setting.', VALUE_OPTIONAL),
-                'lang' => new external_value(PARAM_LANG, 'Default language for the site.', VALUE_OPTIONAL),
-                'langmenu' => new external_value(PARAM_INT, 'Whether the language menu should be displayed.', VALUE_OPTIONAL),
-                'langlist' => new external_value(PARAM_RAW, 'Languages on language menu.', VALUE_OPTIONAL),
-                'locale' => new external_value(PARAM_RAW, 'Sitewide locale.', VALUE_OPTIONAL),
+    public static function settings_returns() {
+        return new external_single_structure([
+            'sitename' => new external_value(PARAM_RAW, 'Site name.'),
+            'rememberusername' => new external_value(PARAM_INT, 'Values: 0 for No, 1 for Yes, 2 for optional.'),
+            'authloginviaemail' => new external_value(PARAM_INT, 'Whether log in via email is enabled.'),
+            'registerauth' => new external_value(PARAM_PLUGIN, 'Authentication method for user registration.'),
+            'forgottenpasswordurl' => new external_value(PARAM_URL, 'Forgotten password URL.'),
+            'authinstructions' => new external_value(PARAM_RAW, 'Authentication instructions.'),
+            'maintenanceenabled' => new external_value(PARAM_INT, 'Whether site maintenance is enabled.'),
+            'maintenancemessage' => new external_value(PARAM_RAW, 'Maintenance message.'),
+            'country' => new external_value(PARAM_NOTAGS, 'Default site country', VALUE_OPTIONAL),
+            'supportpage' => new external_value(PARAM_URL, 'Site support page link.', VALUE_OPTIONAL),
+            'supportavailability' => new external_value(PARAM_INT,
+                'Determines who has access to contact site support.', VALUE_OPTIONAL),
+            'autolang' => new external_value(PARAM_INT,
+                'Whether to detect default language from browser setting.', VALUE_OPTIONAL),
+            'lang' => new external_value(PARAM_LANG, 'Default language for the site.', VALUE_OPTIONAL),
+            'langmenu' => new external_value(PARAM_INT, 'Whether the language menu should be displayed.', VALUE_OPTIONAL),
+            'langlist' => new external_value(PARAM_RAW, 'Languages on language menu.', VALUE_OPTIONAL),
+            'locale' => new external_value(PARAM_RAW, 'Sitewide locale.', VALUE_OPTIONAL),
 
-                'customizationapptopo' => new external_value(PARAM_RAW, 'Customization app topo.', VALUE_OPTIONAL),
-                'logologin' => new external_value(PARAM_RAW, 'The site logo URL', VALUE_OPTIONAL),
-                'customizationappcss' => new external_value(PARAM_RAW, 'Customization app CSS.', VALUE_OPTIONAL),
-                'htmllogin' => new external_value(PARAM_RAW, 'Customization APP LOGIN.', VALUE_OPTIONAL),
-                'customizationapphome' => new external_value(PARAM_RAW, 'Customization app HOME.', VALUE_OPTIONAL),
-                'customfieldpicture' => new external_value(PARAM_RAW, 'Images to icon course', VALUE_OPTIONAL),
-            ]
-        );
+            'customizationapptopo' => new external_value(PARAM_RAW, 'Customization app topo.', VALUE_OPTIONAL),
+            'logologin' => new external_value(PARAM_RAW, 'The site logo URL', VALUE_OPTIONAL),
+            'customizationappcss' => new external_value(PARAM_RAW, 'Customization app CSS.', VALUE_OPTIONAL),
+            'htmllogin' => new external_value(PARAM_RAW, 'Customization APP LOGIN.', VALUE_OPTIONAL),
+            'customizationapphome' => new external_value(PARAM_RAW, 'Customization app HOME.', VALUE_OPTIONAL),
+            'customfieldpicture' => new external_value(PARAM_RAW, 'Images to icon course', VALUE_OPTIONAL),
+            'block_myoverview_hidden_course' => new external_value(PARAM_RAW, 'Block myoverview hidden course', VALUE_OPTIONAL),
+        ]);
     }
 
     /**
@@ -205,5 +200,23 @@ class config extends external_api {
         }
 
         return $images;
+    }
+
+    /**
+     * @throws coding_exception
+     */
+    public static function block_myoverview_hidden_course() {
+        global $USER;
+
+        $preferences = get_user_preferences(null, null, $USER);
+        $ids = [];
+        foreach ($preferences as $key => $value) {
+            if (preg_match('/block_myoverview_hidden_course_(\d)+/', $key)) {
+                $id = preg_split('/block_myoverview_hidden_course_/', $key);
+                $ids[$id[1]] = $id[1];
+            }
+        }
+
+        return $ids;
     }
 }
