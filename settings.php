@@ -115,7 +115,7 @@ if ($hassiteconfig) {
         get_string('customizationappcss_desc', 'local_kopere_mobile'), '', PARAM_RAW);
     $settings->add($setting);
 
-    $setting = new admin_setting_configtextarea('local_kopere_mobile/htmllogin',
+    $setting = new admin_setting_confightmleditor('local_kopere_mobile/htmllogin',
         get_string('htmllogin', 'local_kopere_mobile'),
         get_string('htmllogin_desc', 'local_kopere_mobile'), '', PARAM_RAW);
     $settings->add($setting);
