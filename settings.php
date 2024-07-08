@@ -30,7 +30,7 @@ if ($hassiteconfig) {
     $ADMIN->add('localplugins', $settings);
 
     require_once(__DIR__ . '/classes/config.php');
-    $test = \local_kopere_mobile\config::test_to_string();
+    $test = \local_kopere_mobile\loadconfig::test_to_string();
     if ($test) {
         $setting = new admin_setting_heading('local_kopere_mobile/name',
             get_string('status_app', 'local_kopere_mobile'), $test);
