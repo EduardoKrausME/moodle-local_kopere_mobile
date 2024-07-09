@@ -29,7 +29,6 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('local_kopere_mobile', get_string('setting_title', 'local_kopere_mobile'));
     $ADMIN->add('localplugins', $settings);
 
-    require_once(__DIR__ . '/classes/config.php');
     $test = \local_kopere_mobile\loadconfig::test_to_string();
     if ($test) {
         $setting = new admin_setting_heading('local_kopere_mobile/name',

@@ -68,7 +68,6 @@ try {
 
         case "test-config":
 
-            require_once(__DIR__ . "/classes/config.php");
             $returnjson = \local_kopere_mobile\loadconfig::test();
 
             die(json_encode($returnjson));

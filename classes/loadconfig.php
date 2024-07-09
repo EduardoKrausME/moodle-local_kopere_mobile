@@ -64,8 +64,8 @@ class loadconfig {
 
         return (object)[
             'is_moodle_cookie_secure' => is_moodle_cookie_secure(),
-            'enablemobilewebservice' => $CFG->enablemobilewebservice ? true : false,
-            'allowframembedding' => $CFG->allowframembedding ? true : false,
+            'enablemobilewebservice' => @$CFG->enablemobilewebservice ? true : false,
+            'allowframembedding' => @$CFG->allowframembedding ? true : false,
             'external_services_moodle_mobile_app' => $externalservicesmoodlemobileapp ? true : false,
             'is_chrome' => \core_useragent::is_chrome(),
             'check_chrome_version_78' => \core_useragent::check_chrome_version('78'),
