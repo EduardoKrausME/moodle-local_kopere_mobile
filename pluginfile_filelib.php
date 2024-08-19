@@ -1034,13 +1034,14 @@ function localpluginfile_send_stored_file($storedfile, $lifetime = null, $filter
 }
 
 /**
+ * Function localpluginfile_get_file_preview
+ *
  * @param file_storage $fs
  * @param stored_file $file
  * @param $thumbwidth
  *
  * @return bool|stored_file
- *
- * @throws Exception
+ * @throws dml_exception
  */
 function localpluginfile_get_file_preview(file_storage $fs, stored_file $file, $thumbwidth) {
 
@@ -1060,13 +1061,16 @@ function localpluginfile_get_file_preview(file_storage $fs, stored_file $file, $
 }
 
 /**
+ * Function localpluginfile_create_file_preview
+ *
  * @param file_storage $fs
  * @param stored_file $file
  * @param $thumbwidth
  *
  * @return bool|stored_file
- *
- * @throws Exception
+ * @throws dml_exception
+ * @throws file_exception
+ * @throws stored_file_creation_exception
  */
 function localpluginfile_create_file_preview(file_storage $fs, stored_file $file, $thumbwidth) {
 
@@ -1103,13 +1107,6 @@ function localpluginfile_create_file_preview(file_storage $fs, stored_file $file
     return $fs->create_file_from_string($record, $data);
 }
 
-/**
- * @param stored_file $file
- *
- * @return bool|string
- * \
- * @throws Exception
- */
 function create_imagefile_preview(stored_file $file) {
     global $CFG;
     require_once($CFG->libdir . '/gdlib.php');

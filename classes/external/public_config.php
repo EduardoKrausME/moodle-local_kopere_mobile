@@ -97,6 +97,8 @@ class public_config extends external_api {
             'customizationapphome' => get_config('local_kopere_mobile', 'customizationapphome'),
             'customfieldpicture' => json_encode(self::setting_customfieldpicture()),
             'block_myoverview_hidden_course' => json_encode(self::block_myoverview_hidden_course()),
+
+            'message_koperemobile' => get_config('message_koperemobile', 'version') ? true : false,
         ];
     }
 
@@ -131,6 +133,8 @@ class public_config extends external_api {
             'customizationapphome' => new external_value(PARAM_RAW, 'Customization app HOME.', VALUE_OPTIONAL),
             'customfieldpicture' => new external_value(PARAM_RAW, 'Images to icon course', VALUE_OPTIONAL),
             'block_myoverview_hidden_course' => new external_value(PARAM_RAW, 'Block myoverview hidden course', VALUE_OPTIONAL),
+
+            "message_koperemobile" => new external_value(PARAM_INT, 'koperemobile message instaled', VALUE_OPTIONAL),
         ]);
     }
 
@@ -203,6 +207,9 @@ class public_config extends external_api {
     }
 
     /**
+     * Function block_myoverview_hidden_course
+     *
+     * @return array
      * @throws coding_exception
      */
     public static function block_myoverview_hidden_course() {

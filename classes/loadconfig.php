@@ -57,7 +57,7 @@ class loadconfig {
             set_config('setuplink', "{$CFG->wwwroot}/local/kopere_mobile/download.php", 'tool_mobile');
         }
 
-        $userreturn = $DB->get_record('user', ['username' => 'usuario-app'],
+        $usertest = $DB->get_record('user', ['username' => 'usuario-app'],
             'id,auth,confirmed,deleted,suspended,firstname,lastname');
 
         $externalservicesmoodlemobileapp = $DB->get_field('external_services', 'enabled', ['shortname' => 'moodle_mobile_app']);
@@ -69,7 +69,7 @@ class loadconfig {
             'external_services_moodle_mobile_app' => $externalservicesmoodlemobileapp ? true : false,
             'is_chrome' => \core_useragent::is_chrome(),
             'check_chrome_version_78' => \core_useragent::check_chrome_version('78'),
-            'user' => $userreturn,
+            'user' => $usertest,
             'message_koperemobile_version' => intval(get_config('message_koperemobile', 'version')),
             'local_kopere_mobile_version' => intval(get_config('local_kopere_mobile', 'version')),
         ];

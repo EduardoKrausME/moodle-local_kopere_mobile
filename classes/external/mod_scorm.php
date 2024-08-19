@@ -48,6 +48,7 @@ class mod_scorm extends \external_api {
      * icon function
      *
      * @param $cmid
+     *
      * @return array
      * @throws \dml_exception
      */
@@ -57,7 +58,7 @@ class mod_scorm extends \external_api {
         $context = \context_module::instance($cmid);
 
         $sql = "SELECT id, filepath, filename, filesize, itemid, mimetype
-                  FROM {files} 
+                  FROM {files}
                  WHERE component = 'mod_scorm'
                    AND filearea  = 'content'
                    AND filesize  > 1
@@ -66,12 +67,13 @@ class mod_scorm extends \external_api {
 
         $returnfiles = [];
         foreach ($files as $file) {
-                $returnfiles[] = [
-                    "filepath" => $file->filepath,
-                    "filename" => $file->filename,
-                    "filesize" => $file->filesize,
-                    "fileurl" => "{$CFG->wwwroot}/pluginfile.php/{$context->id}/mod_scorm/content/{$file->itemid}{$file->filepath}{$file->filename}",
-                ];
+            $returnfiles[] = [
+                "filepath" => $file->filepath,
+                "filename" => $file->filename,
+                "filesize" => $file->filesize,
+                "fileurl" =>
+                    "{$CFG->wwwroot}/pluginfile.php/{$context->id}/mod_scorm/content/{$file->itemid}{$file->filepath}{$file->filename}",
+            ];
         }
 
         return $returnfiles;

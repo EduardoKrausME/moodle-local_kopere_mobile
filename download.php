@@ -27,7 +27,7 @@ require('../kopere_dashboard/autoload.php');
 require($CFG->libdir . '/adminlib.php');
 global $DB, $PAGE, $OUTPUT;
 
-$PAGE->set_context(context_system::instance());
+$PAGE->set_context(null);
 
 $PAGE->set_url(new moodle_url("/local/kopere_mobile/download.php"));
 $PAGE->set_pagelayout('base');

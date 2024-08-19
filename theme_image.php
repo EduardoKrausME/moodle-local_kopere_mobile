@@ -22,19 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// disable moodle specific debug messages and any errors in output...
-// comment out when debugging or better look into error log!
-/**
- *
- */
-define('NO_DEBUG_DISPLAY', true);
-
-// we need just the values from config.php and minlib.php.
-/**
- *
- */
 define('ABORT_AFTER_CONFIG', true);
 require('../../config.php'); // This stops immediately at the beginning of lib/setup.php.
+
+$PAGE->set_context(null);
 
 if ($slashargument = min_get_slash_argument()) {
     $slashargument = ltrim($slashargument, '/');
@@ -129,20 +120,19 @@ if ($rev > 0) {
     }
 }
 
-// ok, now we need to start normal moodle script, we need to load all libs and $DB.
 /**
- *
+ * OK, now we need to start normal moodle script, we need to load all libs and $DB.
  */
 define('ABORT_AFTER_CONFIG_CANCEL', true);
 
 /**
- *
+ * Session not used here.
  */
-define('NO_MOODLE_COOKIES', true); // Session not used here.
+define('NO_MOODLE_COOKIES', true);
 /**
- *
+ * Ignore upgrade check.
  */
-define('NO_UPGRADE_CHECK', true);  // Ignore upgrade check.
+define('NO_UPGRADE_CHECK', true);
 
 require("{$CFG->dirroot}/lib/setup.php");
 
@@ -227,7 +217,7 @@ if (file_exists($cacheimage)) {
 
 send_uncached_image($imagefile);
 
-// we are not using filelib because we need to fine tune all header...
+// we are not using filelib because we need to fine tune all header.
 // parameters to get the best performance.
 
 /**
@@ -357,7 +347,7 @@ function cache_image($image, $imagefile, $candidatelocation) {
     if (@copy($imagefile, "{$cacheimage}.tmp")) {
         rename("{$cacheimage}.tmp", $cacheimage);
         @chmod($cacheimage, $CFG->filepermissions);
-        @unlink("{$cacheimage}.tmp"); // Just in case anything fails
+        @unlink("{$cacheimage}.tmp"); // Just in case anything fails.
     }
     return $cacheimage;
 }

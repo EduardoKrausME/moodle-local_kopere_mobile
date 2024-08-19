@@ -22,68 +22,67 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['modulename'] = 'Moodle Mobile v2';
-$string['pluginname'] = 'Moodle Mobile v2';
-$string['facial:view'] = 'Ver Smart Moodle Mobile v2';
-$string['facial:manage'] = 'Gerenciar Smart Moodle Mobile v2';
-$string['settings'] = 'Configurar Smart Moodle Mobile v2';
+$string['modulename'] = 'Kopere Mobile';
+$string['pluginname'] = 'Kopere Mobile';
+$string['facial:view'] = 'View Kopere Mobile';
+$string['facial:manage'] = 'Manager Kopere Mobile';
+$string['settings'] = 'Setting Kopere Mobile';
 
-$string['download_title'] = 'Baixar dispositivo móvel';
-$string['download_info'] = '<p>Com o aplicativo Moodle, você pode aprender de onde estiver, quando quiser, com os seguintes recursos do aplicativo:</p>
+$string['download_title'] = 'Download mobile device';
+$string['download_info'] = '<p>With the Moodle app, you can learn from anywhere, anytime, with the following app features:</p>
     <ul>
-        <li>Acesse facilmente o conteúdo do curso - navegue pelo conteúdo dos seus cursos com facilidade, mesmo quando estiver sem conexão à internet.</li>
-        <!--li>Conecte-se com os participantes do curso - encontre e entre em contato rapidamente com outras pessoas que estão fazendo os mesmos cursos que você.</li-->
-        <li>Mantenha-se atualizado - receba notificações instantâneas de mensagens e outros eventos importantes, como envio de tarefas.</li>
-        <li>Acompanhe seu progresso - visualize suas notas, verifique o progresso de conclusão dos cursos.</li>
-        <li>Conclua atividades em qualquer lugar, a qualquer hora, reproduza pacotes SCORM e muito mais, tanto online quanto offline.</li>
-        <li>... e muito mais!</li>
+        <li>Easily access course content - browse your course content with ease, even when you are offline.</li>
+        <!--li>Connect with course participants - quickly find and contact others who are taking the same courses as you.</li-->
+        <li>Stay updated - receive instant notifications for messages and other important events, such as assignment submissions.</li>
+        <li>Track your progress - view your grades, check course completion progress.</li>
+        <li>Complete activities anywhere, anytime, play SCORM packages, and more, both online and offline.</li>
+        <li>... and much more!</li>
     </ul>';
 
-$string['config_not_manual'] = 'Usuário deve ter autenticação Manual!';
-$string['config_not_confirmed'] = 'Usuário não confirmado!';
-$string['config_deleted'] = 'Usuário excluído!';
-$string['config_suspended'] = 'Usuário Suspenso!';
-$string['config_not_user'] = 'Usuário precisa ser criado';
+$string['config_not_manual'] = 'User must have Manual authentication!';
+$string['config_not_confirmed'] = 'User not confirmed!';
+$string['config_deleted'] = 'User deleted!';
+$string['config_suspended'] = 'User suspended!';
+$string['config_not_user'] = 'User needs to be created';
 
-$string['setting_title'] = 'Configurações do Moodle Mobile v2';
+$string['setting_title'] = 'Kopere Mobile Settings';
 
-$string['status_app'] = 'Status do APP';
-$string['customizationapp'] = 'Personalização do APP';
-$string['logologin'] = 'Logo em PNG/SVG para tela de login';
-$string['logologin_desc'] = 'Insira o logo no formato PNG ou SVG para ser exibido na tela de login. O logo deve ser claro e representativo da identidade visual da sua instituição ou empresa, garantindo uma experiência de login profissional e consistente para os usuários.';
-$string['customizationapptopo'] = 'Imagem de topo na home do APP';
-$string['customizationapptopo_desc'] = 'Este campo permite carregar uma imagem que será exibida como cabeçalho na página inicial do aplicativo. Dimensões: 1080 x 441px';
-$string['customizationapphome'] = 'Lista de cursos na Home';
-$string['customizationapphome_desc'] = 'Esta opção permite personalizar a exibição dos cursos na página inicial da aplicação. Você pode escolher entre diferentes layouts e estilos de exibição para destacar os cursos de acordo com suas preferências e necessidades.';
-$string['customizationapphome_default'] = 'Imagem ao lado';
-$string['customizationapphome_background'] = 'Imagem de fundo';
-$string['customizationappcss'] = 'CSS de personalização do APP';
-$string['customizationappcss_desc'] = 'Este arquivo contém o CSS personalizado que será aplicado ao aplicativo, permitindo ajustes visuais de acordo com as necessidades específicas do projeto.';
-$string['htmllogin'] = 'HTML extra do Login';
-$string['htmllogin_desc'] = 'Esta configuração permite adicionar código HTML personalizado à página de login. Pode ser utilizado para incluir informações adicionais de contato e suporte, como e-mails, telefones, ou links úteis para os usuários. O HTML inserido aqui será exibido diretamente na interface de login.';
+$string['status_app'] = 'APP Status';
+$string['customizationapp'] = 'APP Customization';
+$string['logologin'] = 'PNG/SVG logo for login screen';
+$string['logologin_desc'] = 'Upload the logo in PNG or SVG format to be displayed on the login screen. The logo should be clear and representative of your institution or company\'s visual identity, ensuring a professional and consistent login experience for users.';
+$string['customizationapptopo'] = 'Top image on the APP home screen';
+$string['customizationapptopo_desc'] = 'This field allows you to upload an image that will be displayed as a header on the app\'s home page. Dimensions: 1080 x 441px';
+$string['customizationapphome'] = 'Course list on Home';
+$string['customizationapphome_desc'] = 'This option allows you to customize the display of courses on the application\'s home page. You can choose from different layouts and display styles to highlight the courses according to your preferences and needs.';
+$string['customizationapphome_default'] = 'Image on the side';
+$string['customizationapphome_background'] = 'Background image';
+$string['customizationappcss'] = 'APP Customization CSS';
+$string['customizationappcss_desc'] = 'This file contains the custom CSS that will be applied to the app, allowing visual adjustments according to the specific needs of the project.';
+$string['htmllogin'] = 'Extra Login HTML';
+$string['htmllogin_desc'] = 'This setting allows you to add custom HTML code to the login page. It can be used to include additional contact and support information, such as emails, phone numbers, or useful links for users. The HTML inserted here will be displayed directly on the login interface.';
 
-$string['app_title'] = 'Dados do APP nas lojas';
-$string['iosappid'] = 'ID numérico do aplicativo IOS';
-$string['iosappid_desc'] = 'Esta configuração pode ser deixada com o valor padrão a não que tenha uma aplicação iOS personalizada.';
-$string['androidappid'] = 'O identificador único do aplicativo Android';
-$string['androidappid_desc'] = 'Esta configuração pode ser mantida como padrão, a menos que você tenha um aplicativo Android personalizado.';
-$string['androidappfile'] = 'Arquivo para baixar o aplicativo Android';
-$string['androidappfile_desc'] = 'Deixe esta configuração em branco, a menos que você tenha um aplicativo Android hospedado em seu servidor.';
+$string['app_title'] = 'APP Data in stores';
+$string['iosappid'] = 'IOS app numeric ID';
+$string['iosappid_desc'] = 'This setting can be left as the default unless you have a custom iOS application.';
+$string['androidappid'] = 'The unique identifier of the Android app';
+$string['androidappid_desc'] = 'This setting can be left as default unless you have a custom Android application.';
+$string['androidappfile'] = 'File to download the Android app';
+$string['androidappfile_desc'] = 'Leave this setting blank unless you have an Android app hosted on your server.';
 
-$string['lgpd_title'] = 'Informações sobre a LGPD';
-$string['lgpd_email'] = 'E-mail de exclusão de dados';
-$string['lgpd_email_desc'] = 'Coloque o e-mail para destinar as solicitações e exclusão de dados.';
-$string['lgpd_text'] = 'Política de exclusão de dados';
-$string['lgpd_text_desc'] = 'Descreva a Política de exclusão de dados conforme a LGPD no Moodle';
-$string['lgpd_text_msgdefault'] = '<p>Em conformidade com a Lei Geral de Proteção de Dados (LGPD), esta página tem como objetivo fornecer informações detalhadas sobre como tratamos e protegemos seus dados pessoais no ambiente virtual do Moodle. A LGPD tem como principal propósito assegurar a privacidade e a segurança das informações pessoais, promovendo a transparência e a responsabilidade no tratamento desses dados.</p>
-<p>Você tem o direito de solicitar a exclusão de seus dados pessoais armazenados em nosso sistema. Entretanto, é importante destacar que, de acordo com a legislação vigente e as regulamentações do Ministério da Educação (MEC), alguns dados são obrigatórios para a manutenção dos registros acadêmicos e administrativos.</p>
-<p>Agradecemos a compreensão de todos para garantir a conformidade com a LGPD e demais regulamentações aplicáveis. Estamos à disposição para esclarecer quaisquer dúvidas adicionais ou fornecer informações específicas sobre o tratamento de seus dados pessoais.</p>
-<h2>Formulário de solicitação de Exclusão:</h2>
-<p>Para solicitar a exclusão dos seus dados, preencha o formulário abaixo. Após recebermos sua solicitação, realizaremos uma análise e responderemos o mais rápido possível para preservar a conformidade legal.</p>';
-$string['lgpd_okok'] = 'Mensagem de confirmação de envio';
-$string['lgpd_okok_desc'] = 'Mensagem após os dados serem enviados ao responsável';
-$string['lgpd_okok_msgdefault'] = '<p>Agradecemos por enviar sua solicitação de exclusão de dados. Estamos comprometidos em garantir a segurança e privacidade das informações dos nossos usuários.</p>
-<p>Sua solicitação foi recebida com sucesso e será processada pela nossa equipe de proteção de dados. Ressaltamos que, de acordo com a legislação vigente, apenas dados não obrigatórios serão excluídos, preservando as informações essenciais exigidas pelos órgãos legais.</p>
-<p>Caso haja necessidade de informações adicionais ou se tiver alguma dúvida, nossa equipe entrará em contato com você dentro do prazo estipulado pela lei. Mantenha seus dados de contato atualizados para facilitar a comunicação.</p>
-<p>Agradecemos pela compreensão e confiança em nossa plataforma. Estamos aqui para garantir uma experiência segura e transparente.</p>';
-
+$string['lgpd_title'] = 'Information about the LGPD';
+$string['lgpd_email'] = 'Data deletion email';
+$string['lgpd_email_desc'] = 'Enter the email address to direct data deletion requests.';
+$string['lgpd_text'] = 'Data deletion policy';
+$string['lgpd_text_desc'] = 'Describe the Data Deletion Policy in accordance with the LGPD in Moodle';
+$string['lgpd_text_msgdefault'] = '<p>In compliance with the General Data Protection Law (LGPD), this page aims to provide detailed information on how we handle and protect your personal data within the Moodle virtual environment. The LGPD\'s primary purpose is to ensure the privacy and security of personal information, promoting transparency and accountability in data processing.</p>
+<p>You have the right to request the deletion of your personal data stored in our system. However, it is important to note that, according to current legislation and regulations from the Ministry of Education (MEC), some data is mandatory for the maintenance of academic and administrative records.</p>
+<p>We appreciate everyone\'s understanding in ensuring compliance with the LGPD and other applicable regulations. We are available to clarify any additional questions or provide specific information about the processing of your personal data.</p>
+<h2>Data Deletion Request Form:</h2>
+<p>To request the deletion of your data, please fill out the form below. Upon receiving your request, we will conduct an analysis and respond as quickly as possible to ensure legal compliance.</p>';
+$string['lgpd_okok'] = 'Submission confirmation message';
+$string['lgpd_okok_desc'] = 'Message after the data has been sent to the responsible party';
+$string['lgpd_okok_msgdefault'] = '<p>Thank you for submitting your data deletion request. We are committed to ensuring the security and privacy of our users\' information.</p>
+<p>Your request has been successfully received and will be processed by our data protection team. We emphasize that, according to current legislation, only non-mandatory data will be deleted, preserving essential information required by legal authorities.</p>
+<p>If additional information is needed or if you have any questions, our team will contact you within the timeframe stipulated by law. Please keep your contact details updated to facilitate communication.</p>
+<p>Thank you for your understanding and trust in our platform. We are here to ensure a safe and transparent experience.</p>';

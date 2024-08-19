@@ -22,12 +22,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require "../../config.php";
+require ("../../config.php");
 
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
 header("Content-Type: application/json");
 header("Expires: 0");
+
+$PAGE->set_context(null);
 
 if (empty($localsmtappsendheader)) {
     header_remove("Access-Control-Allow-Origin");
