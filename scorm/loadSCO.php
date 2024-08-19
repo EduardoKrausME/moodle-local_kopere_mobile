@@ -17,8 +17,8 @@
 require_once('../../../config.php');
 require_once($CFG->dirroot . '/mod/scorm/locallib.php');
 
-$id = optional_param('id', '', PARAM_INT);    // Course Module ID, or
-$a = optional_param('a', '', PARAM_INT);     // Scorm ID
+$id = optional_param('id', '', PARAM_INT);       // Course Module ID, or.
+$a = optional_param('a', '', PARAM_INT);         // Scorm ID.
 $scoid = required_param('scoid', PARAM_INT);     // Sco ID.
 
 $delayseconds = 2;  // Delay time before sco launch, used to give time to browser to define API.
