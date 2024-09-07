@@ -1107,6 +1107,14 @@ function localpluginfile_create_file_preview(file_storage $fs, stored_file $file
     return $fs->create_file_from_string($record, $data);
 }
 
+/**
+ * Function create_imagefile_preview
+ *
+ * @param stored_file $file
+ *
+ * @return bool|string
+ * @throws coding_exception
+ */
 function create_imagefile_preview(stored_file $file) {
     global $CFG;
     require_once($CFG->libdir . '/gdlib.php');
