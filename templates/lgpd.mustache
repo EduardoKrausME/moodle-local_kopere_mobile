@@ -13,23 +13,35 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+
+{{!
+    @template local_kopere_mobile/lgpd
+
+    Example context (json):
+    {
+      "lgpd_text": "12345abcde",
+      "user_fullname": "dfg sdfgtyh",
+      "user_email": "12345@abcde",
+      "sesskey":"12345abcde"
+    }
+}}
 <div>
     {{{lgpd_text}}}
 
     <form method="post" action="?" style="margin-left: 20px">
 
-        <div><label for="motivo" style="font-weight:bold">Nome completo:</label>
+        <div><label for="motivo" style="font-weight:bold">{{#str}}fullname{{/str}}:</label>
             {{{user_fullname}}}
         </div>
 
-        <div><label for="motivo" style="font-weight:bold">E-mail cadastrado:</label>
+        <div><label for="motivo" style="font-weight:bold">{{#str}}email{{/str}}:</label>
             {{{user_email}}}
         </div>
 
-        <div><label for="motivo" style="font-weight:bold">Motivo da exclusão:</label> <br>
+        <div><label for="motivo" style="font-weight:bold">{{#str}}config_lgpd_reason,kopere_mobileapp{{/str}}:</label> <br>
             <textarea name="motivo" id="motivo" style="width: 100%; min-height: 120px"></textarea>
         </div>
-        <div><input type="submit" value="Enviar solicitação"></div>
+        <div><input type="submit" value="{{#str}}submit{{/str}}"></div>
         <input type="hidden" name="sesskey" id="sesskey">
     </form>
 </div>
