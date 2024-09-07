@@ -50,24 +50,12 @@ function local_kopere_mobile_before_standard_html_head() {
 
     if (isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile) {
         $PAGE->set_pagelayout('embedded');
-        return "
+        $return = "
             <meta http-equiv=\"Content-Security-Policy\"
                   content=\"default-src *;
                            style-src  * 'self' 'unsafe-inline' 'unsafe-eval';
                            script-src * 'self' 'unsafe-inline' 'unsafe-eval';
                            font-src   * 'self' data:;\">
-            <style>
-                h2.main {
-                    display: none !important;
-                }
-                #page {
-                    margin: 10px !important;
-                    width: auto !important;
-                }
-                #page-mod-chat-view #page-content .navitem .btn-secondary {
-                    display: none !important;
-                }
-            </style>
             <script>
                 window.open = function(url) {
                     location.href = url
@@ -78,6 +66,8 @@ function local_kopere_mobile_before_standard_html_head() {
                     }
                 }, 1000);
             </script>";
+
+        return $return;
     }
     return "";
 }
@@ -90,11 +80,12 @@ function local_kopere_mobile_before_http_headers() {
 
     $iskoperemobilemobile = isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile;
     if ($iskoperemobilemobile || optional_param("kopere_mobile_mobile", false, PARAM_INT)) {
+
+        $PAGE->set_pagelayout('embedded');
+        $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
         if ($PAGE->theme->name == "edooc") {
-            echo "<style>" . file_get_contents(__DIR__ . "/assets/edooc-embedded.css") . "</style>";
             $PAGE->requires->css("/local/kopere_bi/assets/edooc-embedded.css");
         }
-        $PAGE->set_pagelayout('embedded');
     }
 }
 
@@ -135,6 +126,7 @@ function local_kopere_mobile_before_footer() {
  * @param array $args
  * @param bool $forcedownload
  * @param array $options
+ *
  * @return bool
  * @throws coding_exception
  * @throws dml_exception
@@ -250,8 +242,9 @@ function local_kopere_mobile_pluginfile($course, $cm, $context, $filearea, $args
  *
  * @param context $context The context object.
  * @param string $filearea The file area.
- * @param array $args List of arguments.
- * @param array $options Array of options.
+ * @param array $args      List of arguments.
+ * @param array $options   Array of options.
+ *
  * @return bool
  * @throws Exception
  */
