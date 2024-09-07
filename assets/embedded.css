@@ -1,0 +1,14 @@
+h2.main {
+  display: none !important;
+}
+
+#page {
+  margin: 10px !important;
+  width: auto !important;
+}
+
+#page-mod-chat-view #page-content .navitem .btn-secondary {
+  display: none !important;
+}
+
+/*# sourceMappingURL=embedded.css.map */
