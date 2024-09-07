@@ -86,3 +86,7 @@ $string['lgpd_okok_msgdefault'] = '<p>Thank you for submitting your data deletio
 <p>Your request has been successfully received and will be processed by our data protection team. We emphasize that, according to current legislation, only non-mandatory data will be deleted, preserving essential information required by legal authorities.</p>
 <p>If additional information is needed or if you have any questions, our team will contact you within the timeframe stipulated by law. Please keep your contact details updated to facilitate communication.</p>
 <p>Thank you for your understanding and trust in our platform. We are here to ensure a safe and transparent experience.</p>';
+
+$string['config_test_title']='Status das configurações necessárias para o funcionamento do APP';
+$string['config_test_correct']='Valor está incorreto para funcionamento do APP';
+$string['config_lgpd_reason']='Motivo da exclusão';
