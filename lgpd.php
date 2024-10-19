@@ -101,7 +101,6 @@ if (isset($lgpdemail[5])) {
             'lgpd_text' => get_config('local_kopere_mobile', 'lgpd_text'),
             'user_fullname' => fullname($USER),
             'user_email' => $USER->email,
-            'sesskey' => sesskey(),
         ];
         echo $OUTPUT->render_from_template('local_kopere_mobile/lgpd', $data);
     }

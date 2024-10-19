@@ -21,8 +21,7 @@
     {
       "lgpd_text": "12345abcde",
       "user_fullname": "dfg sdfgtyh",
-      "user_email": "12345@abcde",
-      "sesskey":"12345abcde"
+      "user_email": "12345@abcde"
     }
 }}
 <div>
@@ -48,6 +47,6 @@
 
 {{#js}}
     require(['jquery', "core/notification"], function($, Notification) {
-        $("#sesskey").val("{{{sesskey}}}")
+        $("#sesskey").val("{{globals.config.sesskey}}")
     });
 {{/js}}
