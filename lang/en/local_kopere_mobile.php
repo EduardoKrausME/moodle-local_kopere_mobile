@@ -90,4 +90,3 @@ $string['lgpd_okok_msgdefault'] = '<p>Thank you for submitting your data deletio
 $string['config_test_title'] = 'Status das configurações necessárias para o funcionamento do APP';
 $string['config_test_correct'] = 'Valor está incorreto para funcionamento do APP';
 $string['config_lgpd_reason'] = 'Motivo da exclusão';
-$string['koperemobile:managedevice'] = 'Manage Device';
