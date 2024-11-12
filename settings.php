@@ -77,6 +77,7 @@ if ($hassiteconfig) {
             $SESSION->local_kopere_mobile_customfield_picture = $category->id;
             set_config('local_kopere_mobile_customfield_picture', $category->id);
         }
+
         $field = $DB->get_record('customfield_field', ['shortname' => 'app_background']);
         if (!$field) {
             $field = [

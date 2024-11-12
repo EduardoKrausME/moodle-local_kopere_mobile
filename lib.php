@@ -39,7 +39,7 @@ function local_kopere_mobile_before_standard_html_head() {
     if (isset($SESSION->local_kopere_mobile_preserve_page) && $SESSION->local_kopere_mobile_preserve_page) {
         $preservepage = $SESSION->local_kopere_mobile_preserve_page;
 
-        if (strpos($_SERVER['REQUEST_URI'], $preservepage) !== false) {
+        if (strpos($_SERVER['REQUEST_URI'], $preservepage) !== false) { //phpcs:disable
             // Não faz nada aqui.
         } else if (isset($SESSION->kopere_mobile_redirect_page[5])) {
             header("Location: {$SESSION->kopere_mobile_redirect_page}");

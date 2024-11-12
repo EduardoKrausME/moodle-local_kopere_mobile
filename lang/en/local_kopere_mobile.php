@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// phpcs:ignoreFile moodle.Files.LangFilesOrdering.IncorrectOrder
+
 $string['modulename'] = 'Kopere Mobile';
 $string['pluginname'] = 'Kopere Mobile';
 $string['facial:view'] = 'View Kopere Mobile';

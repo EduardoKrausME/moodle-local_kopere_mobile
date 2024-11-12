@@ -62,9 +62,9 @@ if (empty($image)) {
     image_not_found();
 }
 
-if (file_exists("{$CFG->dirroot}/theme/{$themename}/config.php")) {
+if (file_exists("{$CFG->dirroot}/theme/{$themename}/config.php")) {// phpcs:disable
     // Exists.
-} else if (!empty($CFG->themedir) && file_exists("{$CFG->themedir}/{$themename}/config.php")) {
+} else if (!empty($CFG->themedir) && file_exists("{$CFG->themedir}/{$themename}/config.php")) {// phpcs:disable
     // Exists.
 } else {
     image_not_found();
@@ -216,9 +216,6 @@ if (file_exists($cacheimage)) {
 }
 
 send_uncached_image($imagefile);
-
-// we are not using filelib because we need to fine tune all header.
-// parameters to get the best performance.
 
 /**
  * cache

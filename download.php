@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// phpcs:ignoreFile moodle.Files.RequireLogin.Missing
+
 require('../../config.php');
 require('../kopere_dashboard/autoload.php');
 require($CFG->libdir . '/adminlib.php');

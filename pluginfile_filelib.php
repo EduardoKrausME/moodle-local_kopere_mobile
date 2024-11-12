@@ -303,7 +303,7 @@ function local_kopere_mobile_pluginfile_file_pluginfile($relativepath, $forcedow
                 if (!has_capability('moodle/site:accessallgroups', $context) && !groups_is_member($event->groupid, $USER->id)) {
                     local_kopere_mobile_send_file_not_found();
                 }
-            } else if ($event->eventtype === 'course' || $event->eventtype === 'site') {
+            } else if ($event->eventtype === 'course' || $event->eventtype === 'site') {// phpcs:disable
                 // Ok. Please note that the event type 'site' still uses a course context.
             } else {
                 // Some other type.
@@ -410,9 +410,8 @@ function local_kopere_mobile_pluginfile_file_pluginfile($relativepath, $forcedow
 
             $userid = $context->instanceid;
 
-            if ($USER->id == $userid) {
+            if ($USER->id == $userid) {// phpcs:disable
                 // Always can access own.
-
             } else if (!empty($CFG->forceloginforprofiles)) {
                 require_login();
 
