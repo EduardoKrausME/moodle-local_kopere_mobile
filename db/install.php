@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use local_kopere_mobile\vo\kopere_mobile_events;
-
 /**
  * install function
  *
