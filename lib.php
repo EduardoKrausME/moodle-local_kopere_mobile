@@ -36,8 +36,8 @@ function local_kopere_mobile_before_standard_html_head() {
 
     $PAGE->requires->js_call_amd('local_kopere_mobile/picture', 'move');
 
-    if (isset($SESSION->kopere_mobile_preserve_page) && $SESSION->kopere_mobile_preserve_page) {
-        $preservepage = $SESSION->kopere_mobile_preserve_page;
+    if (isset($SESSION->local_kopere_mobile_preserve_page) && $SESSION->local_kopere_mobile_preserve_page) {
+        $preservepage = $SESSION->local_kopere_mobile_preserve_page;
 
         if (strpos($_SERVER['REQUEST_URI'], $preservepage) !== false) {
             // Não faz nada aqui.

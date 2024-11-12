@@ -51,15 +51,10 @@ try {
                 $SESSION->kopere_mobile_mobile = 1;
                 $SESSION->forcepagelayout = 'embedded';
             }
-            $preservepage = optional_param('kopere_mobile_preserve_page', false, PARAM_TEXT);
+            $preservepage = optional_param('local_kopere_mobile_preserve_page', false, PARAM_TEXT);
             if ($preservepage) {
-                $SESSION->kopere_mobile_preserve_page = $preservepage;
+                $SESSION->local_kopere_mobile_preserve_page = $preservepage;
                 $SESSION->kopere_mobile_redirect_page = $redirectpage;
-            }
-
-            $platform = optional_param('kopere_mobile_platform', false, PARAM_TEXT);
-            if ($platform) {
-                $SESSION->kopere_mobile_platform = $platform;
             }
 
             $sessionid = session_id();
@@ -87,7 +82,7 @@ try {
  * @throws dml_exception
  */
 function validate_token() {
-    global $DB, $USER;
+    global $DB, $USER, $SESSION;
 
     if (isloggedin()) {
         @header("smtapp-status:isloggedin");
@@ -115,11 +110,6 @@ function validate_token() {
     \core\session\manager::login_user($user);
     unset($USER->preference);
     check_user_preferences_loaded($USER);
-
-    $smtappplatform = optional_param("smt_app_platform", false, PARAM_TEXT);
-    if ($smtappplatform) {
-        $USER->smt_app_platform = $smtappplatform;
-    }
 
     return true;
 }

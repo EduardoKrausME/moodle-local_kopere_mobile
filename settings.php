@@ -59,7 +59,7 @@ if ($hassiteconfig) {
     $extradescription = "";
     if (file_exists("{$CFG->dirroot}/customfield/field/picture/version.php")) {
         $category = $DB->get_record('customfield_category',
-            ['id' => intval(@$CFG->local_kopere_mobile_customfield_picture)]);
+            ['id' => intval(@$SESSION->local_kopere_mobile_customfield_picture)]);
         if (!$category) {
             $category = (object)[
                 'name' => get_string("modulename", "local_kopere_mobile"),
@@ -74,7 +74,7 @@ if ($hassiteconfig) {
                 'contextid' => context_system::instance()->id,
             ];
             $category->id = $DB->insert_record('customfield_category', $category);
-            $CFG->local_kopere_mobile_customfield_picture = $category->id;
+            $SESSION->local_kopere_mobile_customfield_picture = $category->id;
             set_config('local_kopere_mobile_customfield_picture', $category->id);
         }
         $field = $DB->get_record('customfield_field', ['shortname' => 'app_background']);
@@ -86,7 +86,7 @@ if ($hassiteconfig) {
                 'type' => 'picture',
                 'descriptionformat' => 0,
                 'sortorder' => 0,
-                'categoryid' => $CFG->local_kopere_mobile_customfield_picture,
+                'categoryid' => $SESSION->local_kopere_mobile_customfield_picture,
                 'configdata' => null,
                 'timecreated' => time(),
                 'timemodified' => time(),
