@@ -28,3 +28,4 @@ $plugin->version = 2024100900;
 $plugin->release = "1.2.6";
 $plugin->requires = 2011120500;
 $plugin->component = 'local_kopere_mobile';
+$plugin->dependencies = ["local_kopere_dashboard" => 2024101500];
