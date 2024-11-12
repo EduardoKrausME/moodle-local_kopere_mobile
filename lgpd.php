@@ -35,12 +35,16 @@ $messagesendok = false;
 if (isset($_POST['motivo'][10])) {
     require_sesskey();
     unset($_SESSION['USER']->sesskey);
+    $motivo = required_param("motivo", PARAM_TEXT);
 
-    $mensagem = "O aluno solicitou a exclusão dos dados cadastrais do {$COURSE->fullname}\n\n" .
-        "Nome completo: " . fullname($USER) . "\n" .
-        "Perfil do aluno: {$CFG->wwwroot}/user/profile.php?id={$USER->id} para acesso e exclusão\n" .
-        "E-mail cadastrado: {$USER->email}\n" .
-        "Motivo da exclusão:\n{$_POST['motivo']}";
+    $mensage = get_string("lgpd-body", "local_kopere_mobile", [
+        "wwwroot" => $CFG->wwwroot,
+        "course_fullname" => $COURSE->fullname,
+        "user_id" => $USER->id,
+        "user_fullname" => fullname($USER),
+        "user_email" => $USER->email,
+        "motivo" => $motivo,
+    ]);
 
     $userto = (object)[
         'id' => 1,
@@ -50,8 +54,8 @@ if (isset($_POST['motivo'][10])) {
         'emailstop' => 0,
         'email' => get_config('local_kopere_mobile', 'lgpd_email'),
         'username' => 'dpo',
-        'firstname' => 'DPO',
-        'lastname' => 'LGPD',
+        'firstname' => get_string("lgpd-firstname", "local_kopere_mobile"),
+        'lastname' => get_string("lgpd-lastname", "local_kopere_mobile"),
 
         'firstnamephonetic' => '',
         'lastnamephonetic' => '',
@@ -68,10 +72,10 @@ if (isset($_POST['motivo'][10])) {
     $eventdata->name = 'kopere_dashboard_messages';
     $eventdata->userfrom = $USER;
     $eventdata->userto = $userto;
-    $eventdata->subject = 'Solicitação de exclusão de dados';
-    $eventdata->fullmessage = $mensagem;
+    $eventdata->subject = get_string('lgpd-subject', "local_kopere_mobile");
+    $eventdata->fullmessage = $mensage;
     $eventdata->fullmessageformat = FORMAT_HTML;
-    $eventdata->fullmessagehtml = str_replace("\n", '<br>', $mensagem);
+    $eventdata->fullmessagehtml = str_replace("\n", '<br>', $mensage);
     $eventdata->smallmessage = '';
 
     message_send($eventdata);
@@ -91,10 +95,10 @@ echo $OUTPUT->header();
 $lgpdemail = get_config('local_kopere_mobile', 'lgpd_email');
 if (isset($lgpdemail[5])) {
     if (isset($_POST['motivo']) && strlen($_POST['motivo']) < 11) {
-        echo "<div class='alert alert-danger'>Motivo é obrigatório</div>";
+        echo get_string("lgpd-reason-required", "local_kopere_mobile");
     }
     if ($messagesendok) {
-        echo "<h2>Confirmação de Solicitação de Exclusão de Dados</h2>";
+        echo get_string("lgpd-confirm", "local_kopere_mobile");
         echo get_config('local_kopere_mobile', 'lgpd_okok');
     } else {
         $data = [
@@ -107,7 +111,7 @@ if (isset($lgpdemail[5])) {
 } else {
     redirect(
         "{$CFG->wwwroot}/admin/settings.php?section=local_kopere_mobile#id_s_local_kopere_mobile_lgpd_email",
-        "Nenhum e-mail cadastrado",
+        get_string("lgpd-nonemail", "local_kopere_mobile"),
         \core\output\notification::NOTIFY_ERROR);
 }
 

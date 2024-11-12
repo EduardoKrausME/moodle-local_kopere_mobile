@@ -87,6 +87,23 @@ $string['lgpd_okok_msgdefault'] = '<p>Thank you for submitting your data deletio
 <p>If additional information is needed or if you have any questions, our team will contact you within the timeframe stipulated by law. Please keep your contact details updated to facilitate communication.</p>
 <p>Thank you for your understanding and trust in our platform. We are here to ensure a safe and transparent experience.</p>';
 
-$string['config_test_title'] = 'Status das configurações necessárias para o funcionamento do APP';
-$string['config_test_correct'] = 'Valor está incorreto para funcionamento do APP';
-$string['config_lgpd_reason'] = 'Motivo da exclusão';
+$string['config_test_title'] = 'Status of the required settings for the APP to function';
+$string['config_test_correct'] = 'The value is incorrect for the APP to function';
+$string['config_lgpd_reason'] = 'Reason for deletion';
+
+$string['setting-image-background-title'] = 'APP Background Image';
+$string['setting-image-background-desc'] = 'This image will be used as the background for the course list in the app, with specific dimensions of 600 x 300 pixels.';
+$string['setting-customfield_field-required'] = '<div class="alert alert-warning">You need to install the <a href="https://moodle.org/plugins/customfield_picture" target="_blank">customfield_picture</a> plugin to customize the background image.</div>';
+$string['lgpd-subject'] = 'Request for Data Deletion';
+$string['lgpd-firstname'] = 'DPO';
+$string['lgpd-lastname'] = 'LGPD';
+$string['lgpd-body'] = 'The student has requested the deletion of their registration data from {$a->course_fullname}
+
+Full Name: {$a->user_fullname}
+Student Profile: {$a->wwwroot}/user/profile.php?id={$a->user_id} for access and deletion
+Registered Email: {$a->user_email}
+Reason for deletion:
+{$a->motivo}';
+$string['lgpd-reason-required'] = '<div class=\'alert alert-danger\'>Reason is required</div>';
+$string['lgpd-confirm'] = '<h2>Confirmation of Data Deletion Request</h2>';
+$string['lgpd-nonemail'] = 'No email registered';
