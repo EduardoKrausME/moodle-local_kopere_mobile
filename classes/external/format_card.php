@@ -59,10 +59,10 @@ class format_card extends \external_api {
 
         require_once("{$CFG->dirroot}/course/format/cards/lib.php");
 
-        error_reporting(E_ALL);
-        ini_set('display_errors', '1');
+        $context = \context_course::instance($courseid);
+        require_capability("mod/course:view", $context);
 
-        $PAGE->set_context(\context_course::instance($courseid));
+        $PAGE->set_context($context);
 
         if (file_exists("{$CFG->dirroot}/course/format/cards/classes/output/courseformat/content/section/header.php")) {
 

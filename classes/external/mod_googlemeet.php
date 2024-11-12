@@ -67,6 +67,9 @@ class mod_googlemeet extends \external_api {
             $cm = get_coursemodule_from_id('googlemeet', $cmid);
             $googlemeet = $DB->get_record('googlemeet', ['id' => $cm->instance], '*', MUST_EXIST);
 
+            $context = \context_module::instance($cm->id);
+            require_capability("mod/googlemeet:view", $context);
+
             $recordings = googlemeet_list_recordings(['googlemeetid' => $googlemeet->id, 'visible' => true]);
             $hasrecordings = !empty($recordings);
 

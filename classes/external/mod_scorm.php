@@ -53,11 +53,13 @@ class mod_scorm extends \external_api {
      *
      * @return array
      * @throws \dml_exception
+     * @throws \required_capability_exception
      */
     public static function files($cmid) {
         global $DB, $CFG;
 
         $context = \context_module::instance($cmid);
+        require_capability("mod/scorm:view", $context);
 
         $sql = "SELECT id, filepath, filename, filesize, itemid, mimetype
                   FROM {files}

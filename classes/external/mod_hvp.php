@@ -73,6 +73,9 @@ class mod_hvp extends \external_api {
                 return ["html" => 'coursemisconf'];
             }
 
+            $context = \context_module::instance($cm->id);
+            require_capability("mod/hvp:view", $context);
+
             list($token, $secret) = \mod_hvp\mobile_auth::create_embed_auth_token();
 
             // Store secret in database.

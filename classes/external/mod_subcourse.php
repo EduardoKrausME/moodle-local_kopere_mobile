@@ -57,14 +57,19 @@ class mod_subcourse extends external_api {
      * mobile function
      *
      * @param $instanceid
+     *
      * @return array
      * @throws \dml_exception
-     * @throws \coding_exception
+     * @throws \coding_exception*@throws \required_capability_exception
+     * @throws \required_capability_exception
      */
     public static function mobile($instanceid) {
         global $DB, $USER;
 
         $subcourse = $DB->get_record('subcourse', ['id' => $instanceid]);
+
+        $context = \context_module::instance($instanceid);
+        require_capability("mod/scorm:view", $context);
 
         if ($subcourse) {
             $refcourse = $DB->get_record('course', ['id' => $subcourse->refcourse]);

@@ -50,6 +50,9 @@ class format_card_moodleorg {
         $format = course_get_format($courseid);
         $modinfo = $format->get_modinfo();
 
+        $context = \context_course::instance($courseid);
+        require_capability("mod/course:view", $context);
+
         $itens = [];
         foreach (self::get_sections_to_display($format, $modinfo) as $sectionnum => $section) {
             $header = new \format_cards\output\courseformat\content\section\header($format, $section);

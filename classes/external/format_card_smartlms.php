@@ -55,6 +55,9 @@ class format_card_smartlms {
         $course = course_get_format($courseid)->get_course();
         $modinfo = get_fast_modinfo($course);
 
+        $context = \context_course::instance($courseid);
+        require_capability("mod/course:view", $context);
+
         $sections = $modinfo->get_section_info_all();
         $numsections = course_get_format($course)->get_last_section_number();
 

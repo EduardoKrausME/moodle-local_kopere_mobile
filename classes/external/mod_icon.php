@@ -55,6 +55,9 @@ class mod_icon extends \external_api {
         $themerev = theme_get_revision();
         $modules = $DB->get_records_sql("SELECT id, name FROM {modules} WHERE id IN(SELECT DISTINCT module FROM {course_modules})");
 
+        // require_capability ???
+        // No login is required here, as the system automatically captures all the Moodle icons to make them available offline.
+
         $returnmodules = [];
         foreach ($modules as $module) {
 
