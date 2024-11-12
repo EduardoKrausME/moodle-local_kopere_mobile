@@ -46,7 +46,7 @@
 </div>
 
 {{#js}}
-    require(['jquery', "core/notification"], function($, Notification) {
-        $("#sesskey").val("{{globals.config.sesskey}}")
+    require(["jquery"], function($) {
+        $("#sesskey").val("{{globals.config.sesskey}}");
     });
 {{/js}}
