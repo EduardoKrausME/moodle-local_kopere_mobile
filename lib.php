@@ -263,7 +263,7 @@ function local_kopere_mobile_pluginfile_sendfile($context, $filearea, $args, arr
     }
 
     require_once(__DIR__ . "/pluginfile_filelib.php");
-    localpluginfile_send_stored_file($file, 0, 0, false, $options);
+    local_kopere_mobile_pluginfile_send_stored_file($file, 0, 0, false, $options);
 
     return true;
 }

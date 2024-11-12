@@ -59,4 +59,4 @@ $relativepath = get_file_argument();
 
 require_once(__DIR__ . "/pluginfile_filelib.php");
 
-localpluginfile_file_pluginfile($relativepath, 0, $preview, $offline);
+local_kopere_mobile_pluginfile_file_pluginfile($relativepath, 0, $preview, $offline);
