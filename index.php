@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// phpcs:ignoreFile moodle.Files.RequireLogin.Missing
+
 require("../../config.php");
 
 header("Cache-Control: no-cache, must-revalidate");
@@ -82,7 +84,7 @@ try {
  * @throws dml_exception
  */
 function validate_token() {
-    global $DB, $USER, $SESSION;
+    global $DB, $USER;
 
     if (isloggedin()) {
         @header("smtapp-status:isloggedin");

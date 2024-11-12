@@ -34,7 +34,8 @@
  *
  * @throws Exception
  */
-function local_kopere_mobile_pluginfile_file_pluginfile($relativepath, $forcedownload, $preview = null, $offline = false, $embed = false) {
+function local_kopere_mobile_pluginfile_file_pluginfile($relativepath, $forcedownload,
+                                                        $preview = null, $offline = false, $embed = false) {
     global $DB, $CFG, $USER;
     // Relative path must start with '/'.
     if (!$relativepath) {
@@ -111,7 +112,8 @@ function local_kopere_mobile_pluginfile_file_pluginfile($relativepath, $forcedow
             local_kopere_mobile_send_file_not_found();
         }
 
-        local_kopere_mobile_pluginfile_send_stored_file($file, 10 * 60, 0, true, $sendfileoptions); // Download MUST be forced - security!
+        // Download MUST be forced - security!
+        local_kopere_mobile_pluginfile_send_stored_file($file, 10 * 60, 0, true, $sendfileoptions);
 
     } else if ($component === 'grade') {
 
