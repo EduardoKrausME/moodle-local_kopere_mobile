@@ -55,10 +55,6 @@ $string['logologin'] = 'PNG/SVG logo for login screen';
 $string['logologin_desc'] = 'Upload the logo in PNG or SVG format to be displayed on the login screen. The logo should be clear and representative of your institution or company\'s visual identity, ensuring a professional and consistent login experience for users.';
 $string['customizationapptopo'] = 'Top image on the APP home screen';
 $string['customizationapptopo_desc'] = 'This field allows you to upload an image that will be displayed as a header on the app\'s home page. Dimensions: 1080 x 441px';
-$string['customizationapphome'] = 'Course list on Home';
-$string['customizationapphome_desc'] = 'This option allows you to customize the display of courses on the application\'s home page. You can choose from different layouts and display styles to highlight the courses according to your preferences and needs.';
-$string['customizationapphome_default'] = 'Image on the side';
-$string['customizationapphome_background'] = 'Background image';
 $string['customizationappcss'] = 'APP Customization CSS';
 $string['customizationappcss_desc'] = 'This file contains the custom CSS that will be applied to the app, allowing visual adjustments according to the specific needs of the project.';
 $string['htmllogin'] = 'Extra Login HTML';
@@ -93,9 +89,6 @@ $string['config_test_title'] = 'Status of the required settings for the APP to f
 $string['config_test_correct'] = 'The value is incorrect for the APP to function';
 $string['config_lgpd_reason'] = 'Reason for deletion';
 
-$string['setting-image-background-title'] = 'APP Background Image';
-$string['setting-image-background-desc'] = 'This image will be used as the background for the course list in the app, with specific dimensions of 600 x 300 pixels.';
-$string['setting-customfield_field-required'] = '<div class="alert alert-warning">You need to install the <a href="https://moodle.org/plugins/customfield_picture" target="_blank">customfield_picture</a> plugin to customize the background image.</div>';
 $string['lgpd-subject'] = 'Request for Data Deletion';
 $string['lgpd-firstname'] = 'DPO';
 $string['lgpd-lastname'] = 'LGPD';

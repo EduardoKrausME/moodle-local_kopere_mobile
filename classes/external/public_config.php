@@ -96,8 +96,6 @@ class public_config extends external_api {
             'logologin' => self::setting_logologin(),
             'customizationappcss' => get_config('local_kopere_mobile', 'customizationappcss'),
             'htmllogin' => get_config('local_kopere_mobile', 'htmllogin'),
-            'customizationapphome' => get_config('local_kopere_mobile', 'customizationapphome'),
-            'customfieldpicture' => json_encode(self::setting_customfieldpicture()),
             'block_myoverview_hidden_course' => json_encode(self::block_myoverview_hidden_course()),
 
             'message_koperemobile' => get_config('message_koperemobile', 'version') ? true : false,
@@ -132,8 +130,6 @@ class public_config extends external_api {
             'logologin' => new external_value(PARAM_RAW, 'The site logo URL', VALUE_OPTIONAL),
             'customizationappcss' => new external_value(PARAM_RAW, 'Customization app CSS.', VALUE_OPTIONAL),
             'htmllogin' => new external_value(PARAM_RAW, 'Customization APP LOGIN.', VALUE_OPTIONAL),
-            'customizationapphome' => new external_value(PARAM_RAW, 'Customization app HOME.', VALUE_OPTIONAL),
-            'customfieldpicture' => new external_value(PARAM_RAW, 'Images to icon course', VALUE_OPTIONAL),
             'block_myoverview_hidden_course' => new external_value(PARAM_RAW, 'Block myoverview hidden course', VALUE_OPTIONAL),
 
             "message_koperemobile" => new external_value(PARAM_INT, 'koperemobile message instaled', VALUE_OPTIONAL),
@@ -178,34 +174,6 @@ class public_config extends external_api {
             return $url->out(false);
         }
         return "";
-    }
-
-    /**
-     * setting_customfieldpicture function
-     *
-     * @throws \dml_exception
-     */
-    public static function setting_customfieldpicture() {
-        global $DB;
-
-        $sql = "SELECT f.contenthash, f.filename, cd.id AS data_id, cd.instanceid AS couse_id, cd.contextid
-                 FROM {files} f
-                 JOIN {customfield_data} cd ON cd.id = f.itemid
-                WHERE f.component = 'customfield_picture'
-                  AND f.filesize > 10";
-        $files = $DB->get_records_sql($sql);
-
-        $images = [];
-        foreach ($files as $file) {
-            $url = moodle_url::make_pluginfile_url($file->contextid, 'customfield_picture', 'file',
-                $file->data_id, "/", $file->filename)->out(true);
-            $images[$file->couse_id] = (object)[
-                'src' => $url,
-                'extension' => pathinfo($file->filename, PATHINFO_EXTENSION),
-            ];
-        }
-
-        return $images;
     }
 
     /**

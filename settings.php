@@ -57,56 +57,6 @@ if ($hassiteconfig) {
     $setting->set_updatedcallback("theme_reset_all_caches");
     $settings->add($setting);
 
-    $extradescription = "";
-    if (file_exists("{$CFG->dirroot}/customfield/field/picture/version.php")) {
-        $category = $DB->get_record("customfield_category",
-            ["id" => intval(get_config("local_kopere_mobile", "customfield_picture_category"))]);
-        if (!$category) {
-            $category = (object)[
-                "name" => get_string("modulename", "local_kopere_mobile"),
-                "description" => null,
-                "descriptionformat" => "0",
-                "sortorder" => "0",
-                "timecreated" => time(),
-                "timemodified" => time(),
-                "component" => "core_course",
-                "area" => "course",
-                "itemid" => "0",
-                "contextid" => context_system::instance()->id,
-            ];
-            $category->id = $DB->insert_record("customfield_category", $category);
-            set_config("customfield_picture_category", $category->id, "local_kopere_mobile");
-        }
-
-        $field = $DB->get_record("customfield_field", ["shortname" => "app_background"]);
-        if (!$field) {
-            $field = [
-                "shortname" => "app_background",
-                "name" => get_string("setting-image-background-title", "local_kopere_mobile"),
-                "description" => get_string("setting-image-background-desc", "local_kopere_mobile"),
-                "type" => "picture",
-                "descriptionformat" => 0,
-                "sortorder" => 0,
-                "categoryid" => get_config("local_kopere_mobile", "customfield_picture_category"),
-                "configdata" => null,
-                "timecreated" => time(),
-                "timemodified" => time(),
-            ];
-            $DB->insert_record("customfield_field", $field);
-        }
-    } else {
-        $extradescription = get_string("setting-customfield_field-required", "local_kopere_mobile");
-    }
-    $choices = [
-        "default" => get_string("customizationapphome_default", "local_kopere_mobile"),
-        "background" => get_string("customizationapphome_background", "local_kopere_mobile"),
-    ];
-    $setting = new admin_setting_configselect("local_kopere_mobile/customizationapphome",
-        get_string("customizationapphome", "local_kopere_mobile"),
-        get_string("customizationapphome_desc", "local_kopere_mobile") . $extradescription,
-        "default", $choices);
-    $settings->add($setting);
-
     $setting = new admin_setting_configtextarea("local_kopere_mobile/customizationappcss",
         get_string("customizationappcss", "local_kopere_mobile"),
         get_string("customizationappcss_desc", "local_kopere_mobile"), "", PARAM_RAW);

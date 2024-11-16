@@ -34,8 +34,6 @@ function local_kopere_mobile_before_standard_html_head() {
 
     ob_start();
 
-    $PAGE->requires->js_call_amd('local_kopere_mobile/picture', 'move');
-
     if (isset($SESSION->local_kopere_mobile_preserve_page) && $SESSION->local_kopere_mobile_preserve_page) {
         $preservepage = $SESSION->local_kopere_mobile_preserve_page;
 
