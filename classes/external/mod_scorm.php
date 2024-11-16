@@ -60,6 +60,7 @@ class mod_scorm extends \external_api {
 
         $context = \context_module::instance($cmid);
         require_capability("mod/scorm:view", $context);
+        self::validate_context($context);
 
         $sql = "SELECT id, filepath, filename, filesize, itemid, mimetype
                   FROM {files}

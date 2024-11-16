@@ -30,6 +30,7 @@ require_once("{$CFG->libdir}/externallib.php");
 
 /**
  * Class mod_googlemeet
+ *
  * @package local_kopere_mobile\external
  */
 class mod_googlemeet extends \external_api {
@@ -69,6 +70,7 @@ class mod_googlemeet extends \external_api {
 
             $context = \context_module::instance($cm->id);
             require_capability("mod/googlemeet:view", $context);
+            self::validate_context($context);
 
             $recordings = googlemeet_list_recordings(['googlemeetid' => $googlemeet->id, 'visible' => true]);
             $hasrecordings = !empty($recordings);

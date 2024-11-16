@@ -61,6 +61,7 @@ class format_card extends \external_api {
 
         $context = \context_course::instance($courseid);
         require_capability("mod/course:view", $context);
+        self::validate_context($context);
 
         $PAGE->set_context($context);
 

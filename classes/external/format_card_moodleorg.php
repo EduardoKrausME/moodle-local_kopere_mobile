@@ -52,6 +52,7 @@ class format_card_moodleorg {
 
         $context = \context_course::instance($courseid);
         require_capability("mod/course:view", $context);
+        self::validate_context($context);
 
         $itens = [];
         foreach (self::get_sections_to_display($format, $modinfo) as $sectionnum => $section) {

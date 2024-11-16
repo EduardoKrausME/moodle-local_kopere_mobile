@@ -70,6 +70,7 @@ class mod_subcourse extends external_api {
 
         $context = \context_module::instance($instanceid);
         require_capability("mod/scorm:view", $context);
+        self::validate_context($context);
 
         if ($subcourse) {
             $refcourse = $DB->get_record('course', ['id' => $subcourse->refcourse]);

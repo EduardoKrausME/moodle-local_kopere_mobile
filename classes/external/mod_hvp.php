@@ -75,6 +75,7 @@ class mod_hvp extends \external_api {
 
             $context = \context_module::instance($cm->id);
             require_capability("mod/hvp:view", $context);
+            self::validate_context($context);
 
             list($token, $secret) = \mod_hvp\mobile_auth::create_embed_auth_token();
 

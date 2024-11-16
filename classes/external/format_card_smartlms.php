@@ -57,6 +57,7 @@ class format_card_smartlms {
 
         $context = \context_course::instance($courseid);
         require_capability("mod/course:view", $context);
+        self::validate_context($context);
 
         $sections = $modinfo->get_section_info_all();
         $numsections = course_get_format($course)->get_last_section_number();

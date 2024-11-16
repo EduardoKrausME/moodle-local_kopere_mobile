@@ -71,6 +71,7 @@ class mod_make_view extends \external_api {
             self::validate_context($context);
 
             require_capability("mod/{$modname}:view", $context);
+            self::validate_context($context);
 
             // Call the mod/lib API.
             $functionname = "{$modname}_view";
