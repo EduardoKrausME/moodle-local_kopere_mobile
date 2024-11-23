@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use local_kopere_mobile\injector;
+
 /**
  * local_kopere_mobile_before_standard_html_head function
  *
@@ -30,61 +32,14 @@
  * @throws dml_exception
  */
 function local_kopere_mobile_before_standard_html_head() {
-    global $SESSION, $PAGE;
-
-    ob_start();
-
-    if (isset($SESSION->local_kopere_mobile_preserve_page) && $SESSION->local_kopere_mobile_preserve_page) {
-        $preservepage = $SESSION->local_kopere_mobile_preserve_page;
-
-        if (strpos($_SERVER['REQUEST_URI'], $preservepage) !== false) { //phpcs:disable
-            // Não faz nada aqui.
-        } else if (isset($SESSION->kopere_mobile_redirect_page[5])) {
-            header("Location: {$SESSION->kopere_mobile_redirect_page}");
-            header("kopere_mobile-status: event_observers::process_event");
-            die();
-        }
-    }
-
-    if (isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile) {
-        $PAGE->set_pagelayout('embedded');
-        $return = "
-            <meta http-equiv=\"Content-Security-Policy\"
-                  content=\"default-src *;
-                           style-src  * 'self' 'unsafe-inline' 'unsafe-eval';
-                           script-src * 'self' 'unsafe-inline' 'unsafe-eval';
-                           font-src   * 'self' data:;\">
-            <script>
-                window.open = function(url) {
-                    location.href = url
-                }
-                setTimeout(function() {
-                    window.open = function(url) {
-                        location.href = url
-                    }
-                }, 1000);
-            </script>";
-
-        return $return;
-    }
-    return "";
+    injector::before_standard_head_html_generation();
 }
 
 /**
  *
  */
 function local_kopere_mobile_before_http_headers() {
-    global $SESSION, $PAGE;
-
-    $iskoperemobilemobile = isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile;
-    if ($iskoperemobilemobile || optional_param("kopere_mobile_mobile", false, PARAM_INT)) {
-
-        $PAGE->set_pagelayout('embedded');
-        $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
-        if ($PAGE->theme->name == "edooc") {
-            $PAGE->requires->css("/local/kopere_bi/assets/edooc-embedded.css");
-        }
-    }
+    injector::before_http_headers();
 }
 
 /**
@@ -93,25 +48,7 @@ function local_kopere_mobile_before_http_headers() {
  * @throws coding_exception
  */
 function local_kopere_mobile_before_footer() {
-    global $CFG;
-
-    $openedin = optional_param("openedin", false, PARAM_TEXT);
-    if ($openedin == 'AppMoodleMobileV2' || strpos($_SERVER['HTTP_USER_AGENT'], "AppMoodleMobileV2")) {
-
-        if (strpos($_SERVER['REQUEST_URI'], 'mod/scorm/player.php') > 0 ||
-            strpos($_SERVER['REQUEST_URI'], 'local/kopere_mobile/scorm/player.php') > 0) {
-
-            $html = ob_get_contents();
-            ob_clean();
-
-            $html = str_replace("www.googletagmanager.com", "", $html);
-            $html = str_replace("vlibras.gov.br", "", $html);
-
-            echo $html;
-            echo "\n\n\n<script></script>\n";
-            echo "<link rel='stylesheet' href='{$CFG->wwwroot}/local/kopere_mobile/scorm/scorm.css'/>";
-        }
-    }
+    injector::before_footer_html_generation();
 }
 
 /**
