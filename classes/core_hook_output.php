@@ -24,14 +24,15 @@
 
 namespace local_kopere_mobile;
 
+defined('MOODLE_INTERNAL') || die;
 require_once(__DIR__ . "/../lib.php");
 
 /**
- * Class injector
+ * Class core_hook_output
  *
  * @package local_kopere_mobile
  */
-class injector {
+class core_hook_output {
 
     /**
      * Function before_http_headers

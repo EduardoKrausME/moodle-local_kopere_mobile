@@ -27,14 +27,14 @@ defined('MOODLE_INTERNAL') || die;
 $callbacks = [
     [
         "hook" => \core\hook\output\before_http_headers::class,
-        "callback" => "\\local_kopere_mobile\\injector::before_http_headers",
+        "callback" => "\\local_kopere_mobile\\core_hook_output::before_http_headers",
     ],
     [
         "hook" => \core\hook\output\before_standard_head_html_generation::class,
-        "callback" => "\\local_kopere_mobile\\injector::before_standard_head_html_generation",
+        "callback" => "\\local_kopere_mobile\\core_hook_output::before_standard_head_html_generation",
     ],
     [
         "hook" => \core\hook\output\before_footer_html_generation::class,
-        "callback" => "\\local_kopere_mobile\\injector::before_footer_html_generation",
+        "callback" => "\\local_kopere_mobile\\core_hook_output::before_footer_html_generation",
     ],
 ];

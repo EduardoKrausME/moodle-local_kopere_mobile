@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use local_kopere_mobile\injector;
+use local_kopere_mobile\core_hook_output;
 
 /**
  * local_kopere_mobile_before_standard_html_head function
@@ -32,14 +32,14 @@ use local_kopere_mobile\injector;
  * @throws dml_exception
  */
 function local_kopere_mobile_before_standard_html_head() {
-    injector::before_standard_head_html_generation();
+    core_hook_output::before_standard_head_html_generation();
 }
 
 /**
  *
  */
 function local_kopere_mobile_before_http_headers() {
-    injector::before_http_headers();
+    core_hook_output::before_http_headers();
 }
 
 /**
@@ -48,7 +48,7 @@ function local_kopere_mobile_before_http_headers() {
  * @throws coding_exception
  */
 function local_kopere_mobile_before_footer() {
-    injector::before_footer_html_generation();
+    core_hook_output::before_footer_html_generation();
 }
 
 /**
