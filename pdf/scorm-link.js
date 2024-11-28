@@ -41,7 +41,7 @@ setInterval(function() {
                         fadeDelay    : 1.75,
                     });
 
-                    var fullurl = "/mod/scorm/pdf/pdfjs-2.8.335-legacy/web/viewer.html?file=" + encodeURI(href);
+                    var fullurl = M.cfg.wwwroot + "/local/kopere_mobile/pdf/pdfjs-2.8.335-legacy/web/viewer.html?file=" + encodeURI(href);
                     $("#iframe-modal-pdf").attr("src", fullurl);
                 });
 
