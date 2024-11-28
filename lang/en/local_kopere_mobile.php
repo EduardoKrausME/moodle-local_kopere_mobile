@@ -29,7 +29,7 @@ $string['pluginname'] = 'Kopere Mobile';
 $string['facial:view'] = 'View Kopere Mobile';
 $string['facial:manage'] = 'Manager Kopere Mobile';
 $string['settings'] = 'Setting Kopere Mobile';
-
+$string['privacy:metadata'] = 'The Kopere Mobile plugin does not store student data.';
 $string['download_title'] = 'Download mobile device';
 $string['download_info'] = '<p>With the Moodle app, you can learn from anywhere, anytime, with the following app features:</p>
     <ul>
