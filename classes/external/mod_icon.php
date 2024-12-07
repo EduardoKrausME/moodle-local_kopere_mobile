@@ -95,7 +95,9 @@ class mod_icon extends \external_api {
             $function = "{$module->name}_supports";
 
             $modpurpose = function_exists($function) ? $function("mod_purpose") : "";
-            $courses = $DB->get_records_sql("SELECT course FROM {course_modules} WHERE module = {$module->id}");
+            $courses = $DB->get_records_sql(
+                "SELECT course FROM {course_modules} WHERE module = :moduleid",
+                ["moduleid", $module->id]);
 
             $returnmodules[] = [
                 "name" => $module->name,
