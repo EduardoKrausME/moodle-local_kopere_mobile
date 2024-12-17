@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// No login check is expected here bacause token validation.
+// @codingStandardsIgnoreLine
 require ("../../config.php");
 
 header("Cache-Control: no-cache, must-revalidate");
@@ -48,17 +50,17 @@ try {
 
             $mobile = optional_param('kopere_mobile_mobile', false, PARAM_INT);
             if ($mobile) {
-                $SESSION->kopere_mobile_mobile = 1;
+                $USER->kopere_mobile_mobile = 1;
             }
             $preservepage = optional_param('kopere_mobile_preserve_page', false, PARAM_TEXT);
             if ($preservepage) {
-                $SESSION->kopere_mobile_preserve_page = $preservepage;
-                $SESSION->kopere_mobile_redirect_page = $redirectpage;
+                $USER->kopere_mobile_preserve_page = $preservepage;
+                $USER->kopere_mobile_redirect_page = $redirectpage;
             }
 
             $platform = optional_param('kopere_mobile_platform', false, PARAM_TEXT);
             if ($platform) {
-                $SESSION->kopere_mobile_platform = $platform;
+                $USER->kopere_mobile_platform = $platform;
             }
 
             $sessionid = session_id();
