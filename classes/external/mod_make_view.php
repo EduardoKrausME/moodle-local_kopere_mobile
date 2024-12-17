@@ -24,6 +24,9 @@
 
 namespace local_kopere_mobile\external;
 
+defined('MOODLE_INTERNAL') || die;
+
+global $CFG;
 require_once("{$CFG->libdir}/externallib.php");
 
 /**

@@ -24,6 +24,9 @@
 
 namespace local_kopere_mobile\external;
 
+defined('MOODLE_INTERNAL') || die;
+
+global $CFG;
 require_once("{$CFG->libdir}/externallib.php");
 
 /**
@@ -72,7 +75,8 @@ class mod_scorm extends \external_api {
                 "filename" => $file->filename,
                 "filesize" => $file->filesize,
                 "fileurl" =>
-                    "{$CFG->wwwroot}/pluginfile.php/{$context->id}/mod_scorm/content/{$file->itemid}{$file->filepath}{$file->filename}",
+                    "{$CFG->wwwroot}/pluginfile.php/{$context->id}/mod_scorm/content/" .
+                    "{$file->itemid}{$file->filepath}{$file->filename}",
             ];
         }
 

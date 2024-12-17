@@ -26,6 +26,8 @@ namespace local_kopere_mobile\external;
 
 use tool_dataprivacy\external\data_request_exporter;
 
+defined('MOODLE_INTERNAL') || die;
+
 require_once("{$CFG->libdir}/externallib.php");
 
 /**
