@@ -28,9 +28,9 @@
  * @param string $relativepath
  * @param bool $forcedownload
  * @param null|string $preview the preview mode, defaults to serving the original file
- * @param boolean $offline If offline is requested - don't serve a redirect to an external file, return a file
+ * @param boolean $offline     If offline is requested - don't serve a redirect to an external file, return a file
  *                             suitable for viewing offline (e.g. mobile app).
- * @param bool $embed Whether this file will be served embed into an iframe.
+ * @param bool $embed          Whether this file will be served embed into an iframe.
  *
  * @throws Exception
  */
@@ -303,10 +303,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
                 if (!has_capability('moodle/site:accessallgroups', $context) && !groups_is_member($event->groupid, $USER->id)) {
                     kopere_send_file_not_found();
                 }
-            } else if ($event->eventtype === 'course' || $event->eventtype === 'site') {
-                // Ok. Please note that the event type 'site' still uses a course context.
-            } else {
-                // Some other type.
+            } else if ($event->eventtype !== 'course' && $event->eventtype !== 'site') {
                 kopere_send_file_not_found();
             }
 
@@ -410,10 +407,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
             $userid = $context->instanceid;
 
-            if ($USER->id == $userid) {
-                // Always can access own.
-
-            } else if (!empty($CFG->forceloginforprofiles)) {
+            if ($USER->id != $userid && !empty($CFG->forceloginforprofiles)) {
                 require_login();
 
                 if (isguestuser()) {
@@ -948,13 +942,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
  *
  * @category files
  *
- * @param stored_file $storedfile local file object
- * @param int $lifetime Number of seconds before the file should expire from caches (null means
+ * @param stored_file $storedfile    local file object
+ * @param int $lifetime              Number of seconds before the file should expire from caches (null means
  *                                   $CFG->filelifetime)
- * @param int $filter 0 (default)=no filtering, 1=all files, 2=html files only
- * @param bool $forcedownload If true (default false), forces download of file rather than view in
+ * @param int $filter                0 (default)=no filtering, 1=all files, 2=html files only
+ * @param bool $forcedownload        If true (default false), forces download of file rather than view in
  *                                   browser/plugin
- * @param array $options additional options affecting the file serving
+ * @param array $options             additional options affecting the file serving
  *
  * @return null script execution stopped unless $options['dontdie'] is true
  *
