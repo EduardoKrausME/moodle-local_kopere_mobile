@@ -38,18 +38,10 @@
             {{{user_email}}}
         </div>
 
-        <div><label for="motivo" style="font-weight:bold">{{#str}}config_lgpd_reason,kopere_mobileapp{{/str}}:</label> <br>
+        <div><label for="motivo" style="font-weight:bold">{{#str}}config_lgpd_reason,local_kopere_mobile{{/str}}:</label> <br>
             <textarea name="motivo" id="motivo" style="width: 100%; min-height: 120px"></textarea>
         </div>
         <div><input type="submit" value="{{#str}}submit{{/str}}"></div>
-        <input type="hidden" name="sesskey" id="sesskey">
+        <input type="hidden" name="sesskey" id="sesskey" value="{{{sesskey}}}">
     </form>
 </div>
-
-{{#js}}
-    //
-    <script>
-        require(['jquery', "core/notification"], function($, Notification) {
-            $("#sesskey").val("{{{sesskey}}}")
-        });
-{{/js}}
