@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <libraries>
     <library>
-        <location>pdf/pdfjs-2.8.335-legacy</location>
+        <location>scorm/pdf/pdfjs-2.8.335-legacy</location>
         <name>pdfjs</name>
         <version>2.8.335-legacy</version>
         <license>Apache License</license>
