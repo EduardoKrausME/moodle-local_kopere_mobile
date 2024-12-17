@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * player file
+ *
+ * @package    local_kopere_mobile
+ * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 // phpcs:disable
 
 // This page prints a particular instance of aicc/scorm package.
