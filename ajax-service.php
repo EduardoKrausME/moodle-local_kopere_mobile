@@ -21,8 +21,8 @@
  * It is recommended to add webservice functions and re-use this script instead of
  * writing any new custom ajax scripts.
  *
- * @since Moodle 2.9
- * @package local_kopere_mobile
+ * @since     Moodle 2.9
+ * @package   local_kopere_mobile
  * @copyright 2015 Damyon Wiese
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -41,6 +41,8 @@ if (!$nosessionupdate) {
 header_remove("Access-Control-Allow-Origin");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
+
+require_login();
 
 define('PREFERRED_RENDERER_TARGET', RENDERER_TARGET_GENERAL);
 
