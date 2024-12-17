@@ -28,13 +28,13 @@
     }
 }}
 <div style='padding: 0 0 20px 19px'>
-    <h3>{{#str}}config_test_title,kopere_mobile{{/str}}</h3>
+    <h3>{{#str}}config_test_title,local_kopere_mobile{{/str}}</h3>
     {{^is_moodle_cookie_secure}}
         <div>
             <strong>is_moodle_cookie_secure</strong>:
             <a style="color:#E91E63"
                href="{{{config.wwwroot}}}/admin/search.php?query=cookiesecure"
-               target="_blank">{{#str}}config_test_correct,kopere_mobile{{/str}}</a>
+               target="_blank">{{#str}}config_test_correct,local_kopere_mobile{{/str}}</a>
         </div>
     {{/is_moodle_cookie_secure}}
     {{^allowframembedding}}
@@ -42,7 +42,7 @@
             <strong>allowframembedding</strong>:
             <a style="color:#E91E63"
                href="{{{config.wwwroot}}}/admin/search.php?query=allowframembedding"
-               target="_blank">{{#str}}config_test_correct,kopere_mobile{{/str}}</a>
+               target="_blank">{{#str}}config_test_correct,local_kopere_mobile{{/str}}</a>
         </div>
     {{/allowframembedding}}
     {{^enablemobilewebservice}}
@@ -50,7 +50,7 @@
             <strong>enablemobilewebservice</strong>:
             <a style="color:#E91E63"
                href="{{{config.wwwroot}}}/admin/search.php?query=allowframembedding"
-               target="_blank">{{#str}}config_test_correct,kopere_mobile{{/str}}</a>
+               target="_blank">{{#str}}config_test_correct,local_kopere_mobile{{/str}}</a>
         </div>
     {{/enablemobilewebservice}}
     {{^external_services_moodle_mobile_app}}
@@ -58,7 +58,7 @@
             <strong>external_services -> moodle_mobile_app</strong>:
             <a style="color:#E91E63"
                href="{{{config.wwwroot}}}/admin/settings.php?section=externalservices"
-               target="_blank">{{#str}}config_test_correct,kopere_mobile{{/str}}</a>
+               target="_blank">{{#str}}config_test_correct,local_kopere_mobile{{/str}}</a>
         </div>
     {{/external_services_moodle_mobile_app}}
 
