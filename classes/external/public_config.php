@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
 require_once("{$CFG->libdir}/externallib.php");
-require_once("$CFG->dirroot/webservice/lib.php");
+require_once("{$CFG->dirroot}/webservice/lib.php");
 
 use external_api;
 use external_function_parameters;
@@ -65,7 +65,7 @@ class public_config extends external_api {
      */
     public static function settings() {
         global $CFG, $SITE, $PAGE;
-        require_once($CFG->libdir . '/authlib.php');
+        require_once("{$CFG->libdir}/authlib.php");
 
         $context = context_system::instance();
 
@@ -75,32 +75,32 @@ class public_config extends external_api {
         // Check if contacting site support is available to all visitors.
         $sitesupportavailable = (isset($CFG->supportavailability) && $CFG->supportavailability == CONTACT_SUPPORT_ANYONE);
 
-        $data= [
-            'sitename' => external_format_string($SITE->fullname, $context->id, true),
-            'rememberusername' => $CFG->rememberusername,
-            'authloginviaemail' => $CFG->authloginviaemail,
-            'registerauth' => $CFG->registerauth,
-            'forgottenpasswordurl' => clean_param($CFG->forgottenpasswordurl, PARAM_URL), // We may expect a mailto: here.
-            'authinstructions' => external_format_text($CFG->auth_instructions, FORMAT_MOODLE, $context->id)[1],
-            'maintenanceenabled' => $CFG->maintenance_enabled,
-            'maintenancemessage' => external_format_text($CFG->maintenance_message, FORMAT_MOODLE, $context->id)[1],
-            'country' => clean_param($CFG->country, PARAM_NOTAGS),
-            'autolang' => $CFG->autolang,
-            'lang' => clean_param($CFG->lang, PARAM_LANG),  // Avoid breaking WS because of incorrect package langs.
-            'langmenu' => $CFG->langmenu,
-            'langlist' => $CFG->langlist,
-            'locale' => $CFG->locale,
-            'supportavailability' => clean_param($CFG->supportavailability, PARAM_INT),
-            'supportpage' => $sitesupportavailable ? clean_param($CFG->supportpage, PARAM_URL) : '',
-            'customizationapptopo' => self::setting_customizationapptopo(),
-            'logologin' => self::setting_logologin(),
-            'customizationappcss' => get_config('local_kopere_mobile', 'customizationappcss'),
-            'htmllogin' => get_config('local_kopere_mobile', 'htmllogin'),
-            'customizationapphome' => get_config('local_kopere_mobile', 'customizationapphome'),
-            'customfieldpicture' => json_encode(self::setting_customfieldpicture()),
-            'block_myoverview_hidden_course' => json_encode(self::block_myoverview_hidden_course()),
+        $data = [
+            "sitename" => external_format_string($SITE->fullname, $context->id, true),
+            "rememberusername" => $CFG->rememberusername,
+            "authloginviaemail" => $CFG->authloginviaemail,
+            "registerauth" => $CFG->registerauth,
+            "forgottenpasswordurl" => clean_param($CFG->forgottenpasswordurl, PARAM_URL), // We may expect a mailto: here.
+            "authinstructions" => external_format_text($CFG->auth_instructions, FORMAT_MOODLE, $context->id)[1],
+            "maintenanceenabled" => $CFG->maintenance_enabled,
+            "maintenancemessage" => external_format_text($CFG->maintenance_message, FORMAT_MOODLE, $context->id)[1],
+            "country" => clean_param($CFG->country, PARAM_NOTAGS),
+            "autolang" => $CFG->autolang,
+            "lang" => clean_param($CFG->lang, PARAM_LANG),  // Avoid breaking WS because of incorrect package langs.
+            "langmenu" => $CFG->langmenu,
+            "langlist" => $CFG->langlist,
+            "locale" => $CFG->locale,
+            "supportavailability" => clean_param($CFG->supportavailability, PARAM_INT),
+            "supportpage" => $sitesupportavailable ? clean_param($CFG->supportpage, PARAM_URL) : "",
+            "customizationapptopo" => self::setting_customizationapptopo(),
+            "logologin" => self::setting_logologin(),
+            "customizationappcss" => get_config("local_kopere_mobile", "customizationappcss"),
+            "htmllogin" => get_config("local_kopere_mobile", "htmllogin"),
+            "customizationapphome" => get_config("local_kopere_mobile", "customizationapphome"),
+            "customfieldpicture" => json_encode(self::setting_customfieldpicture()),
+            "block_myoverview_hidden_course" => json_encode(self::block_myoverview_hidden_course()),
 
-            'message_koperemobile' => get_config('message_koperemobile', 'version') ? true : false,
+            "message_koperemobile" => get_config("message_koperemobile", "version") ? true : false,
         ];
 
         return $data;
@@ -111,34 +111,34 @@ class public_config extends external_api {
      */
     public static function settings_returns() {
         return new external_single_structure([
-            'sitename' => new external_value(PARAM_RAW, 'Site name.'),
-            'rememberusername' => new external_value(PARAM_INT, 'Values: 0 for No, 1 for Yes, 2 for optional.'),
-            'authloginviaemail' => new external_value(PARAM_INT, 'Whether log in via email is enabled.'),
-            'registerauth' => new external_value(PARAM_PLUGIN, 'Authentication method for user registration.'),
-            'forgottenpasswordurl' => new external_value(PARAM_URL, 'Forgotten password URL.'),
-            'authinstructions' => new external_value(PARAM_RAW, 'Authentication instructions.'),
-            'maintenanceenabled' => new external_value(PARAM_INT, 'Whether site maintenance is enabled.'),
-            'maintenancemessage' => new external_value(PARAM_RAW, 'Maintenance message.'),
-            'country' => new external_value(PARAM_NOTAGS, 'Default site country', VALUE_OPTIONAL),
-            'supportpage' => new external_value(PARAM_URL, 'Site support page link.', VALUE_OPTIONAL),
-            'supportavailability' => new external_value(PARAM_INT,
-                'Determines who has access to contact site support.', VALUE_OPTIONAL),
-            'autolang' => new external_value(PARAM_INT,
-                'Whether to detect default language from browser setting.', VALUE_OPTIONAL),
-            'lang' => new external_value(PARAM_LANG, 'Default language for the site.', VALUE_OPTIONAL),
-            'langmenu' => new external_value(PARAM_INT, 'Whether the language menu should be displayed.', VALUE_OPTIONAL),
-            'langlist' => new external_value(PARAM_RAW, 'Languages on language menu.', VALUE_OPTIONAL),
-            'locale' => new external_value(PARAM_RAW, 'Sitewide locale.', VALUE_OPTIONAL),
+            "sitename" => new external_value(PARAM_RAW, "Site name."),
+            "rememberusername" => new external_value(PARAM_INT, "Values: 0 for No, 1 for Yes, 2 for optional."),
+            "authloginviaemail" => new external_value(PARAM_INT, "Whether log in via email is enabled."),
+            "registerauth" => new external_value(PARAM_PLUGIN, "Authentication method for user registration."),
+            "forgottenpasswordurl" => new external_value(PARAM_URL, "Forgotten password URL."),
+            "authinstructions" => new external_value(PARAM_RAW, "Authentication instructions."),
+            "maintenanceenabled" => new external_value(PARAM_INT, "Whether site maintenance is enabled."),
+            "maintenancemessage" => new external_value(PARAM_RAW, "Maintenance message."),
+            "country" => new external_value(PARAM_NOTAGS, "Default site country", VALUE_OPTIONAL),
+            "supportpage" => new external_value(PARAM_URL, "Site support page link.", VALUE_OPTIONAL),
+            "supportavailability" => new external_value(PARAM_INT,
+                "Determines who has access to contact site support.", VALUE_OPTIONAL),
+            "autolang" => new external_value(PARAM_INT,
+                "Whether to detect default language from browser setting.", VALUE_OPTIONAL),
+            "lang" => new external_value(PARAM_LANG, "Default language for the site.", VALUE_OPTIONAL),
+            "langmenu" => new external_value(PARAM_INT, "Whether the language menu should be displayed.", VALUE_OPTIONAL),
+            "langlist" => new external_value(PARAM_RAW, "Languages on language menu.", VALUE_OPTIONAL),
+            "locale" => new external_value(PARAM_RAW, "Sitewide locale.", VALUE_OPTIONAL),
 
-            'customizationapptopo' => new external_value(PARAM_RAW, 'Customization app topo.', VALUE_OPTIONAL),
-            'logologin' => new external_value(PARAM_RAW, 'The site logo URL', VALUE_OPTIONAL),
-            'customizationappcss' => new external_value(PARAM_RAW, 'Customization app CSS.', VALUE_OPTIONAL),
-            'htmllogin' => new external_value(PARAM_RAW, 'Customization APP LOGIN.', VALUE_OPTIONAL),
-            'customizationapphome' => new external_value(PARAM_RAW, 'Customization app HOME.', VALUE_OPTIONAL),
-            'customfieldpicture' => new external_value(PARAM_RAW, 'Images to icon course', VALUE_OPTIONAL),
-            'block_myoverview_hidden_course' => new external_value(PARAM_RAW, 'Block myoverview hidden course', VALUE_OPTIONAL),
+            "customizationapptopo" => new external_value(PARAM_RAW, "Customization app topo.", VALUE_OPTIONAL),
+            "logologin" => new external_value(PARAM_RAW, "The site logo URL", VALUE_OPTIONAL),
+            "customizationappcss" => new external_value(PARAM_RAW, "Customization app CSS.", VALUE_OPTIONAL),
+            "htmllogin" => new external_value(PARAM_RAW, "Customization APP LOGIN.", VALUE_OPTIONAL),
+            "customizationapphome" => new external_value(PARAM_RAW, "Customization app HOME.", VALUE_OPTIONAL),
+            "customfieldpicture" => new external_value(PARAM_RAW, "Images to icon course", VALUE_OPTIONAL),
+            "block_myoverview_hidden_course" => new external_value(PARAM_RAW, "Block myoverview hidden course", VALUE_OPTIONAL),
 
-            "message_koperemobile" => new external_value(PARAM_INT, 'koperemobile message instaled', VALUE_OPTIONAL),
+            "message_koperemobile" => new external_value(PARAM_INT, "koperemobile message instaled", VALUE_OPTIONAL),
         ]);
     }
 
@@ -151,7 +151,7 @@ class public_config extends external_api {
     public static function setting_customizationapptopo() {
         global $CFG;
 
-        $customizationapptopo = get_config('local_kopere_mobile', 'customizationapptopo');
+        $customizationapptopo = get_config("local_kopere_mobile", "customizationapptopo");
         if ($customizationapptopo) {
             $syscontext = context_system::instance();
             $url = moodle_url::make_file_url("$CFG->wwwroot/pluginfile.php",
@@ -171,7 +171,7 @@ class public_config extends external_api {
     public static function setting_logologin() {
         global $CFG;
 
-        $logologin = get_config('local_kopere_mobile', 'logologin');
+        $logologin = get_config("local_kopere_mobile", "logologin");
         if ($logologin) {
             $syscontext = context_system::instance();
             $url = moodle_url::make_file_url("$CFG->wwwroot/pluginfile.php",
@@ -199,11 +199,11 @@ class public_config extends external_api {
 
         $images = [];
         foreach ($files as $file) {
-            $url = moodle_url::make_pluginfile_url($file->contextid, 'customfield_picture', 'file',
+            $url = moodle_url::make_pluginfile_url($file->contextid, "customfield_picture", "file",
                 $file->data_id, "/", $file->filename)->out(true);
             $images[$file->couse_id] = (object)[
-                'src' => $url,
-                'extension' => pathinfo($file->filename, PATHINFO_EXTENSION),
+                "src" => $url,
+                "extension" => pathinfo($file->filename, PATHINFO_EXTENSION),
             ];
         }
 

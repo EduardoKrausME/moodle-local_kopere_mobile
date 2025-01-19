@@ -30,47 +30,47 @@
 define('AJAX_SCRIPT', true);
 define('READ_ONLY_SESSION', true);
 
-require_once(__DIR__ . '/../../config.php');
-require_once($CFG->libdir . '/externallib.php');
+require_once(__DIR__ . "/../../config.php");
+require_once("{$CFG->libdir}/externallib.php");
 
-$nosessionupdate = optional_param('nosessionupdate', false, PARAM_RAW);
+$nosessionupdate = optional_param("nosessionupdate", false, PARAM_RAW);
 if (!$nosessionupdate) {
-    define('NO_SESSION_UPDATE', true);
+    define("NO_SESSION_UPDATE", true);
 }
 
 header_remove("Access-Control-Allow-Origin");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-define('PREFERRED_RENDERER_TARGET', RENDERER_TARGET_GENERAL);
+define("PREFERRED_RENDERER_TARGET", RENDERER_TARGET_GENERAL);
 
-$arguments = '';
+$arguments = "";
 $cacherequest = false;
-if (defined('ALLOW_GET_PARAMETERS')) {
-    $arguments = optional_param('args', '', PARAM_RAW);
-    $cachekey = optional_param('cachekey', '', PARAM_INT);
+if (defined("ALLOW_GET_PARAMETERS")) {
+    $arguments = optional_param("args", "", PARAM_RAW);
+    $cachekey = optional_param("cachekey", "", PARAM_INT);
     if ($cachekey && $cachekey > 0 && $cachekey <= time()) {
         $cacherequest = true;
     }
 }
 
-// Either we are not allowing GET parameters or we didn't use GET because
+// Either we are not allowing GET parameters or we didn"t use GET because
 // we did not pass a cache key or the URL was too long.
 if (empty($arguments)) {
-    $arguments = file_get_contents('php://input');
+    $arguments = file_get_contents("php://input");
 }
 
 $requests = json_decode($arguments, true);
 
 if ($requests === null) {
     $lasterror = json_last_error_msg();
-    throw new coding_exception('Invalid json in request: ' . $lasterror);
+    throw new coding_exception("Invalid json in request: " . $lasterror);
 }
 $responses = [];
 
 // Defines the external settings required for Ajax processing.
 $settings = external_settings::get_instance();
-$settings->set_file('pluginfile.php');
+$settings->set_file("pluginfile.php");
 $settings->set_fileurl(true);
 $settings->set_filter(true);
 $settings->set_raw(false);
@@ -78,14 +78,14 @@ $settings->set_raw(false);
 $haserror = false;
 foreach ($requests as $request) {
     $response = [];
-    $methodname = clean_param($request['methodname'], PARAM_ALPHANUMEXT);
-    $index = clean_param($request['index'], PARAM_INT);
-    $args = $request['args'];
+    $methodname = clean_param($request["methodname"], PARAM_ALPHANUMEXT);
+    $index = clean_param($request["index"], PARAM_INT);
+    $args = $request["args"];
 
     $response = external_api::call_external_function($methodname, $args, true);
     $responses[$index] = $response;
 
-    if ($response['error']) {
+    if ($response["error"]) {
         $haserror = true;
         if (!NO_MOODLE_COOKIES) {
             break;
@@ -97,10 +97,10 @@ if ($cacherequest && !$haserror) {
     // 90 days only - based on Moodle point release cadence being every 3 months.
     $lifetime = 60 * 60 * 24 * 90;
 
-    header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $lifetime) . ' GMT');
-    header('Pragma: ');
-    header('Cache-Control: public, max-age=' . $lifetime . ', immutable');
-    header('Accept-Ranges: none');
+    header("Expires: " . gmdate("D, d M Y H:i:s", time() + $lifetime) . " GMT");
+    header("Pragma: ");
+    header("Cache-Control: public, max-age={$lifetime}, immutable");
+    header("Accept-Ranges: none");
 }
 
 echo json_encode($responses);
