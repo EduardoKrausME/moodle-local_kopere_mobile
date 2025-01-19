@@ -27,6 +27,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// phpcs:disable moodle.Files.RequireLogin.Missing
+
 define('AJAX_SCRIPT', true);
 define('READ_ONLY_SESSION', true);
 
