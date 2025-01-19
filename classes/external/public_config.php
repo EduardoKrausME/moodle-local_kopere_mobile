@@ -64,7 +64,7 @@ class public_config extends external_api {
      * @throws moodle_exception
      */
     public static function settings() {
-        global $CFG, $SITE, $PAGE, $OUTPUT;
+        global $CFG, $SITE, $PAGE;
         require_once($CFG->libdir . '/authlib.php');
 
         $context = context_system::instance();
@@ -75,7 +75,7 @@ class public_config extends external_api {
         // Check if contacting site support is available to all visitors.
         $sitesupportavailable = (isset($CFG->supportavailability) && $CFG->supportavailability == CONTACT_SUPPORT_ANYONE);
 
-        return [
+        $data= [
             'sitename' => external_format_string($SITE->fullname, $context->id, true),
             'rememberusername' => $CFG->rememberusername,
             'authloginviaemail' => $CFG->authloginviaemail,
@@ -102,6 +102,8 @@ class public_config extends external_api {
 
             'message_koperemobile' => get_config('message_koperemobile', 'version') ? true : false,
         ];
+
+        return $data;
     }
 
     /**

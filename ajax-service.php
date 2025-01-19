@@ -42,8 +42,6 @@ header_remove("Access-Control-Allow-Origin");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-require_login();
-
 define('PREFERRED_RENDERER_TARGET', RENDERER_TARGET_GENERAL);
 
 $arguments = '';

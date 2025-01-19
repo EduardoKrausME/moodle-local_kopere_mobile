@@ -36,7 +36,7 @@ if (isset($_POST['motivo'][10])) {
     require_sesskey();
     unset($_SESSION['USER']->sesskey);
 
-    $mensagem = "O aluno solicitou a exclusão dos dados cadastrais do {$COURSE->fullname}\n\n" .
+    $message = "O aluno solicitou a exclusão dos dados cadastrais do {$COURSE->fullname}\n\n" .
         "Nome completo: " . fullname($USER) . "\n" .
         "Perfil do aluno: {$CFG->wwwroot}/user/profile.php?id={$USER->id} para acesso e exclusão\n" .
         "E-mail cadastrado: {$USER->email}\n" .
@@ -69,9 +69,9 @@ if (isset($_POST['motivo'][10])) {
     $eventdata->userfrom = $USER;
     $eventdata->userto = $userto;
     $eventdata->subject = 'Solicitação de exclusão de dados';
-    $eventdata->fullmessage = $mensagem;
+    $eventdata->fullmessage = $message;
     $eventdata->fullmessageformat = FORMAT_HTML;
-    $eventdata->fullmessagehtml = str_replace("\n", '<br>', $mensagem);
+    $eventdata->fullmessagehtml = str_replace("\n", '<br>', $message);
     $eventdata->smallmessage = '';
 
     message_send($eventdata);
