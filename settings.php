@@ -81,9 +81,8 @@ if ($hassiteconfig) {
         if (!$field) {
             $field = [
                 'shortname' => 'app_background',
-                'name' => 'Imagem de fundo do APP',
-                'description' => "Esta imagem será utilizada como plano de fundo da lista de cursos aplicativo, " .
-                    "com dimensões específicas de 600 x 300 pixel.",
+                'name' => get_string("customfield_field_name", "local_kopere_mobile"),
+                'description' => get_string("customfield_field_description", "local_kopere_mobile"),
                 'type' => 'picture',
                 'descriptionformat' => 0,
                 'sortorder' => 0,
@@ -95,9 +94,7 @@ if ($hassiteconfig) {
             $DB->insert_record('customfield_field', $field);
         }
     } else {
-        $extradescription = "<div class='alert alert-warning'>Você precisa instalar o plugin " .
-            "<a href='https://moodle.org/plugins/customfield_picture' target='_blank'>customfield_picture</a> " .
-            "para poder personalizar a imagem de fundo.</div>";
+        $extradescription = get_string("customfield_field_extradescription", "local_kopere_mobile");
     }
     $choices = [
         'default' => get_string('customizationapphome_default', 'local_kopere_mobile'),

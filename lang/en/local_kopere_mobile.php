@@ -37,6 +37,9 @@ $string['config_not_user'] = 'User needs to be created';
 $string['config_suspended'] = 'User suspended!';
 $string['config_test_correct'] = 'Valor está incorreto para funcionamento do APP';
 $string['config_test_title'] = 'Status das configurações necessárias para o funcionamento do APP';
+$string['customfield_field_description'] = 'This image will be used as the background for the course list in the app, with specific dimensions of 600 x 300 pixels.';
+$string['customfield_field_extradescription'] = '<div class="alert alert-warning">You need to install the <a href="https://moodle.org/plugins/customfield_picture" target="_blank">customfield_picture</a> plugin in order to customize the background image.</div>';
+$string['customfield_field_name'] = 'App Background Image';
 $string['customizationapp'] = 'APP Customization';
 $string['customizationappcss'] = 'APP Customization CSS';
 $string['customizationappcss_desc'] = 'This file contains the custom CSS that will be applied to the app, allowing visual adjustments according to the specific needs of the project.';
@@ -86,5 +89,3 @@ $string['privacy:metadata'] = 'The Plugin custom field plugin does not store any
 $string['setting_title'] = 'Kopere Mobile Settings';
 $string['settings'] = 'Setting Kopere Mobile';
 $string['status_app'] = 'APP Status';
-
-
