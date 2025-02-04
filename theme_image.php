@@ -22,17 +22,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define('ABORT_AFTER_CONFIG', true);
-require('../../config.php'); // This stops immediately at the beginning of lib/setup.php.
+define("ABORT_AFTER_CONFIG", true);
+require("../../config.php"); // This stops immediately at the beginning of lib/setup.php.
 
 $PAGE->set_context(null);
 
 if ($slashargument = min_get_slash_argument()) {
-    $slashargument = ltrim($slashargument, '/');
-    if (substr_count($slashargument, '/') < 3) {
+    $slashargument = ltrim($slashargument, "/");
+    if (substr_count($slashargument, "/") < 3) {
         image_not_found();
     }
-    if (strpos($slashargument, '_s/') === 0) {
+    if (strpos($slashargument, "_s/") === 0) {
         // Can't use SVG.
         $slashargument = substr($slashargument, 3);
         $usesvg = false;
@@ -40,22 +40,22 @@ if ($slashargument = min_get_slash_argument()) {
         $usesvg = true;
     }
     // Image must be last because it may contain "/".
-    list($themename, $component, $rev, $image) = explode('/', $slashargument, 4);
-    $themename = min_clean_param($themename, 'SAFEDIR');
-    $component = min_clean_param($component, 'SAFEDIR');
-    $rev = min_clean_param($rev, 'INT');
-    $image = min_clean_param($image, 'SAFEPATH');
+    list($themename, $component, $rev, $image) = explode("/", $slashargument, 4);
+    $themename = min_clean_param($themename, "SAFEDIR");
+    $component = min_clean_param($component, "SAFEDIR");
+    $rev = min_clean_param($rev, "INT");
+    $image = min_clean_param($image, "SAFEPATH");
 
 } else {
-    $themename = min_optional_param('theme', 'standard', 'SAFEDIR');
-    $component = min_optional_param('component', 'core', 'SAFEDIR');
-    $rev = min_optional_param('rev', -1, 'INT');
-    $image = min_optional_param('image', '', 'SAFEPATH');
-    $usesvg = (bool)min_optional_param('svg', '1', 'INT');
+    $themename = min_optional_param("theme", "standard", "SAFEDIR");
+    $component = min_optional_param("component", "core", "SAFEDIR");
+    $rev = min_optional_param("rev", -1, "INT");
+    $image = min_optional_param("image", "", "SAFEPATH");
+    $usesvg = (bool)min_optional_param("svg", "1", "INT");
 }
 
-if (empty($component) || $component === 'moodle' || $component === 'core') {
-    $component = 'core';
+if (empty($component) || $component === "moodle" || $component === "core") {
+    $component = "core";
 }
 
 if (empty($image)) {
@@ -82,25 +82,25 @@ if ($rev > 0) {
     $cacheimage = false;
     if ($usesvg && file_exists("{$candidatelocation}/{$image}.svg")) {
         $cacheimage = "{$candidatelocation}/{$image}.svg";
-        $ext = 'svg';
+        $ext = "svg";
     } else if (file_exists("{$candidatelocation}/{$image}.png")) {
         $cacheimage = "{$candidatelocation}/{$image}.png";
-        $ext = 'png';
+        $ext = "png";
     } else if (file_exists("{$candidatelocation}/{$image}.gif")) {
         $cacheimage = "{$candidatelocation}/{$image}.gif";
-        $ext = 'gif';
+        $ext = "gif";
     } else if (file_exists("{$candidatelocation}/{$image}.jpg")) {
         $cacheimage = "{$candidatelocation}/{$image}.jpg";
-        $ext = 'jpg';
+        $ext = "jpg";
     } else if (file_exists("{$candidatelocation}/{$image}.jpeg")) {
         $cacheimage = "{$candidatelocation}/{$image}.jpeg";
-        $ext = 'jpeg';
+        $ext = "jpeg";
     } else if (file_exists("{$candidatelocation}/{$image}.ico")) {
         $cacheimage = "{$candidatelocation}/{$image}.ico";
-        $ext = 'ico';
+        $ext = "ico";
     }
     if ($cacheimage) {
-        if (!empty($_SERVER['HTTP_IF_NONE_MATCH']) || !empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+        if (!empty($_SERVER["HTTP_IF_NONE_MATCH"]) || !empty($_SERVER["HTTP_IF_MODIFIED_SINCE"])) {
             // We do not actually need to verify the etag value because our files...
             // Never change in cache because we increment the rev parameter.
             // 90 days only - based on Moodle point release cadence being every 3 months.
@@ -109,10 +109,10 @@ if ($rev > 0) {
 
             header_remove("Access-Control-Allow-Origin");
             header("Access-Control-Allow-Origin: *");
-            header('HTTP/1.1 304 Not Modified');
-            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $lifetime) . ' GMT');
-            header('Cache-Control: public, max-age=' . $lifetime . ', no-transform');
-            header('Content-Type: ' . $mimetype);
+            header("HTTP/1.1 304 Not Modified");
+            header("Expires: " . gmdate("D, d M Y H:i:s", time() + $lifetime) . " GMT");
+            header("Cache-Control: public, max-age=" . $lifetime . ", no-transform");
+            header("Content-Type: " . $mimetype);
             header('Etag: "' . $etag . '"');
             die;
         }
@@ -123,16 +123,16 @@ if ($rev > 0) {
 /**
  * OK, now we need to start normal moodle script, we need to load all libs and $DB.
  */
-define('ABORT_AFTER_CONFIG_CANCEL', true);
+define("ABORT_AFTER_CONFIG_CANCEL", true);
 
 /**
  * Session not used here.
  */
-define('NO_MOODLE_COOKIES', true);
+define("NO_MOODLE_COOKIES", true);
 /**
  * Ignore upgrade check.
  */
-define('NO_UPGRADE_CHECK', true);
+define("NO_UPGRADE_CHECK", true);
 
 require("{$CFG->dirroot}/lib/setup.php");
 
@@ -149,7 +149,7 @@ if ($themerev <= 0 || $rev != $themerev) {
     send_uncached_image($imagefile);
 }
 
-make_localcache_directory('theme', false);
+make_localcache_directory("theme", false);
 
 // At this stage caching is enabled, and either:
 // * we have no cached copy of the image in any format (either SVG, or non-SVG); or...
@@ -171,7 +171,7 @@ if (empty($imagefile) || !is_readable($imagefile)) {
     }
     // Make note we can not find this file.
     $cacheimage = "{$candidatelocation}/{$image}.error";
-    $fp = fopen($cacheimage, 'w');
+    $fp = fopen($cacheimage, "w");
     fclose($fp);
     image_not_found();
 }
@@ -181,13 +181,13 @@ $pathinfo = pathinfo($imagefile);
 
 // Attempt to cache it if necessary.
 // We don't really want to overwrite any existing cache items just for the sake of it.
-$cacheimage = "{$candidatelocation}/{$image}.{$pathinfo['extension']}";
+$cacheimage = "{$candidatelocation}/{$image}.{$pathinfo["extension"]}";
 if (!file_exists($cacheimage)) {
     // We don't already hold a cached copy of this image. Cache it now.
     $cacheimage = cache_image($image, $imagefile, $candidatelocation);
 }
 
-if (!$usesvg && $pathinfo['extension'] === 'svg') {
+if (!$usesvg && $pathinfo["extension"] === "svg") {
     // The browser has requested that a non-SVG version be returned.
     // The version found so far is the SVG version - try and find the non-SVG version.
     $imagefile = $theme->resolve_image_location($image, $component, false);
@@ -231,33 +231,33 @@ function send_cached_image($imagepath, $etag) {
     // 90 days only - based on Moodle point release cadence being every 3 months.
     $lifetime = 60 * 60 * 24 * 90;
     $pathinfo = pathinfo($imagepath);
-    $imagename = $pathinfo['filename'] . '.' . $pathinfo['extension'];
+    $imagename = $pathinfo["filename"] . "." . $pathinfo["extension"];
 
-    $mimetype = get_contenttype_from_ext($pathinfo['extension']);
+    $mimetype = get_contenttype_from_ext($pathinfo["extension"]);
 
     header_remove("Access-Control-Allow-Origin");
     header("Access-Control-Allow-Origin: *");
     header('Etag: "' . $etag . '"');
     header('Content-Disposition: inline; filename="' . $imagename . '"');
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($imagepath)) . ' GMT');
-    header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $lifetime) . ' GMT');
-    header('Pragma: ');
-    header('Cache-Control: public, max-age=' . $lifetime . ', no-transform, immutable');
-    header('Accept-Ranges: none');
-    header('Content-Type: ' . $mimetype);
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", filemtime($imagepath)) . " GMT");
+    header("Expires: " . gmdate("D, d M Y H:i:s", time() + $lifetime) . " GMT");
+    header("Pragma: ");
+    header("Cache-Control: public, max-age=" . $lifetime . ", no-transform, immutable");
+    header("Accept-Ranges: none");
+    header("Content-Type: " . $mimetype);
 
     if (xsendfile($imagepath)) {
         die;
     }
 
-    if ($mimetype === 'image/svg+xml') {
+    if ($mimetype === "image/svg+xml") {
         // SVG format is a text file. So we can compress SVG files.
         if (!min_enable_zlib_compression()) {
-            header('Content-Length: ' . filesize($imagepath));
+            header("Content-Length: " . filesize($imagepath));
         }
     } else {
         // No need to compress other image formats.
-        header('Content-Length: ' . filesize($imagepath));
+        header("Content-Length: " . filesize($imagepath));
     }
 
     readfile($imagepath);
@@ -271,19 +271,19 @@ function send_cached_image($imagepath, $etag) {
  */
 function send_uncached_image($imagepath) {
     $pathinfo = pathinfo($imagepath);
-    $imagename = $pathinfo['filename'] . '.' . $pathinfo['extension'];
+    $imagename = $pathinfo["filename"] . "." . $pathinfo["extension"];
 
-    $mimetype = get_contenttype_from_ext($pathinfo['extension']);
+    $mimetype = get_contenttype_from_ext($pathinfo["extension"]);
 
     header_remove("Access-Control-Allow-Origin");
     header("Access-Control-Allow-Origin: *");
     header('Content-Disposition: inline; filename="' . $imagename . '"');
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
-    header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 15) . ' GMT');
-    header('Pragma: ');
-    header('Accept-Ranges: none');
-    header('Content-Type: ' . $mimetype);
-    header('Content-Length: ' . filesize($imagepath));
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
+    header("Expires: " . gmdate("D, d M Y H:i:s", time() + 15) . " GMT");
+    header("Pragma: ");
+    header("Accept-Ranges: none");
+    header("Content-Type: " . $mimetype);
+    header("Content-Length: " . filesize($imagepath));
 
     readfile($imagepath);
     die;
@@ -295,7 +295,7 @@ function send_uncached_image($imagepath) {
 function image_not_found() {
     header_remove("Access-Control-Allow-Origin");
     header("Access-Control-Allow-Origin: *");
-    die('Image was not found, sorry.');
+    die("Image was not found, sorry.");
 }
 
 /**
@@ -306,19 +306,19 @@ function image_not_found() {
  */
 function get_contenttype_from_ext($ext) {
     switch ($ext) {
-        case 'svg':
-            return 'image/svg+xml';
-        case 'png':
-            return 'image/png';
-        case 'gif':
-            return 'image/gif';
-        case 'jpg':
-        case 'jpeg':
-            return 'image/jpeg';
-        case 'ico':
-            return 'image/vnd.microsoft.icon';
+        case "svg":
+            return "image/svg+xml";
+        case "png":
+            return "image/png";
+        case "gif":
+            return "image/gif";
+        case "jpg":
+        case "jpeg":
+            return "image/jpeg";
+        case "ico":
+            return "image/vnd.microsoft.icon";
     }
-    return 'document/unknown';
+    return "document/unknown";
 }
 
 /**
@@ -332,7 +332,7 @@ function get_contenttype_from_ext($ext) {
 function cache_image($image, $imagefile, $candidatelocation) {
     global $CFG;
     $pathinfo = pathinfo($imagefile);
-    $cacheimage = "{$candidatelocation}/{$image}.{$pathinfo['extension']}";
+    $cacheimage = "{$candidatelocation}/{$image}.{$pathinfo["extension"]}";
 
     clearstatcache();
     if (!file_exists(dirname($cacheimage))) {

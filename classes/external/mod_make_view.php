@@ -42,8 +42,8 @@ class mod_make_view extends \external_api {
      */
     public static function make_view_parameters() {
         return new \external_function_parameters([
-            'modid' => new \external_value(PARAM_INT, 'mod instance id'),
-            'modname' => new \external_value(PARAM_TEXT, 'mod instance name'),
+            "modid" => new \external_value(PARAM_INT, 'mod instance id'),
+            "modname" => new \external_value(PARAM_TEXT, 'mod instance name'),
         ]);
     }
 
@@ -65,7 +65,7 @@ class mod_make_view extends \external_api {
             require_once("{$CFG->dirroot}/mod/{$modname}/lib.php");
 
             // Request and permission validation.
-            $mod = $DB->get_record($modname, ['id' => $modid], '*', MUST_EXIST);
+            $mod = $DB->get_record($modname, ["id" => $modid], '*', MUST_EXIST);
             list($course, $cm) = get_course_and_cm_from_instance($mod, $modname);
 
             $context = \context_module::instance($cm->id);
@@ -90,7 +90,7 @@ class mod_make_view extends \external_api {
      */
     public static function make_view_returns() {
         return new \external_single_structure([
-            'status' => new \external_value(PARAM_BOOL, 'Status'),
+            "status" => new \external_value(PARAM_BOOL, "Status"),
         ]);
     }
 }

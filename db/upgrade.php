@@ -27,16 +27,14 @@
  *
  * @param $oldversion
  * @return bool
- * @throws coding_exception
- * @throws downgrade_exception
- * @throws upgrade_exception
+ * @throws Exception
  */
 function xmldb_local_kopere_mobile_upgrade($oldversion) {
     if ($oldversion < 2024020400) {
-        set_config('lgpd_text', get_string('lgpd_text_msgdefault', 'local_kopere_mobile'), 'local_kopere_mobile');
-        set_config('lgpd_okok', get_string('lgpd_okok_msgdefault', 'local_kopere_mobile'), 'local_kopere_mobile');
+        set_config("lgpd_text", get_string("lgpd_text_msgdefault", "local_kopere_mobile"), "local_kopere_mobile");
+        set_config("lgpd_okok", get_string("lgpd_okok_msgdefault", "local_kopere_mobile"), "local_kopere_mobile");
 
-        upgrade_plugin_savepoint(true, 2024020400, 'local', 'kopere_mobile');
+        upgrade_plugin_savepoint(true, 2024020400, "local", "kopere_mobile");
     }
     return true;
 }

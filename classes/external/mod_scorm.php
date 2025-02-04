@@ -43,7 +43,7 @@ class mod_scorm extends \external_api {
      */
     public static function files_parameters() {
         return new \external_function_parameters([
-            'cmid' => new \external_value(PARAM_INT, 'mod instance id'),
+            "cmid" => new \external_value(PARAM_INT, 'mod instance id'),
         ]);
     }
 
@@ -90,10 +90,10 @@ class mod_scorm extends \external_api {
      */
     public static function files_returns() {
         return new \external_multiple_structure(new \external_single_structure([
-            'filepath' => new \external_value(PARAM_RAW, ''),
-            'filename' => new \external_value(PARAM_RAW, ''),
-            'filesize' => new \external_value(PARAM_INT, ''),
-            'fileurl' => new \external_value(PARAM_RAW, ''),
+            "filepath" => new \external_value(PARAM_RAW, ""),
+            "filename" => new \external_value(PARAM_RAW, ""),
+            "filesize" => new \external_value(PARAM_INT, ""),
+            "fileurl" => new \external_value(PARAM_RAW, ""),
         ]));
     }
 }

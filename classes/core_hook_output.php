@@ -44,7 +44,7 @@ class core_hook_output {
         $iskoperemobilemobile = isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile;
         if ($iskoperemobilemobile || optional_param("kopere_mobile_mobile", false, PARAM_INT)) {
 
-            $PAGE->set_pagelayout('embedded');
+            $PAGE->set_pagelayout("embedded");
             $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
             if ($PAGE->theme->name == "edooc") {
                 $PAGE->requires->css("/local/kopere_bi/assets/edooc-embedded.css");
@@ -65,17 +65,17 @@ class core_hook_output {
         if (isset($SESSION->local_kopere_mobile_preserve_page) && $SESSION->local_kopere_mobile_preserve_page) {
             $preservepage = $SESSION->local_kopere_mobile_preserve_page;
 
-            if (strpos($_SERVER['REQUEST_URI'], $preservepage) !== false) { //phpcs:disable
+            if (strpos($_SERVER["REQUEST_URI"], $preservepage) !== false) { //phpcs:disable
                 // Não faz nada aqui.
             } else if (isset($SESSION->kopere_mobile_redirect_page[5])) {
                 header("Location: {$SESSION->kopere_mobile_redirect_page}");
                 header("kopere_mobile-status: event_observers::process_event");
-                die();
+                die;
             }
         }
 
         if (isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile) {
-            $PAGE->set_pagelayout('embedded');
+            $PAGE->set_pagelayout("embedded");
             $return = "
             <meta http-equiv=\"Content-Security-Policy\"
                   content=\"default-src *;
@@ -106,10 +106,10 @@ class core_hook_output {
         global $CFG;
 
         $openedin = optional_param("openedin", false, PARAM_TEXT);
-        if ($openedin == 'AppMoodleMobileV2' || strpos($_SERVER['HTTP_USER_AGENT'], "AppMoodleMobileV2")) {
+        if ($openedin == "AppMoodleMobileV2" || strpos($_SERVER["HTTP_USER_AGENT"], "AppMoodleMobileV2")) {
 
-            if (strpos($_SERVER['REQUEST_URI'], 'mod/scorm/player.php') > 0 ||
-                strpos($_SERVER['REQUEST_URI'], 'local/kopere_mobile/scorm/player.php') > 0) {
+            if (strpos($_SERVER["REQUEST_URI"], 'mod/scorm/player.php') > 0 ||
+                strpos($_SERVER["REQUEST_URI"], 'local/kopere_mobile/scorm/player.php') > 0) {
 
                 $html = ob_get_contents();
                 ob_clean();

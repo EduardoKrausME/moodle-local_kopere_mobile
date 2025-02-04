@@ -116,13 +116,13 @@ class mod_icon extends \external_api {
      */
     public static function icon_returns() {
         return new \external_multiple_structure(new \external_single_structure([
-            'name' => new \external_value(PARAM_RAW, ''),
-            'monologo_ext' => new \external_value(PARAM_RAW, ''),
-            'monologo_url' => new \external_value(PARAM_RAW, ''),
-            'icon_ext' => new \external_value(PARAM_RAW, ''),
-            'icon_url' => new \external_value(PARAM_RAW, ''),
-            'mod_purpose' => new \external_value(PARAM_RAW, ''),
-            'courses' => new \external_value(PARAM_RAW, ''),
+            "name" => new \external_value(PARAM_RAW, ""),
+            "monologo_ext" => new \external_value(PARAM_RAW, ""),
+            "monologo_url" => new \external_value(PARAM_RAW, ""),
+            "icon_ext" => new \external_value(PARAM_RAW, ""),
+            "icon_url" => new \external_value(PARAM_RAW, ""),
+            "mod_purpose" => new \external_value(PARAM_RAW, ""),
+            "courses" => new \external_value(PARAM_RAW, ""),
         ]));
     }
 }

@@ -32,8 +32,8 @@ use local_kopere_mobile\vo\kopere_mobile_events;
  */
 function xmldb_local_kopere_mobile_install() {
 
-    set_config('lgpd_text', get_string('lgpd_text_msgdefault', 'local_kopere_mobile'), 'local_kopere_mobile');
-    set_config('lgpd_okok', get_string('lgpd_okok_msgdefault', 'local_kopere_mobile'), 'local_kopere_mobile');
+    set_config("lgpd_text", get_string("lgpd_text_msgdefault", "local_kopere_mobile"), "local_kopere_mobile");
+    set_config("lgpd_okok", get_string("lgpd_okok_msgdefault", "local_kopere_mobile"), "local_kopere_mobile");
 
     return true;
 }

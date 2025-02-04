@@ -25,54 +25,54 @@
 use core\message\message;
 use local_kopere_dashboard\util\release;
 
-require('../../config.php');
-require('../kopere_dashboard/autoload.php');
+require("../../config.php");
+require("../kopere_dashboard/autoload.php");
 global $DB, $PAGE, $OUTPUT, $COURSE;
 
 $PAGE->set_context(context_system::instance());
 
 $messagesendok = false;
-if (isset($_POST['motivo'][10])) {
+if (isset($_POST["motivo"][10])) {
     require_sesskey();
-    unset($_SESSION['USER']->sesskey);
+    unset($_SESSION["USER"]->sesskey);
 
     $message = "O aluno solicitou a exclusão dos dados cadastrais do {$COURSE->fullname}\n\n" .
         "Nome completo: " . fullname($USER) . "\n" .
         "Perfil do aluno: {$CFG->wwwroot}/user/profile.php?id={$USER->id} para acesso e exclusão\n" .
         "E-mail cadastrado: {$USER->email}\n" .
-        "Motivo da exclusão:\n{$_POST['motivo']}";
+        "Motivo da exclusão:\n{$_POST["motivo"]}";
 
     $userto = (object)[
-        'id' => 1,
-        'auth' => 'OK',
-        'suspended' => 0,
-        'deleted' => 0,
-        'emailstop' => 0,
-        'email' => get_config('local_kopere_mobile', 'lgpd_email'),
-        'username' => 'dpo',
-        'firstname' => 'DPO',
-        'lastname' => 'LGPD',
+        "id" => 1,
+        "auth" => "OK",
+        "suspended" => 0,
+        "deleted" => 0,
+        "emailstop" => 0,
+        "email" => get_config("local_kopere_mobile", "lgpd_email"),
+        "username" => "dpo",
+        "firstname" => "DPO",
+        "lastname" => "LGPD",
 
-        'firstnamephonetic' => '',
-        'lastnamephonetic' => '',
-        'middlename' => '',
-        'alternatename' => '',
+        "firstnamephonetic" => "",
+        "lastnamephonetic" => "",
+        "middlename" => "",
+        "alternatename" => "",
     ];
 
     $eventdata = new message();
     if (release::version() >= 3.2) {
         $eventdata->courseid = SITEID;
-        $eventdata->modulename = 'moodle';
+        $eventdata->modulename = "moodle";
     }
-    $eventdata->component = 'local_kopere_dashboard';
-    $eventdata->name = 'kopere_dashboard_messages';
+    $eventdata->component = "local_kopere_dashboard";
+    $eventdata->name = "kopere_dashboard_messages";
     $eventdata->userfrom = $USER;
     $eventdata->userto = $userto;
-    $eventdata->subject = 'Solicitação de exclusão de dados';
+    $eventdata->subject = "Solicitação de exclusão de dados";
     $eventdata->fullmessage = $message;
     $eventdata->fullmessageformat = FORMAT_HTML;
-    $eventdata->fullmessagehtml = str_replace("\n", '<br>', $message);
-    $eventdata->smallmessage = '';
+    $eventdata->fullmessagehtml = str_replace("\n", "<br>", $message);
+    $eventdata->smallmessage = "";
 
     message_send($eventdata);
 
@@ -80,30 +80,30 @@ if (isset($_POST['motivo'][10])) {
 }
 
 $PAGE->set_url(new moodle_url("/local/kopere_mobile/lgpd.php"));
-$PAGE->set_pagelayout('base');
-$PAGE->set_title(get_string('lgpd_title', 'local_kopere_mobile'));
-$PAGE->set_heading(get_string('lgpd_title', 'local_kopere_mobile'));
+$PAGE->set_pagelayout("base");
+$PAGE->set_title(get_string("lgpd_title", "local_kopere_mobile"));
+$PAGE->set_heading(get_string("lgpd_title", "local_kopere_mobile"));
 
 require_login();
 
 echo $OUTPUT->header();
 
-$lgpdemail = get_config('local_kopere_mobile', 'lgpd_email');
+$lgpdemail = get_config("local_kopere_mobile", "lgpd_email");
 if (isset($lgpdemail[5])) {
-    if (isset($_POST['motivo']) && strlen($_POST['motivo']) < 11) {
+    if (isset($_POST["motivo"]) && strlen($_POST["motivo"]) < 11) {
         echo "<div class='alert alert-danger'>Motivo é obrigatório</div>";
     }
     if ($messagesendok) {
         echo "<h2>Confirmação de Solicitação de Exclusão de Dados</h2>";
-        echo get_config('local_kopere_mobile', 'lgpd_okok');
+        echo get_config("local_kopere_mobile", "lgpd_okok");
     } else {
         $data = [
-            'lgpd_text' => get_config('local_kopere_mobile', 'lgpd_text'),
-            'user_fullname' => fullname($USER),
-            'user_email' => $USER->email,
-            'sesskey' => sesskey(),
+            "lgpd_text" => get_config("local_kopere_mobile", "lgpd_text"),
+            "user_fullname" => fullname($USER),
+            "user_email" => $USER->email,
+            "sesskey" => sesskey(),
         ];
-        echo $OUTPUT->render_from_template('local_kopere_mobile/lgpd', $data);
+        echo $OUTPUT->render_from_template("local_kopere_mobile/lgpd", $data);
     }
 } else {
     redirect(
@@ -121,13 +121,13 @@ function local_kopere_mobile_setting_androidappfile() {
     $context = context_system::instance();
     $fs = get_file_storage();
 
-    $files = $fs->get_area_files($context->id, 'local_kopere_mobile', 'androidappfile', 0, 'filename', false);
+    $files = $fs->get_area_files($context->id, "local_kopere_mobile", "androidappfile", 0, "filename", false);
 
     if ($files) {
         /** @var stored_file $file */
         foreach ($files as $file) {
-            return moodle_url::make_pluginfile_url($context->id, 'local_kopere_mobile', 'androidappfile',
-                0, '/', $file->get_filename())->out(true);
+            return moodle_url::make_pluginfile_url($context->id, "local_kopere_mobile", "androidappfile",
+                0, "/", $file->get_filename())->out(true);
         }
     }
 

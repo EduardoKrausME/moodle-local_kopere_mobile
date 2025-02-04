@@ -42,7 +42,7 @@ class mod_hvp extends \external_api {
      */
     public static function mobile_parameters() {
         return new \external_function_parameters([
-            'cmid' => new \external_value(PARAM_INT, 'mod instance id'),
+            "cmid" => new \external_value(PARAM_INT, 'mod instance id'),
         ]);
     }
 
@@ -65,41 +65,41 @@ class mod_hvp extends \external_api {
             require_once("{$CFG->dirroot}/mod/hvp/classes/mobile_auth.php");
 
             // Verify course context.
-            $cm = get_coursemodule_from_id('hvp', $cmid);
+            $cm = get_coursemodule_from_id("hvp", $cmid);
             if (!$cm) {
-                return ["html" => 'invalidcoursemodule'];
+                return ["html" => "invalidcoursemodule"];
             }
-            $course = $DB->get_record('course', ['id' => $cm->course]);
+            $course = $DB->get_record("course", ["id" => $cm->course]);
             if (!$course) {
-                return ["html" => 'coursemisconf'];
+                return ["html" => "coursemisconf"];
             }
 
             list($token, $secret) = \mod_hvp\mobile_auth::create_embed_auth_token();
 
             // Store secret in database.
-            $auth = $DB->get_record('hvp_auth', [
-                'user_id' => $USER->id,
+            $auth = $DB->get_record("hvp_auth", [
+                "user_id" => $USER->id,
             ]);
             $currenttimestamp = time();
             if ($auth) {
-                $DB->update_record('hvp_auth', [
-                    'id' => $auth->id,
-                    'secret' => $token,
-                    'created_at' => $currenttimestamp,
+                $DB->update_record("hvp_auth", [
+                    "id" => $auth->id,
+                    "secret" => $token,
+                    "created_at" => $currenttimestamp,
                 ]);
             } else {
-                $DB->insert_record('hvp_auth', [
-                    'user_id' => $USER->id,
-                    'secret' => $token,
-                    'created_at' => $currenttimestamp,
+                $DB->insert_record("hvp_auth", [
+                    "user_id" => $USER->id,
+                    "secret" => $token,
+                    "created_at" => $currenttimestamp,
                 ]);
             }
 
             $data = [
-                'cmid' => $cmid,
-                'wwwroot' => $CFG->wwwroot,
-                'user_id' => $USER->id,
-                'secret' => urlencode($secret),
+                "cmid" => $cmid,
+                "wwwroot" => $CFG->wwwroot,
+                "user_id" => $USER->id,
+                "secret" => urlencode($secret),
             ];
             $html = $OUTPUT->render_from_template('mod_hvp/mobile_view_page', $data);
 
@@ -115,7 +115,7 @@ class mod_hvp extends \external_api {
      */
     public static function mobile_returns() {
         return new \external_single_structure([
-            'html' => new \external_value(PARAM_RAW, 'HTML'),
+            "html" => new \external_value(PARAM_RAW, "HTML"),
         ]);
     }
 }

@@ -29,8 +29,8 @@
 
 // phpcs:disable moodle.Files.RequireLogin.Missing
 
-define('AJAX_SCRIPT', true);
-define('READ_ONLY_SESSION', true);
+define("AJAX_SCRIPT", true);
+define("READ_ONLY_SESSION", true);
 
 require_once(__DIR__ . "/../../config.php");
 require_once("{$CFG->libdir}/externallib.php");

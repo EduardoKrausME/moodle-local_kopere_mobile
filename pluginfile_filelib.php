@@ -36,18 +36,18 @@
  */
 function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview = null, $offline = false, $embed = false) {
     global $DB, $CFG, $USER;
-    // Relative path must start with '/'.
+    // Relative path must start with "/".
     if (!$relativepath) {
-        throw new moodle_exception('invalidargorconf');
-    } else if ($relativepath[0] != '/') {
-        throw new moodle_exception('pathdoesnotstartslash');
+        throw new moodle_exception("invalidargorconf");
+    } else if ($relativepath[0] != "/") {
+        throw new moodle_exception("pathdoesnotstartslash");
     }
 
     // Extract relative path components.
-    $args = explode('/', ltrim($relativepath, '/'));
+    $args = explode("/", ltrim($relativepath, "/"));
 
     if (count($args) < 3) { // Always at least context, component and filearea.
-        throw new moodle_exception('invalidarguments');
+        throw new moodle_exception("invalidarguments");
     }
 
     $contextid = (int)array_shift($args);
@@ -58,29 +58,29 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
     $fs = get_file_storage();
 
-    $sendfileoptions = ['preview' => $preview, 'offline' => $offline, 'embed' => $embed];
+    $sendfileoptions = ["preview" => $preview, "offline" => $offline, "embed" => $embed];
 
-    if ($component === 'blog') {
+    if ($component === "blog") {
         // Blog file serving.
         if ($context->contextlevel != CONTEXT_SYSTEM) {
             kopere_send_file_not_found();
         }
-        if ($filearea !== 'attachment' && $filearea !== 'post') {
+        if ($filearea !== "attachment" && $filearea !== "post") {
             kopere_send_file_not_found();
         }
 
         if (empty($CFG->enableblogs)) {
-            throw new moodle_exception('siteblogdisable', 'blog');
+            throw new moodle_exception("siteblogdisable", "blog");
         }
 
         $entryid = (int)array_shift($args);
-        if (!$entry = $DB->get_record('post', ['module' => 'blog', 'id' => $entryid])) {
+        if (!$entry = $DB->get_record("post", ["module" => "blog", "id" => $entryid])) {
             kopere_send_file_not_found();
         }
         if ($CFG->bloglevel < BLOG_GLOBAL_LEVEL) {
             require_login();
             if (isguestuser()) {
-                throw new moodle_exception('noguest');
+                throw new moodle_exception("noguest");
             }
             if ($CFG->bloglevel == BLOG_USER_LEVEL) {
                 if ($USER->id != $entry->userid) {
@@ -89,15 +89,15 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             }
         }
 
-        if ($entry->publishstate === 'public') {
+        if ($entry->publishstate === "public") {
             if ($CFG->forcelogin) {
                 require_login();
             }
 
-        } else if ($entry->publishstate === 'site') {
+        } else if ($entry->publishstate === "site") {
             require_login();
             // Ok.
-        } else if ($entry->publishstate === 'draft') {
+        } else if ($entry->publishstate === "draft") {
             require_login();
             if ($USER->id != $entry->userid) {
                 kopere_send_file_not_found();
@@ -105,7 +105,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
         }
 
         $filename = array_pop($args);
-        $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+        $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
         $file = $fs->get_file($context->id, $component, $filearea, $entryid, $filepath, $filename);
         if (!$file || $file->is_directory()) {
             kopere_send_file_not_found();
@@ -113,17 +113,17 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
         localpluginfile_send_stored_file($file, 10 * 60, 0, true, $sendfileoptions); // Download MUST be forced - security!
 
-    } else if ($component === 'grade') {
+    } else if ($component === "grade") {
 
-        require_once($CFG->libdir . '/grade/constants.php');
+        require_once("{$CFG->libdir}/grade/constants.php");
 
-        if (($filearea === 'outcome' || $filearea === 'scale') && $context->contextlevel == CONTEXT_SYSTEM) {
+        if (($filearea === "outcome" || $filearea === "scale") && $context->contextlevel == CONTEXT_SYSTEM) {
             // Global gradebook files.
             if ($CFG->forcelogin) {
                 require_login();
             }
 
-            $fullpath = "/{$context->id}/{$component}/{$filearea}/" . implode('/', $args);
+            $fullpath = "/{$context->id}/{$component}/{$filearea}/" . implode("/", $args);
             $file = $fs->get_file_by_hash(sha1($fullpath));
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -142,9 +142,9 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             $gradeid = (int)array_shift($args);
             $filename = array_pop($args);
             if ($filearea == GRADE_HISTORY_FEEDBACK_FILEAREA) {
-                $grade = $DB->get_record('grade_grades_history', ['id' => $gradeid]);
+                $grade = $DB->get_record("grade_grades_history", ["id" => $gradeid]);
             } else {
-                $grade = $DB->get_record('grade_grades', ['id' => $gradeid]);
+                $grade = $DB->get_record("grade_grades", ["id" => $gradeid]);
             }
 
             if (!$grade) {
@@ -155,7 +155,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
             if (!$iscurrentuser) {
                 $coursecontext = context_course::instance($course->id);
-                if (!has_capability('moodle/grade:viewall', $coursecontext)) {
+                if (!has_capability("moodle/grade:viewall", $coursecontext)) {
                     kopere_send_file_not_found();
                 }
             }
@@ -172,15 +172,15 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'tag') {
-        if ($filearea === 'description' && $context->contextlevel == CONTEXT_SYSTEM) {
+    } else if ($component === "tag") {
+        if ($filearea === "description" && $context->contextlevel == CONTEXT_SYSTEM) {
 
             // All tag descriptions are going to be public but we still need to respect forcelogin.
             if ($CFG->forcelogin) {
                 require_login();
             }
 
-            $fullpath = "/{$context->id}/tag/description/" . implode('/', $args);
+            $fullpath = "/{$context->id}/tag/description/" . implode("/", $args);
             $file = $fs->get_file_by_hash(sha1($fullpath));
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -192,33 +192,33 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
         } else {
             kopere_send_file_not_found();
         }
-    } else if ($component === 'badges') {
-        require_once($CFG->libdir . '/badgeslib.php');
+    } else if ($component === "badges") {
+        require_once("{$CFG->libdir}/badgeslib.php");
 
         $badgeid = (int)array_shift($args);
         $badge = new badge($badgeid);
         $filename = array_pop($args);
 
-        if ($filearea === 'badgeimage') {
-            if ($filename !== 'f1' && $filename !== 'f2' && $filename !== 'f3') {
+        if ($filearea === "badgeimage") {
+            if ($filename !== "f1" && $filename !== "f2" && $filename !== "f3") {
                 kopere_send_file_not_found();
             }
-            if (!$file = $fs->get_file($context->id, 'badges', 'badgeimage', $badge->id, '/', $filename . '.png')) {
+            if (!$file = $fs->get_file($context->id, "badges", "badgeimage", $badge->id, "/", $filename . ".png")) {
                 kopere_send_file_not_found();
             }
 
             \core\session\manager::write_close();
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
-        } else if ($filearea === 'userbadge' && $context->contextlevel == CONTEXT_USER) {
-            if (!$file = $fs->get_file($context->id, 'badges', 'userbadge', $badge->id, '/', $filename . '.png')) {
+        } else if ($filearea === "userbadge" && $context->contextlevel == CONTEXT_USER) {
+            if (!$file = $fs->get_file($context->id, "badges", "userbadge", $badge->id, "/", $filename . ".png")) {
                 kopere_send_file_not_found();
             }
 
             \core\session\manager::write_close();
             localpluginfile_send_stored_file($file, 60 * 60, 0, true, $sendfileoptions);
         }
-    } else if ($component === 'calendar') {
-        if ($filearea === 'event_description' && $context->contextlevel == CONTEXT_SYSTEM) {
+    } else if ($component === "calendar") {
+        if ($filearea === "event_description" && $context->contextlevel == CONTEXT_SYSTEM) {
 
             // All events here are public the one requirement is that we respect forcelogin.
             if ($CFG->forcelogin) {
@@ -229,13 +229,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             $eventid = array_shift($args);
 
             // Load the event from the database.
-            if (!$event = $DB->get_record('event', ['id' => (int)$eventid, 'eventtype' => 'site'])) {
+            if (!$event = $DB->get_record("event", ["id" => (int)$eventid, "eventtype" => "site"])) {
                 kopere_send_file_not_found();
             }
 
             // Get the file and serve if successful.
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
             $file = $fs->get_file($context->id, $component, $filearea, $eventid, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -244,7 +244,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
 
-        } else if ($filearea === 'event_description' && $context->contextlevel == CONTEXT_USER) {
+        } else if ($filearea === "event_description" && $context->contextlevel == CONTEXT_USER) {
 
             // Must be logged in, if they are not then they obviously can't be this user.
             require_login();
@@ -258,13 +258,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             $eventid = array_shift($args);
 
             // Load the event from the database - user id must match.
-            if (!$event = $DB->get_record('event', ['id' => (int)$eventid, 'userid' => $USER->id, 'eventtype' => 'user'])) {
+            if (!$event = $DB->get_record("event", ["id" => (int)$eventid, "userid" => $USER->id, "eventtype" => "user"])) {
                 kopere_send_file_not_found();
             }
 
             // Get the file and serve if successful.
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
             $file = $fs->get_file($context->id, $component, $filearea, $eventid, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -273,7 +273,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 0, 0, true, $sendfileoptions);
 
-        } else if ($filearea === 'event_description' && $context->contextlevel == CONTEXT_COURSE) {
+        } else if ($filearea === "event_description" && $context->contextlevel == CONTEXT_COURSE) {
 
             // Respect forcelogin and require login unless this is the site.... it probably.
             // Should NEVER be the site.
@@ -294,22 +294,22 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             // A) valid course event.
             // B) a group event.
             // Group events use the course context (there is no group context).
-            if (!$event = $DB->get_record('event', ['id' => (int)$eventid, 'courseid' => $course->id])) {
+            if (!$event = $DB->get_record("event", ["id" => (int)$eventid, "courseid" => $course->id])) {
                 kopere_send_file_not_found();
             }
 
             // If its a group event require either membership of view all groups capability.
-            if ($event->eventtype === 'group') {
-                if (!has_capability('moodle/site:accessallgroups', $context) && !groups_is_member($event->groupid, $USER->id)) {
+            if ($event->eventtype === "group") {
+                if (!has_capability("moodle/site:accessallgroups", $context) && !groups_is_member($event->groupid, $USER->id)) {
                     kopere_send_file_not_found();
                 }
-            } else if ($event->eventtype !== 'course' && $event->eventtype !== 'site') {
+            } else if ($event->eventtype !== "course" && $event->eventtype !== "site") {
                 kopere_send_file_not_found();
             }
 
             // If we get this far we can serve the file.
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
             $file = $fs->get_file($context->id, $component, $filearea, $eventid, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -322,8 +322,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'user') {
-        if ($filearea === 'icon' && $context->contextlevel == CONTEXT_USER) {
+    } else if ($component === "user") {
+        if ($filearea === "icon" && $context->contextlevel == CONTEXT_USER) {
             if (count($args) == 1) {
                 $themename = theme_config::DEFAULT_THEME;
                 $filename = array_shift($args);
@@ -333,8 +333,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             }
 
             // Fix file name automatically.
-            if ($filename !== 'f1' && $filename !== 'f2' && $filename !== 'f3') {
-                $filename = 'f1';
+            if ($filename !== "f1" && $filename !== "f2" && $filename !== "f3") {
+                $filename = "f1";
             }
 
             if ((!empty($CFG->forcelogin) && !isloggedin()) ||
@@ -343,29 +343,29 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
                 // Also if login is required for profile images and is not logged in or guest.
                 // Do not use require_login() because it is expensive and not suitable here anyway.
                 $theme = theme_config::load($themename);
-                redirect($theme->image_url("u/{$filename}", 'moodle')); // Intentionally not cached.
+                redirect($theme->image_url("u/{$filename}", "moodle")); // Intentionally not cached.
             }
 
-            if (!$file = $fs->get_file($context->id, 'user', 'icon', 0, '/', $filename . '.png')) {
-                if (!$file = $fs->get_file($context->id, 'user', 'icon', 0, '/', $filename . '.jpg')) {
-                    if ($filename === 'f3') {
+            if (!$file = $fs->get_file($context->id, "user", "icon", 0, "/", $filename . ".png")) {
+                if (!$file = $fs->get_file($context->id, "user", "icon", 0, "/", $filename . ".jpg")) {
+                    if ($filename === "f3") {
                         // F3 512x512px was introduced in 2.3, there might be only the smaller version.
-                        if (!$file = $fs->get_file($context->id, 'user', 'icon', 0, '/', 'f1.png')) {
-                            $file = $fs->get_file($context->id, 'user', 'icon', 0, '/', 'f1.jpg');
+                        if (!$file = $fs->get_file($context->id, "user", "icon", 0, "/", "f1.png")) {
+                            $file = $fs->get_file($context->id, "user", "icon", 0, "/", "f1.jpg");
                         }
                     }
                 }
             }
             if (!$file) {
                 // Bad reference - try to prevent future retries as hard as possible!
-                if ($user = $DB->get_record('user', ['id' => $context->instanceid], 'id, picture')) {
+                if ($user = $DB->get_record("user", ["id" => $context->instanceid], "id, picture")) {
                     if ($user->picture > 0) {
-                        $DB->set_field('user', 'picture', 0, ['id' => $user->id]);
+                        $DB->set_field("user", "picture", 0, ["id" => $user->id]);
                     }
                 }
                 // No redirect here because it is not cached.
                 $theme = theme_config::load($themename);
-                $imagefile = $theme->resolve_image_location("u/{$filename}", 'moodle', null);
+                $imagefile = $theme->resolve_image_location("u/{$filename}", "moodle", null);
                 send_file($imagefile, basename($imagefile), 60 * 60 * 24 * 14);
             }
 
@@ -373,12 +373,12 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             if (empty($CFG->forcelogin) && empty($CFG->forceloginforprofileimage)) {
                 // Profile images should be cache-able by both browsers and proxies according.
                 // To $CFG->forcelogin and $CFG->forceloginforprofileimage.
-                $options['cacheability'] = 'public';
+                $options["cacheability"] = "public";
             }
             // Enable long caching, there are many images on each page.
             localpluginfile_send_stored_file($file, 60 * 60 * 24 * 365, 0, false, $options);
 
-        } else if ($filearea === 'private' && $context->contextlevel == CONTEXT_USER) {
+        } else if ($filearea === "private" && $context->contextlevel == CONTEXT_USER) {
             require_login();
 
             if (isguestuser()) {
@@ -390,7 +390,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
             $file = $fs->get_file($context->id, $component, $filearea, 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -399,7 +399,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 0, 0, true, $sendfileoptions); // Must force download - security!
 
-        } else if ($filearea === 'profile' && $context->contextlevel == CONTEXT_USER) {
+        } else if ($filearea === "profile" && $context->contextlevel == CONTEXT_USER) {
 
             if ($CFG->forcelogin) {
                 require_login();
@@ -415,12 +415,12 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
                 }
 
                 // We allow access to site profile of all course contacts (usually teachers).
-                if (!has_coursecontact_role($userid) && !has_capability('moodle/user:viewdetails', $context)) {
+                if (!has_coursecontact_role($userid) && !has_capability("moodle/user:viewdetails", $context)) {
                     kopere_send_file_not_found();
                 }
 
                 $canview = false;
-                if (has_capability('moodle/user:viewdetails', $context)) {
+                if (has_capability("moodle/user:viewdetails", $context)) {
                     $canview = true;
                 } else {
                     $courses = enrol_get_my_courses();
@@ -428,14 +428,14 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
                 while (!$canview && count($courses) > 0) {
                     $course = array_shift($courses);
-                    if (has_capability('moodle/user:viewdetails', context_course::instance($course->id))) {
+                    if (has_capability("moodle/user:viewdetails", context_course::instance($course->id))) {
                         $canview = true;
                     }
                 }
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
             $file = $fs->get_file($context->id, $component, $filearea, 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -444,7 +444,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 0, 0, true, $sendfileoptions); // Must force download - security!
 
-        } else if ($filearea === 'profile' && $context->contextlevel == CONTEXT_COURSE) {
+        } else if ($filearea === "profile" && $context->contextlevel == CONTEXT_COURSE) {
             $userid = (int)array_shift($args);
             $usercontext = context_user::instance($userid);
 
@@ -455,29 +455,29 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             if (!empty($CFG->forceloginforprofiles)) {
                 require_login();
                 if (isguestuser()) {
-                    throw new moodle_exception('noguest');
+                    throw new moodle_exception("noguest");
                 }
 
                 // Review this logic of user profile access prevention.
-                if (!has_coursecontact_role($userid) && !has_capability('moodle/user:viewdetails', $usercontext)) {
-                    throw new moodle_exception('usernotavailable');
+                if (!has_coursecontact_role($userid) && !has_capability("moodle/user:viewdetails", $usercontext)) {
+                    throw new moodle_exception("usernotavailable");
                 }
-                if (!has_capability('moodle/user:viewdetails', $context) &&
-                    !has_capability('moodle/user:viewdetails', $usercontext)) {
-                    throw new moodle_exception('cannotviewprofile');
+                if (!has_capability("moodle/user:viewdetails", $context) &&
+                    !has_capability("moodle/user:viewdetails", $usercontext)) {
+                    throw new moodle_exception("cannotviewprofile");
                 }
                 if (!is_enrolled($context, $userid)) {
-                    throw new moodle_exception('notenrolledprofile');
+                    throw new moodle_exception("notenrolledprofile");
                 }
                 if (groups_get_course_groupmode($course) == SEPARATEGROUPS &&
-                    !has_capability('moodle/site:accessallgroups', $context)) {
-                    throw new moodle_exception('groupnotamember');
+                    !has_capability("moodle/site:accessallgroups", $context)) {
+                    throw new moodle_exception("groupnotamember");
                 }
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($usercontext->id, 'user', 'profile', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($usercontext->id, "user", "profile", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -485,7 +485,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 0, 0, true, $sendfileoptions); // Must force download - security!
 
-        } else if ($filearea === 'backup' && $context->contextlevel == CONTEXT_USER) {
+        } else if ($filearea === "backup" && $context->contextlevel == CONTEXT_USER) {
             require_login();
 
             if (isguestuser()) {
@@ -498,8 +498,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'user', 'backup', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "user", "backup", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -511,12 +511,12 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'coursecat') {
+    } else if ($component === "coursecat") {
         if ($context->contextlevel != CONTEXT_COURSECAT) {
             kopere_send_file_not_found();
         }
 
-        if ($filearea === 'description') {
+        if ($filearea === "description") {
             if ($CFG->forcelogin) {
                 // No login necessary - unless login forced everywhere.
                 require_login();
@@ -528,8 +528,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'coursecat', 'description', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "coursecat", "description", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -540,19 +540,19 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'course') {
+    } else if ($component === "course") {
         if ($context->contextlevel != CONTEXT_COURSE) {
             kopere_send_file_not_found();
         }
 
-        if ($filearea === 'summary' || $filearea === 'overviewfiles') {
+        if ($filearea === "summary" || $filearea === "overviewfiles") {
             if ($CFG->forcelogin) {
                 require_login();
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'course', $filearea, 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "course", $filearea, 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -560,7 +560,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
 
-        } else if ($filearea === 'section') {
+        } else if ($filearea === "section") {
             if ($CFG->forcelogin) {
                 require_login($course);
             } else if ($course->id != SITEID) {
@@ -569,13 +569,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
             $sectionid = (int)array_shift($args);
 
-            if (!$section = $DB->get_record('course_sections', ['id' => $sectionid, 'course' => $course->id])) {
+            if (!$section = $DB->get_record("course_sections", ["id" => $sectionid, "course" => $course->id])) {
                 kopere_send_file_not_found();
             }
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'course', 'section', $sectionid, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "course", "section", $sectionid, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -587,13 +587,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'cohort') {
+    } else if ($component === "cohort") {
 
         $cohortid = (int)array_shift($args);
-        $cohort = $DB->get_record('cohort', ['id' => $cohortid], '*', MUST_EXIST);
+        $cohort = $DB->get_record("cohort", ["id" => $cohortid], "*", MUST_EXIST);
         $cohortcontext = context::instance_by_id($cohort->contextid);
 
-        // The context in the file URL must be either cohort context or context of the course underneath the cohort's context.
+        // The context in the file URL must be either cohort context or context of the course underneath the cohort"s context.
         if ($context->id != $cohort->contextid &&
             ($context->contextlevel != CONTEXT_COURSE || !in_array($cohort->contextid, $context->get_parent_context_ids()))) {
             kopere_send_file_not_found();
@@ -601,13 +601,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
         // User is able to access cohort if they have view cap on cohort level or.
         // The cohort is visible and they have view cap on course level.
-        $canview = has_capability('moodle/cohort:view', $cohortcontext) ||
-            ($cohort->visible && has_capability('moodle/cohort:view', $context));
+        $canview = has_capability("moodle/cohort:view", $cohortcontext) ||
+            ($cohort->visible && has_capability("moodle/cohort:view", $context));
 
-        if ($filearea === 'description' && $canview) {
+        if ($filearea === "description" && $canview) {
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            if (($file = $fs->get_file($cohortcontext->id, 'cohort', 'description', $cohort->id, $filepath, $filename))
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            if (($file = $fs->get_file($cohortcontext->id, "cohort", "description", $cohort->id, $filepath, $filename))
                 && !$file->is_directory()) {
                 \core\session\manager::write_close(); // Unlock session during file serving.
                 localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
@@ -615,7 +615,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
         }
 
         kopere_send_file_not_found();
-    } else if ($component === 'group') {
+    } else if ($component === "group") {
         if ($context->contextlevel != CONTEXT_COURSE) {
             kopere_send_file_not_found();
         }
@@ -624,20 +624,20 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
         $groupid = (int)array_shift($args);
 
-        $group = $DB->get_record('groups', ['id' => $groupid, 'courseid' => $course->id], '*', MUST_EXIST);
+        $group = $DB->get_record("groups", ["id" => $groupid, "courseid" => $course->id], "*", MUST_EXIST);
         if (($course->groupmodeforce && $course->groupmode == SEPARATEGROUPS) &&
-            !has_capability('moodle/site:accessallgroups', $context) && !groups_is_member($group->id, $USER->id)) {
+            !has_capability("moodle/site:accessallgroups", $context) && !groups_is_member($group->id, $USER->id)) {
             // Do not allow access to separate group info if not member or teacher.
             kopere_send_file_not_found();
         }
 
-        if ($filearea === 'description') {
+        if ($filearea === "description") {
 
             require_login($course);
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'group', 'description', $group->id, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "group", "description", $group->id, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -645,14 +645,14 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
 
-        } else if ($filearea === 'icon') {
+        } else if ($filearea === "icon") {
             $filename = array_pop($args);
 
-            if ($filename !== 'f1' && $filename !== 'f2') {
+            if ($filename !== "f1" && $filename !== "f2") {
                 kopere_send_file_not_found();
             }
-            if (!$file = $fs->get_file($context->id, 'group', 'icon', $group->id, '/', $filename . '.png')) {
-                if (!$file = $fs->get_file($context->id, 'group', 'icon', $group->id, '/', $filename . '.jpg')) {
+            if (!$file = $fs->get_file($context->id, "group", "icon", $group->id, "/", $filename . ".png")) {
+                if (!$file = $fs->get_file($context->id, "group", "icon", $group->id, "/", $filename . ".jpg")) {
                     kopere_send_file_not_found();
                 }
             }
@@ -664,7 +664,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'grouping') {
+    } else if ($component === "grouping") {
         if ($context->contextlevel != CONTEXT_COURSE) {
             kopere_send_file_not_found();
         }
@@ -674,11 +674,11 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
         $groupingid = (int)array_shift($args);
 
         // Note: everybody has access to grouping desc images for now.
-        if ($filearea === 'description') {
+        if ($filearea === "description") {
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'grouping', 'description', $groupingid, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "grouping", "description", $groupingid, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -690,14 +690,14 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'backup') {
-        if ($filearea === 'course' && $context->contextlevel == CONTEXT_COURSE) {
+    } else if ($component === "backup") {
+        if ($filearea === "course" && $context->contextlevel == CONTEXT_COURSE) {
             require_login($course);
-            require_capability('moodle/backup:downloadfile', $context);
+            require_capability("moodle/backup:downloadfile", $context);
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'backup', 'course', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "backup", "course", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -705,15 +705,15 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close(); // Unlock session during file serving.
             localpluginfile_send_stored_file($file, 0, 0, $forcedownload, $sendfileoptions);
 
-        } else if ($filearea === 'section' && $context->contextlevel == CONTEXT_COURSE) {
+        } else if ($filearea === "section" && $context->contextlevel == CONTEXT_COURSE) {
             require_login($course);
-            require_capability('moodle/backup:downloadfile', $context);
+            require_capability("moodle/backup:downloadfile", $context);
 
             $sectionid = (int)array_shift($args);
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'backup', 'section', $sectionid, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "backup", "section", $sectionid, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -721,13 +721,13 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close();
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
 
-        } else if ($filearea === 'activity' && $context->contextlevel == CONTEXT_MODULE) {
+        } else if ($filearea === "activity" && $context->contextlevel == CONTEXT_MODULE) {
             require_login($course, false, $cm);
-            require_capability('moodle/backup:downloadfile', $context);
+            require_capability("moodle/backup:downloadfile", $context);
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'backup', 'activity', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "backup", "activity", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -735,16 +735,16 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             \core\session\manager::write_close();
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
 
-        } else if ($filearea === 'automated' && $context->contextlevel == CONTEXT_COURSE) {
+        } else if ($filearea === "automated" && $context->contextlevel == CONTEXT_COURSE) {
             // Backup files that were generated by the automated backup systems.
 
             require_login($course);
-            require_capability('moodle/backup:downloadfile', $context);
-            require_capability('moodle/restore:userinfo', $context);
+            require_capability("moodle/backup:downloadfile", $context);
+            require_capability("moodle/restore:userinfo", $context);
 
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'backup', 'automated', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "backup", "automated", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -756,14 +756,14 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
 
-    } else if ($component === 'question') {
-        require_once($CFG->libdir . '/questionlib.php');
-        $sendfileoptions['preview'] = null;
-        question_pluginfile($course, $context, 'question', $filearea, $args, $forcedownload, $sendfileoptions);
+    } else if ($component === "question") {
+        require_once("{$CFG->libdir}/questionlib.php");
+        $sendfileoptions["preview"] = null;
+        question_pluginfile($course, $context, "question", $filearea, $args, $forcedownload, $sendfileoptions);
         kopere_send_file_not_found();
 
-    } else if ($component === 'grading') {
-        if ($filearea === 'description') {
+    } else if ($component === "grading") {
+        if ($filearea === "description") {
             // Files embedded into the form definition description.
 
             if ($context->contextlevel == CONTEXT_SYSTEM) {
@@ -788,7 +788,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
                 kopere_send_file_not_found();
             }
 
-            $fullpath = "/{$context->id}/{$component}/{$filearea}/{$formid}/" . implode('/', $args);
+            $fullpath = "/{$context->id}/{$component}/{$filearea}/{$formid}/" . implode("/", $args);
             $file = $fs->get_file_by_hash(sha1($fullpath));
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
@@ -798,7 +798,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             localpluginfile_send_stored_file($file, 60 * 60, 0, $forcedownload, $sendfileoptions);
         }
 
-    } else if (strpos($component, 'mod_') === 0) {
+    } else if (strpos($component, "mod_") === 0) {
         $modname = substr($component, 4);
         if (!file_exists("{$CFG->dirroot}/mod/{$modname}/lib.php")) {
             kopere_send_file_not_found();
@@ -812,8 +812,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             }
         }
 
-        if ($filearea === 'intro') {
-            if (!plugin_supports('mod', $modname, FEATURE_MOD_INTRO, true)) {
+        if ($filearea === "intro") {
+            if (!plugin_supports("mod", $modname, FEATURE_MOD_INTRO, true)) {
                 kopere_send_file_not_found();
             }
 
@@ -831,8 +831,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
             // All users may access it.
             $filename = array_pop($args);
-            $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
-            $file = $fs->get_file($context->id, 'mod_' . $modname, 'intro', 0, $filepath, $filename);
+            $filepath = $args ? "/" . implode("/", $args) . "/" : "/";
+            $file = $fs->get_file($context->id, "mod_" . $modname, "intro", 0, $filepath, $filename);
             if (!$file || $file->is_directory()) {
                 kopere_send_file_not_found();
             }
@@ -841,10 +841,10 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             localpluginfile_send_stored_file($file, null, 0, false, $sendfileoptions);
         }
 
-        $sendfileoptions['preview'] = null;
+        $sendfileoptions["preview"] = null;
 
-        $filefunction = $component . '_pluginfile';
-        $filefunctionold = $modname . '_pluginfile';
+        $filefunction = $component . "_pluginfile";
+        $filefunctionold = $modname . "_pluginfile";
         if (function_exists($filefunction)) {
             // If the function exists, it must send the file and terminate. Whatever it returns leads to "not found".
             $filefunction($course, $cm, $context, $filearea, $args, $forcedownload, $sendfileoptions);
@@ -855,7 +855,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
         kopere_send_file_not_found();
 
-    } else if (strpos($component, 'block_') === 0) {
+    } else if (strpos($component, "block_") === 0) {
         $blockname = substr($component, 6);
         // Note: no more class methods in blocks please, that is ...
         if (!file_exists("{$CFG->dirroot}/blocks/{$blockname}/lib.php")) {
@@ -864,7 +864,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
         require_once("{$CFG->dirroot}/blocks/{$blockname}/lib.php");
 
         if ($context->contextlevel == CONTEXT_BLOCK) {
-            $birecord = $DB->get_record('block_instances', ['id' => $context->instanceid], '*', MUST_EXIST);
+            $birecord = $DB->get_record("block_instances", ["id" => $context->instanceid], "*", MUST_EXIST);
             if ($birecord->blockname !== $blockname) {
                 // Somebody tries to gain illegal access, cm type must match the component!
                 kopere_send_file_not_found();
@@ -878,19 +878,19 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
                 require_login();
             }
 
-            $bprecord = $DB->get_record('block_positions',
-                ['contextid' => $context->id, 'blockinstanceid' => $context->instanceid]);
+            $bprecord = $DB->get_record("block_positions",
+                ["contextid" => $context->id, "blockinstanceid" => $context->instanceid]);
             // User can't access file, if block is hidden or doesn't have block:view capability.
-            if (($bprecord && !$bprecord->visible) || !has_capability('moodle/block:view', $context)) {
+            if (($bprecord && !$bprecord->visible) || !has_capability("moodle/block:view", $context)) {
                 kopere_send_file_not_found();
             }
         } else {
             $birecord = null;
         }
 
-        $sendfileoptions['preview'] = null;
+        $sendfileoptions["preview"] = null;
 
-        $filefunction = $component . '_pluginfile';
+        $filefunction = $component . "_pluginfile";
         if (function_exists($filefunction)) {
             // If the function exists, it must send the file and terminate. Whatever it returns leads to "not found".
             $filefunction($course, $birecord, $context, $filearea, $args, $forcedownload, $sendfileoptions);
@@ -898,7 +898,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
         kopere_send_file_not_found();
 
-    } else if (strpos($component, '_') === false) {
+    } else if (strpos($component, "_") === false) {
         // All core subsystems have to be specified above, no more guessing here!
         kopere_send_file_not_found();
 
@@ -910,9 +910,9 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
         }
         include_once("{$dir}/lib.php");
 
-        $sendfileoptions['preview'] = null;
+        $sendfileoptions["preview"] = null;
 
-        $filefunction = $component . '_pluginfile';
+        $filefunction = $component . "_pluginfile";
         if (function_exists($filefunction)) {
             // If the function exists, it must send the file and terminate. Whatever it returns leads to "not found".
             $filefunction($course, $cm, $context, $filearea, $args, $forcedownload, $sendfileoptions);
@@ -950,7 +950,7 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
  *                                   browser/plugin
  * @param array $options             additional options affecting the file serving
  *
- * @return null script execution stopped unless $options['dontdie'] is true
+ * @return null script execution stopped unless $options["dontdie"] is true
  *
  * @throws Exception
  */
@@ -958,37 +958,37 @@ function localpluginfile_send_stored_file($storedfile, $lifetime = null, $filter
                                           $forcedownload = false, array $options = []) {
     global $CFG;
 
-    if (empty($options['filename'])) {
+    if (empty($options["filename"])) {
         $filename = null;
     } else {
-        $filename = $options['filename'];
+        $filename = $options["filename"];
     }
 
-    if (empty($options['dontdie'])) {
+    if (empty($options["dontdie"])) {
         $dontdie = false;
     } else {
         $dontdie = true;
     }
 
-    if ($lifetime === 'default' || is_null($lifetime)) {
+    if ($lifetime === "default" || is_null($lifetime)) {
         $lifetime = $CFG->filelifetime;
     }
 
-    if (!empty($options['preview'])) {
+    if (!empty($options["preview"])) {
         // Replace the file with its preview.
         $fs = get_file_storage();
-        $previewfile = localpluginfile_get_file_preview($fs, $storedfile, $options['preview']);
+        $previewfile = localpluginfile_get_file_preview($fs, $storedfile, $options["preview"]);
         if (!$previewfile) {
             // Unable to create a preview of the file, send its default mime icon instead.
-            if ($options['preview'] === 'tinyicon') {
+            if ($options["preview"] === "tinyicon") {
                 $size = 24;
-            } else if ($options['preview'] === 'thumb') {
+            } else if ($options["preview"] === "thumb") {
                 $size = 90;
             } else {
                 $size = 256;
             }
             $fileicon = file_file_icon($storedfile, $size);
-            send_file("{$CFG->dirroot}/pix/{$fileicon}.png", basename($fileicon) . '.png');
+            send_file("{$CFG->dirroot}/pix/{$fileicon}.png", basename($fileicon) . ".png");
         } else {
             // Preview images have fixed cache lifetime and they ignore forced download.
             // (they are generated by GD and therefore they are considered reasonably safe).
@@ -1000,7 +1000,7 @@ function localpluginfile_send_stored_file($storedfile, $lifetime = null, $filter
     }
 
     // Handle external resource.
-    if ($storedfile && $storedfile->is_external_file() && !isset($options['sendcachedexternalfile'])) {
+    if ($storedfile && $storedfile->is_external_file() && !isset($options["sendcachedexternalfile"])) {
         $storedfile->send_file($lifetime, $filter, $forcedownload, $options);
         die;
     }
@@ -1021,7 +1021,7 @@ function localpluginfile_send_stored_file($storedfile, $lifetime = null, $filter
     // Allow cross-origin requests only for Web Services.
     // This allow to receive requests done by Web Workers or webapps in different domains.
     if (WS_SERVER) {
-        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Origin: *");
     }
 
     send_file($storedfile, $filename, $lifetime, $filter, false, $forcedownload, $mimetype, $dontdie, $options);
@@ -1040,10 +1040,10 @@ function localpluginfile_send_stored_file($storedfile, $lifetime = null, $filter
 function localpluginfile_get_file_preview(file_storage $fs, stored_file $file, $thumbwidth) {
 
     $context = context_system::instance();
-    $filepath = '/' . trim($thumbwidth, '/') . '/';
+    $filepath = "/" . trim($thumbwidth, "/") . "/";
     $filename = $file->get_contenthash();
 
-    $preview = $fs->get_file($context->id, 'core', 'preview', 0, $filepath, $filename);
+    $preview = $fs->get_file($context->id, "core", "preview", 0, $filepath, $filename);
     if (!$preview) {
         $preview = localpluginfile_create_file_preview($fs, $file, $thumbwidth);
         if (!$preview) {
@@ -1070,7 +1070,7 @@ function localpluginfile_create_file_preview(file_storage $fs, stored_file $file
 
     $mimetype = $file->get_mimetype();
 
-    if ($mimetype === 'image/gif' || $mimetype === 'image/jpeg' || $mimetype === 'image/png') {
+    if ($mimetype === "image/gif" || $mimetype === "image/jpeg" || $mimetype === "image/png") {
         // Make a preview of the image.
         $data = create_imagefile_preview($file);
 
@@ -1085,17 +1085,17 @@ function localpluginfile_create_file_preview(file_storage $fs, stored_file $file
 
     $context = context_system::instance();
     $record = [
-        'contextid' => $context->id,
-        'component' => 'core',
-        'filearea' => 'preview',
-        'itemid' => 0,
-        'filepath' => '/' . trim($thumbwidth, '/') . '/',
-        'filename' => $file->get_contenthash(),
+        "contextid" => $context->id,
+        "component" => "core",
+        "filearea" => "preview",
+        "itemid" => 0,
+        "filepath" => "/" . trim($thumbwidth, "/") . "/",
+        "filename" => $file->get_contenthash(),
     ];
 
     $imageinfo = getimagesizefromstring($data);
     if ($imageinfo) {
-        $record['mimetype'] = $imageinfo['mime'];
+        $record["mimetype"] = $imageinfo["mime"];
     }
 
     return $fs->create_file_from_string($record, $data);
@@ -1111,7 +1111,7 @@ function localpluginfile_create_file_preview(file_storage $fs, stored_file $file
  */
 function create_imagefile_preview(stored_file $file) {
     global $CFG;
-    require_once($CFG->libdir . '/gdlib.php');
+    require_once("{$CFG->libdir}/gdlib.php");
 
     $thumbwidth = optional_param("preview", 250, PARAM_INT);
     if (empty($thumbwidth)) {
@@ -1145,9 +1145,9 @@ function kopere_send_file_not_found() {
     // Allow cross-origin requests only for Web Services.
     // This allow to receive requests done by Web Workers or webapps in different domains.
     if (WS_SERVER) {
-        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Origin: *");
     }
 
-    header('HTTP/1.0 404 not found');
-    die();
+    header("HTTP/1.0 404 not found");
+    die;
 }

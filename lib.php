@@ -33,18 +33,18 @@ function local_kopere_mobile_before_standard_html_head() {
 
     ob_start();
 
-    $PAGE->requires->js_call_amd('local_kopere_mobile/picture', 'move');
+    $PAGE->requires->js_call_amd("local_kopere_mobile/picture", "move");
 
     if (isset($USER->kopere_mobile_preserve_page) && $USER->kopere_mobile_preserve_page) {
         if (isset($USER->kopere_mobile_redirect_page[5])) {
             header("Location: {$USER->kopere_mobile_redirect_page}");
             header("kopere_mobile-status: event_observers::process_event");
-            die();
+            die;
         }
     }
 
     if (isset($USER->kopere_mobile_mobile) && $USER->kopere_mobile_mobile) {
-        $PAGE->set_pagelayout('embedded');
+        $PAGE->set_pagelayout("embedded");
         $return = "
             <meta http-equiv=\"Content-Security-Policy\"
                   content=\"default-src *;
@@ -76,7 +76,7 @@ function local_kopere_mobile_before_http_headers() {
     $iskoperemobilemobile = isset($USER->kopere_mobile_mobile) && $USER->kopere_mobile_mobile;
     if ($iskoperemobilemobile || optional_param("kopere_mobile_mobile", false, PARAM_INT)) {
 
-        $PAGE->set_pagelayout('embedded');
+        $PAGE->set_pagelayout("embedded");
         $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
         if ($PAGE->theme->name == "edooc") {
             $PAGE->requires->css("/local/kopere_bi/assets/edooc-embedded.css");
@@ -99,11 +99,11 @@ function local_kopere_mobile_before_http_headers() {
  * @throws Exception
  */
 function local_kopere_mobile_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
-    if ($filearea == 'androidappfile') {
+    if ($filearea == "androidappfile") {
         return local_kopere_mobile_pluginfile_sendfile($context, $filearea, $args, $options);
-    } else if ($filearea == 'customizationapptopo') {
+    } else if ($filearea == "customizationapptopo") {
         return local_kopere_mobile_pluginfile_sendfile($context, $filearea, $args, $options);
-    } else if ($filearea == 'logologin') {
+    } else if ($filearea == "logologin") {
         return local_kopere_mobile_pluginfile_sendfile($context, $filearea, $args, $options);
     }
 }
@@ -122,7 +122,7 @@ function local_kopere_mobile_pluginfile($course, $cm, $context, $filearea, $args
 function local_kopere_mobile_pluginfile_sendfile($context, $filearea, $args, array $options = []) {
 
     $fs = get_file_storage();
-    $relativepath = implode('/', $args);
+    $relativepath = implode("/", $args);
 
     $fullpath = "/{$context->id}/local_kopere_mobile/{$filearea}/{$relativepath}";
     $file = $fs->get_file_by_hash(sha1($fullpath));
@@ -130,7 +130,7 @@ function local_kopere_mobile_pluginfile_sendfile($context, $filearea, $args, arr
         return false;
     }
     if ($preview = optional_param("preview", 0, PARAM_INT)) {
-        $options['preview'] = $preview;
+        $options["preview"] = $preview;
     }
 
     require_once(__DIR__ . "/pluginfile_filelib.php");

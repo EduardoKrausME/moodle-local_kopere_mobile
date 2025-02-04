@@ -49,7 +49,7 @@ class mod_subcourse extends external_api {
      */
     public static function mobile_parameters() {
         return new external_function_parameters([
-            'instanceid' => new external_value(PARAM_INT, 'subcourse id'),
+            "instanceid" => new external_value(PARAM_INT, 'subcourse id'),
         ]);
     }
 
@@ -64,10 +64,10 @@ class mod_subcourse extends external_api {
     public static function mobile($instanceid) {
         global $DB, $USER;
 
-        $subcourse = $DB->get_record('subcourse', ['id' => $instanceid]);
+        $subcourse = $DB->get_record("subcourse", ["id" => $instanceid]);
 
         if ($subcourse) {
-            $refcourse = $DB->get_record('course', ['id' => $subcourse->refcourse]);
+            $refcourse = $DB->get_record("course", ["id" => $subcourse->refcourse]);
             if ($refcourse) {
                 $contextcourseref = context_course::instance($refcourse->id);
                 if (!has_capability('moodle/course:view', $contextcourseref)) {
@@ -75,13 +75,13 @@ class mod_subcourse extends external_api {
                 }
 
                 return [
-                    'refcourse' => $refcourse->id,
+                    "refcourse" => $refcourse->id,
                 ];
             }
         }
 
         return [
-            'refcourse' => 0,
+            "refcourse" => 0,
         ];
     }
 
@@ -92,7 +92,7 @@ class mod_subcourse extends external_api {
      */
     public static function mobile_returns() {
         return new external_single_structure([
-            'refcourse' => new external_value(PARAM_INT, ''),
+            "refcourse" => new external_value(PARAM_INT, ""),
         ]);
     }
 }

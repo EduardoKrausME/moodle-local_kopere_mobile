@@ -42,7 +42,7 @@ class mod_googlemeet extends \external_api {
      */
     public static function mobile_parameters() {
         return new \external_function_parameters([
-            'cmid' => new \external_value(PARAM_INT, 'mod instance id'),
+            "cmid" => new \external_value(PARAM_INT, 'mod instance id'),
         ]);
     }
 
@@ -65,20 +65,20 @@ class mod_googlemeet extends \external_api {
             require_once("{$CFG->dirroot}/mod/googlemeet/lib.php");
             require_once("{$CFG->dirroot}/mod/googlemeet/locallib.php");
 
-            $cm = get_coursemodule_from_id('googlemeet', $cmid);
-            $googlemeet = $DB->get_record('googlemeet', ['id' => $cm->instance], '*', MUST_EXIST);
+            $cm = get_coursemodule_from_id("googlemeet", $cmid);
+            $googlemeet = $DB->get_record("googlemeet", ["id" => $cm->instance], '*', MUST_EXIST);
 
-            $recordings = googlemeet_list_recordings(['googlemeetid' => $googlemeet->id, 'visible' => true]);
+            $recordings = googlemeet_list_recordings(["googlemeetid" => $googlemeet->id, "visible" => true]);
             $hasrecordings = !empty($recordings);
 
             $data = [
-                'intro' => $googlemeet->intro,
-                'url' => $googlemeet->url,
-                'cmid' => $cm->id,
-                'upcomingevent' => googlemeet_get_upcoming_events($googlemeet->id),
-                'recording' => [
-                    'hasrecordings' => $hasrecordings,
-                    'recordings' => $recordings,
+                "intro" => $googlemeet->intro,
+                "url" => $googlemeet->url,
+                "cmid" => $cm->id,
+                "upcomingevent" => googlemeet_get_upcoming_events($googlemeet->id),
+                "recording" => [
+                    "hasrecordings" => $hasrecordings,
+                    "recordings" => $recordings,
                 ],
             ];
             $html = $OUTPUT->render_from_template("mod_googlemeet/mobile_view_page_latest", $data);
@@ -90,7 +90,7 @@ class mod_googlemeet extends \external_api {
             $html = str_replace("ion-icon slot=\"", "ons-icon icon=\"ion-", $html);
             $html = str_replace("ion-icon", "ons-icon", $html);
 
-            $html = preg_replace('/<core-course-module-description.*>/', '', $html);
+            $html = preg_replace('/<core-course-module-description.*>/', "", $html);
 
             preg_match_all('/\{\{ \'plugin.(\w+).(\w+)\' \| translate }}/', $html, $translates);
             foreach ($translates[0] as $id => $translate) {
@@ -114,7 +114,7 @@ class mod_googlemeet extends \external_api {
      */
     public static function mobile_returns() {
         return new \external_single_structure([
-            'html' => new \external_value(PARAM_RAW, 'HTML'),
+            "html" => new \external_value(PARAM_RAW, "HTML"),
         ]);
     }
 }

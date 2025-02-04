@@ -43,7 +43,7 @@ class format_card extends \external_api {
      */
     public static function get_structure_parameters() {
         return new \external_function_parameters([
-            'courseid' => new \external_value(PARAM_INT, 'Course id'),
+            "courseid" => new \external_value(PARAM_INT, 'Course id'),
         ]);
     }
 
@@ -100,7 +100,7 @@ class format_card extends \external_api {
      */
     public static function get_structure_returns() {
         return new \external_single_structure([
-            'cards' => data_request_exporter::get_read_structure(),
+            "cards" => data_request_exporter::get_read_structure(),
         ]);
     }
 }

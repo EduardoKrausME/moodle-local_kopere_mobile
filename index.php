@@ -48,17 +48,17 @@ try {
 
             $redirectpage = optional_param("page", false, PARAM_TEXT);
 
-            $mobile = optional_param('kopere_mobile_mobile', false, PARAM_INT);
+            $mobile = optional_param("kopere_mobile_mobile", false, PARAM_INT);
             if ($mobile) {
                 $USER->kopere_mobile_mobile = 1;
             }
-            $preservepage = optional_param('kopere_mobile_preserve_page', false, PARAM_TEXT);
+            $preservepage = optional_param("kopere_mobile_preserve_page", false, PARAM_TEXT);
             if ($preservepage) {
                 $USER->kopere_mobile_preserve_page = $preservepage;
                 $USER->kopere_mobile_redirect_page = $redirectpage;
             }
 
-            $platform = optional_param('kopere_mobile_platform', false, PARAM_TEXT);
+            $platform = optional_param("kopere_mobile_platform", false, PARAM_TEXT);
             if ($platform) {
                 $USER->kopere_mobile_platform = $platform;
             }
@@ -67,7 +67,7 @@ try {
             header("Set-Cookie: MoodleSession={$sessionid}; path=/; SameSite=None; Secure");
             header("Location: {$redirectpage}");
 
-            die();
+            die;
             break;
 
         case "test-config":
@@ -95,7 +95,7 @@ function validate_token() {
         return true;
     }
 
-    $token = optional_param('token', false, PARAM_TEXT);
+    $token = optional_param("token", false, PARAM_TEXT);
     if (!$token) {
         @header("smtapp-status:no-token");
         return false;

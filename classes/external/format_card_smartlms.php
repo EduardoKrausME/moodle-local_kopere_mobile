@@ -138,7 +138,7 @@ class format_card_smartlms {
             $return["headerdisplaymultipage"] = false;
             $return["cardlevel"] = $course->cardlevel;
 
-            $placeholder = $PAGE->theme->image_url('card-thumb', 'format_cards');
+            $placeholder = $PAGE->theme->image_url('card-thumb', "format_cards");
             $cardsgetimage = cards::get_image($course->id, $section->id);
             $return["image"] = $cardsgetimage ? $cardsgetimage : $placeholder->out();
         }
