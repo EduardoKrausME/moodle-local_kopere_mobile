@@ -26,8 +26,7 @@
  * local_kopere_mobile_before_standard_html_head function
  *
  * @return string
- * @throws coding_exception
- * @throws dml_exception
+ * @throws Exception
  */
 function local_kopere_mobile_before_standard_html_head() {
     global $USER, $PAGE;
@@ -97,10 +96,6 @@ function local_kopere_mobile_before_http_headers() {
  * @param array $options
  *
  * @return bool
- * @throws coding_exception
- * @throws dml_exception
- * @throws moodle_exception
- * @throws require_login_exception
  * @throws Exception
  */
 function local_kopere_mobile_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
