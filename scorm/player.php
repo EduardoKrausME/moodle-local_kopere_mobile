@@ -30,7 +30,7 @@ require_once('../../../config.php');
 require_once($CFG->dirroot . '/mod/scorm/locallib.php');
 require_once($CFG->libdir . '/completionlib.php');
 
-$SESSION->kopere_mobile_preserve_page = false;
+$SESSION->local_kopere_mobile_preserve_page = false;
 $SESSION->kopere_mobile_redirect_page = false;
 
 $id = optional_param('cm', '', PARAM_INT);                          // Course Module ID, or.

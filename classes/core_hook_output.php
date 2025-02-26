@@ -41,8 +41,8 @@ class core_hook_output {
     public static function before_http_headers() {
         global $SESSION, $PAGE;
 
-        $iskoperemobilemobile = isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile;
-        if ($iskoperemobilemobile || optional_param("kopere_mobile_mobile", false, PARAM_INT)) {
+        $iskoperemobilemobile = isset($SESSION->local_kopere_mobile_mobile) && $SESSION->local_kopere_mobile_mobile;
+        if ($iskoperemobilemobile || optional_param("local_kopere_mobile_mobile", false, PARAM_INT)) {
 
             $PAGE->set_pagelayout("embedded");
             $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
@@ -62,8 +62,8 @@ class core_hook_output {
 
         ob_start();
 
-        if (isset($SESSION->local_kopere_mobile_preserve_page) && $SESSION->local_kopere_mobile_preserve_page) {
-            $preservepage = $SESSION->local_kopere_mobile_preserve_page;
+        if (isset($SESSION->local_local_kopere_mobile_preserve_page) && $SESSION->local_local_kopere_mobile_preserve_page) {
+            $preservepage = $SESSION->local_local_kopere_mobile_preserve_page;
 
             if (strpos($_SERVER["REQUEST_URI"], $preservepage) !== false) { //phpcs:disable
                 // Não faz nada aqui.
@@ -74,7 +74,7 @@ class core_hook_output {
             }
         }
 
-        if (isset($SESSION->kopere_mobile_mobile) && $SESSION->kopere_mobile_mobile) {
+        if (isset($SESSION->local_kopere_mobile_mobile) && $SESSION->local_kopere_mobile_mobile) {
             $PAGE->set_pagelayout("embedded");
             $return = "
             <meta http-equiv=\"Content-Security-Policy\"
