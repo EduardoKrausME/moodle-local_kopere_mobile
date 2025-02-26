@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die;
 
 $functions = [
 
-    "local_kopere_mobile_public_config" => [
+    "local_kopere_mobile_publicconfig" => [
         "classname" => "\\local_kopere_mobile\\external\\public_config",
         "classpath" => "local/kopere_mobile/classes/external/public_config.php",
         "methodname" => "settings",
