@@ -22,7 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use core\message\message;
 use local_kopere_dashboard\util\release;
 
 require("../../config.php");
@@ -59,7 +58,7 @@ if (isset($_POST["motivo"][10])) {
         "alternatename" => "",
     ];
 
-    $eventdata = new message();
+    $eventdata = new \core\message\message();
     if (release::version() >= 3.2) {
         $eventdata->courseid = SITEID;
         $eventdata->modulename = "moodle";
