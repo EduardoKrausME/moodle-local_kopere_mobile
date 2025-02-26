@@ -33,11 +33,11 @@ header("Expires: 0");
 
 $PAGE->set_context(null);
 
-if (empty($localsmtappsendheader)) {
+if (empty($localkoperesendheader)) {
     header_remove("Access-Control-Allow-Origin");
     header("Access-Control-Allow-Origin: *");
 }
-$localsmtappsendheader = true;
+$localkoperesendheader = true;
 
 try {
     $action = optional_param("action", false, PARAM_TEXT);
@@ -91,36 +91,31 @@ function validate_token() {
     global $DB, $USER;
 
     if (isloggedin()) {
-        @header("smtapp-status:isloggedin");
+        @header("kopere-status:isloggedin");
         return true;
     }
 
     $token = optional_param("token", false, PARAM_TEXT);
     if (!$token) {
-        @header("smtapp-status:no-token");
+        @header("kopere-status:no-token");
         return false;
     }
 
     $sessao = $DB->get_record("external_tokens", ["token" => $token]);
     if (!$sessao) {
-        @header("smtapp-status:no-session");
+        @header("kopere-status:no-session");
         return false;
     }
 
     $user = $DB->get_record("user", ["id" => $sessao->userid]);
     if (!$user) {
-        @header("smtapp-status:no-user");
+        @header("kopere-status:no-user");
         return false;
     }
 
     \core\session\manager::login_user($user);
     unset($USER->preference);
     check_user_preferences_loaded($USER);
-
-    $smtappplatform = optional_param("smt_app_platform", false, PARAM_TEXT);
-    if ($smtappplatform) {
-        $USER->smt_app_platform = $smtappplatform;
-    }
 
     return true;
 }
