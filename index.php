@@ -119,5 +119,3 @@ function validate_token() {
 
     return true;
 }
-
-

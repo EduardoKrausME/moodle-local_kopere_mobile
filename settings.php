@@ -40,14 +40,12 @@ if ($hassiteconfig) {
         get_string("customizationapp", "local_kopere_mobile"), "");
     $settings->add($setting);
 
-
     $setting = new admin_setting_configstoredfile("local_kopere_mobile/logologin",
         get_string("logologin", "local_kopere_mobile"),
         get_string("logologin_desc", "local_kopere_mobile"),
         "logologin", 0, ["maxfiles" => 1, "accepted_types" => [".png", ".svg"]]);
     $setting->set_updatedcallback("theme_reset_all_caches");
     $settings->add($setting);
-
 
     $setting = new admin_setting_configstoredfile("local_kopere_mobile/customizationapptopo",
         get_string("customizationapptopo", "local_kopere_mobile"),
