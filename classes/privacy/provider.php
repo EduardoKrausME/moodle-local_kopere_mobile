@@ -18,7 +18,7 @@
  * Privacy Subsystem implementation for local_kopere_mobile.
  *
  * @package    local_kopere_mobile
- * @copyright  2024 Eduardo Kraus {@link http://eduardokraus.com}
+ * @copyright  2024 Eduardo Kraus {@link https://eduardokraus.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,7 +28,7 @@ namespace local_kopere_mobile\privacy;
  * The local_kopere_mobile module does not store any data.
  *
  * @package   local_kopere_mobile
- * @copyright 2017 Eduardo Kraus {@link http://eduardokraus.com}
+ * @copyright 2017 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {
