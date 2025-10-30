@@ -35,6 +35,5 @@ class event_observers {
      * @param \core\event\base $event
      */
     public static function process_event(\core\event\base $event) {
-
     }
 }

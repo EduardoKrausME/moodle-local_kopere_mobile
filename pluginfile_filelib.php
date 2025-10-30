@@ -920,7 +920,6 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
 
         kopere_send_file_not_found();
     }
-
 }
 
 /**
