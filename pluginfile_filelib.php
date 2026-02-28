@@ -841,8 +841,6 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             localpluginfile_send_stored_file($file, null, 0, false, $sendfileoptions);
         }
 
-        $sendfileoptions["preview"] = null;
-
         $filefunction = $component . "_pluginfile";
         $filefunctionold = $modname . "_pluginfile";
         if (function_exists($filefunction)) {
@@ -888,8 +886,6 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             $birecord = null;
         }
 
-        $sendfileoptions["preview"] = null;
-
         $filefunction = $component . "_pluginfile";
         if (function_exists($filefunction)) {
             // If the function exists, it must send the file and terminate. Whatever it returns leads to "not found".
@@ -909,8 +905,6 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
             kopere_send_file_not_found();
         }
         include_once("{$dir}/lib.php");
-
-        $sendfileoptions["preview"] = null;
 
         $filefunction = $component . "_pluginfile";
         if (function_exists($filefunction)) {
