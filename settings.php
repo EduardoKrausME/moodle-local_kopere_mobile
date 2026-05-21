@@ -94,15 +94,6 @@ if ($hassiteconfig) {
     } else {
         $extradescription = get_string("customfield_field_extradescription", "local_kopere_mobile");
     }
-    $choices = [
-        "default" => get_string("customizationapphome_default", "local_kopere_mobile"),
-        "background" => get_string("customizationapphome_background", "local_kopere_mobile"),
-    ];
-    $setting = new admin_setting_configselect("local_kopere_mobile/customizationapphome",
-        get_string("customizationapphome", "local_kopere_mobile"),
-        get_string("customizationapphome_desc", "local_kopere_mobile") . $extradescription,
-        "default", $choices);
-    $settings->add($setting);
 
     $setting = new admin_setting_configtextarea("local_kopere_mobile/customizationappcss",
         get_string("customizationappcss", "local_kopere_mobile"),
