@@ -46,9 +46,6 @@ class core_hook_output {
 
             $PAGE->set_pagelayout("embedded");
             $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
-            if ($PAGE->theme->name == "edooc") {
-                $PAGE->requires->css("/local/kopere_bi/assets/edooc-embedded.css");
-            }
         }
     }
 

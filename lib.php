@@ -78,9 +78,6 @@ function local_kopere_mobile_before_http_headers() {
 
         $PAGE->set_pagelayout("embedded");
         $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
-        if ($PAGE->theme->name == "edooc") {
-            $PAGE->requires->css("/local/kopere_bi/assets/edooc-embedded.css");
-        }
     }
 }
 
