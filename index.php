@@ -68,14 +68,11 @@ try {
             header("Location: {$redirectpage}");
 
             die;
-            break;
-
         case "test-config":
 
             $returnjson = \local_kopere_mobile\loadconfig::test();
 
             die(json_encode($returnjson));
-            break;
     }
 } catch (Exception $e) {
     echo $e->getMessage();
