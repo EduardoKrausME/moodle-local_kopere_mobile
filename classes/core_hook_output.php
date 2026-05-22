@@ -39,9 +39,9 @@ class core_hook_output {
      *
      */
     public static function before_http_headers() {
-        global $SESSION, $PAGE;
+        global $USER, $PAGE;
 
-        $iskoperemobilemobile = isset($SESSION->local_kopere_mobile_mobile) && $SESSION->local_kopere_mobile_mobile;
+        $iskoperemobilemobile = isset($USER->local_kopere_mobile_mobile) && $USER->local_kopere_mobile_mobile;
         if ($iskoperemobilemobile || optional_param("local_kopere_mobile_mobile", false, PARAM_INT)) {
 
             $PAGE->set_pagelayout("embedded");
@@ -55,23 +55,23 @@ class core_hook_output {
      * @return string
      */
     public static function before_standard_head_html_generation() {
-        global $SESSION, $PAGE;
+        global $USER, $PAGE;
 
         ob_start();
 
-        if (isset($SESSION->local_local_kopere_mobile_preserve_page) && $SESSION->local_local_kopere_mobile_preserve_page) {
-            $preservepage = $SESSION->local_local_kopere_mobile_preserve_page;
+        if (isset($USER->local_local_kopere_mobile_preserve_page) && $USER->local_local_kopere_mobile_preserve_page) {
+            $preservepage = $USER->local_local_kopere_mobile_preserve_page;
 
             if (strpos($_SERVER["REQUEST_URI"], $preservepage) !== false) { //phpcs:disable
                 // Não faz nada aqui.
-            } else if (isset($SESSION->kopere_mobile_redirect_page[5])) {
-                header("Location: {$SESSION->kopere_mobile_redirect_page}");
+            } else if (isset($USER->kopere_mobile_redirect_page[5])) {
+                header("Location: {$USER->kopere_mobile_redirect_page}");
                 header("kopere_mobile-status: event_observers::process_event");
                 die;
             }
         }
 
-        if (isset($SESSION->local_kopere_mobile_mobile) && $SESSION->local_kopere_mobile_mobile) {
+        if (isset($USER->local_kopere_mobile_mobile) && $USER->local_kopere_mobile_mobile) {
             $PAGE->set_pagelayout("embedded");
             $return = "
             <meta http-equiv=\"Content-Security-Policy\"

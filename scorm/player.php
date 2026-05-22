@@ -30,8 +30,8 @@ require_once('../../../config.php');
 require_once($CFG->dirroot . '/mod/scorm/locallib.php');
 require_once($CFG->libdir . '/completionlib.php');
 
-$SESSION->local_kopere_mobile_preserve_page = false;
-$SESSION->kopere_mobile_redirect_page = false;
+$USER->local_kopere_mobile_preserve_page = false;
+$USER->kopere_mobile_redirect_page = false;
 
 $id = optional_param('cm', '', PARAM_INT);                          // Course Module ID, or.
 $a = optional_param('a', '', PARAM_INT);                            // Scorm ID.
@@ -163,11 +163,11 @@ if ($scorm->lastattemptlock == 1 && $result->attemptleft == 0) {
 $scoidstr = '&amp;scoid=' . $sco->id;
 $modestr = '&amp;mode=' . $mode;
 
-$SESSION->scorm = new stdClass();
-$SESSION->scorm->scoid = $sco->id;
-$SESSION->scorm->scormstatus = 'Not Initialized';
-$SESSION->scorm->scormmode = $mode;
-$SESSION->scorm->attempt = $attempt;
+$USER->scorm = new stdClass();
+$USER->scorm->scoid = $sco->id;
+$USER->scorm->scormstatus = 'Not Initialized';
+$USER->scorm->scormmode = $mode;
+$USER->scorm->attempt = $attempt;
 
 // Mark module viewed.
 $completion = new completion_info($course);
