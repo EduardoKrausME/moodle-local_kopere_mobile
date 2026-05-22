@@ -24,6 +24,8 @@
 
 namespace local_kopere_mobile\privacy;
 
+use core_privacy\local\metadata\null_provider;
+
 /**
  * The local_kopere_mobile module does not store any data.
  *
@@ -31,7 +33,7 @@ namespace local_kopere_mobile\privacy;
  * @copyright 2017 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider {
+class provider implements null_provider {
     /**
      * Get the language string identifier with the component's language
      * file to explain why this plugin stores no data.

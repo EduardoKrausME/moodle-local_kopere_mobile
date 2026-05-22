@@ -24,6 +24,7 @@
 
 namespace local_kopere_mobile\external;
 
+use context_course;
 use format_cards\pluginfile\cards;
 
 /**
@@ -59,7 +60,7 @@ class format_card_smartlms {
         $cards = [];
         // Mostra as cards.
         foreach ($sections as $section => $thissection) {
-            $cardsinfo = $this->show_card($section, $thissection, $numsections, $course, $level = 0);
+            $cardsinfo = $this->show_card($section, $thissection, $numsections, $course);
 
             if ($cardsinfo) {
                 $cards[] = $cardsinfo;
@@ -84,7 +85,7 @@ class format_card_smartlms {
     public function show_card($section, $thissection, $numsections, $course, $level = 0) {
         global $COURSE;
 
-        if (!$thissection->visible && !has_capability('moodle/course:sectionvisibility', \context_course::instance($COURSE->id))) {
+        if (!$thissection->visible && !has_capability('moodle/course:sectionvisibility', context_course::instance($COURSE->id))) {
             return null;
         }
 
@@ -140,7 +141,7 @@ class format_card_smartlms {
 
             $placeholder = $PAGE->theme->image_url('card-thumb', "format_cards");
             $cardsgetimage = cards::get_image($course->id, $section->id);
-            $return["image"] = $cardsgetimage ? $cardsgetimage : $placeholder->out();
+            $return["image"] = $cardsgetimage ?: $placeholder->out();
         }
 
         return $return;

@@ -24,6 +24,11 @@
 
 namespace local_kopere_mobile\external;
 
+use external_api;
+use external_function_parameters;
+use external_single_structure;
+use external_value;
+
 defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
@@ -33,7 +38,7 @@ require_once("{$CFG->libdir}/externallib.php");
  * Class mod_googlemeet
  * @package local_kopere_mobile\external
  */
-class mod_googlemeet extends \external_api {
+class mod_googlemeet extends external_api {
 
     /**
      * mobile_parameters function
@@ -41,8 +46,8 @@ class mod_googlemeet extends \external_api {
      * @return \external_function_parameters
      */
     public static function mobile_parameters() {
-        return new \external_function_parameters([
-            "cmid" => new \external_value(PARAM_INT, 'mod instance id'),
+        return new external_function_parameters([
+            "cmid" => new external_value(PARAM_INT, 'mod instance id'),
         ]);
     }
 
@@ -113,8 +118,8 @@ class mod_googlemeet extends \external_api {
      * @return \external_single_structure
      */
     public static function mobile_returns() {
-        return new \external_single_structure([
-            "html" => new \external_value(PARAM_RAW, "HTML"),
+        return new external_single_structure([
+            "html" => new external_value(PARAM_RAW, "HTML"),
         ]);
     }
 }

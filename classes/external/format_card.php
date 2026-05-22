@@ -24,6 +24,11 @@
 
 namespace local_kopere_mobile\external;
 
+use context_course;
+use external_api;
+use external_function_parameters;
+use external_single_structure;
+use external_value;
 use tool_dataprivacy\external\data_request_exporter;
 
 defined('MOODLE_INTERNAL') || die;
@@ -34,7 +39,7 @@ require_once("{$CFG->libdir}/externallib.php");
  * Class format_card
  * @package local_kopere_mobile\external
  */
-class format_card extends \external_api {
+class format_card extends external_api {
 
     /**
      * get_structure_parameters function
@@ -42,16 +47,17 @@ class format_card extends \external_api {
      * @return \external_function_parameters
      */
     public static function get_structure_parameters() {
-        return new \external_function_parameters([
-            "courseid" => new \external_value(PARAM_INT, 'Course id'),
+        return new external_function_parameters([
+            "courseid" => new external_value(PARAM_INT, 'Course id'),
         ]);
     }
 
     /**
      * get_structure function
+     *
      * @param int $courseid
      *
-     * @return array
+     * @return void
      * @throws \Exception
      */
     public static function get_structure($courseid) {
@@ -59,7 +65,7 @@ class format_card extends \external_api {
 
         require_once("{$CFG->dirroot}/course/format/cards/lib.php");
 
-        $PAGE->set_context(\context_course::instance($courseid));
+        $PAGE->set_context(context_course::instance($courseid));
 
         if (file_exists("{$CFG->dirroot}/course/format/cards/classes/output/courseformat/content/section/header.php")) {
 
@@ -99,7 +105,7 @@ class format_card extends \external_api {
      * @return \external_description
      */
     public static function get_structure_returns() {
-        return new \external_single_structure([
+        return new external_single_structure([
             "cards" => data_request_exporter::get_read_structure(),
         ]);
     }

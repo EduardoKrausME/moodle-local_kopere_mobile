@@ -37,12 +37,15 @@ class core_hook_output {
     /**
      * Function before_http_headers
      *
+     * @throws \coding_exception
+     * @throws \core\exception\coding_exception
      */
     public static function before_http_headers() {
         global $USER, $PAGE;
 
         $iskoperemobilemobile = isset($USER->local_kopere_mobile_mobile) && $USER->local_kopere_mobile_mobile;
-        if ($iskoperemobilemobile || optional_param("local_kopere_mobile_mobile", false, PARAM_INT)) {
+        $iskoperemobilemobileparams = optional_param("local_kopere_mobile_mobile", false, PARAM_INT);
+        if ($iskoperemobilemobile || $iskoperemobilemobileparams) {
 
             $PAGE->set_pagelayout("embedded");
             $PAGE->requires->css("/local/kopere_bi/assets/embedded.css");
@@ -62,12 +65,12 @@ class core_hook_output {
         if (isset($USER->local_local_kopere_mobile_preserve_page) && $USER->local_local_kopere_mobile_preserve_page) {
             $preservepage = $USER->local_local_kopere_mobile_preserve_page;
 
-            if (strpos($_SERVER["REQUEST_URI"], $preservepage) !== false) { //phpcs:disable
-                // Não faz nada aqui.
-            } else if (isset($USER->kopere_mobile_redirect_page[5])) {
-                header("Location: {$USER->kopere_mobile_redirect_page}");
-                header("kopere_mobile-status: event_observers::process_event");
-                die;
+            if (strpos($_SERVER["REQUEST_URI"], $preservepage) === false) {
+                if (isset($USER->kopere_mobile_redirect_page[5])) {
+                    header("Location: {$USER->kopere_mobile_redirect_page}");
+                    header("kopere_mobile-status: event_observers::process_event");
+                    die;
+                }
             }
         }
 
@@ -98,6 +101,7 @@ class core_hook_output {
     /**
      * Function before_footer_html_generation
      *
+     * @throws \coding_exception
      */
     public static function before_footer_html_generation() {
         global $CFG;

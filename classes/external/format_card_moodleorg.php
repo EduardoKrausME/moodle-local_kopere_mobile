@@ -24,8 +24,12 @@
 
 namespace local_kopere_mobile\external;
 
+use format_cards\output\courseformat\content\section\header;
+use format_cards\output\renderer;
+
 /**
  * Class format_card_moodleorg
+ *
  * @package local_kopere_mobile\external
  */
 class format_card_moodleorg {
@@ -50,9 +54,9 @@ class format_card_moodleorg {
 
         $itens = [];
         foreach (self::get_sections_to_display($format, $modinfo) as $sectionnum => $section) {
-            $header = new \format_cards\output\courseformat\content\section\header($format, $section);
+            $header = new header($format, $section);
 
-            $renderer = new \format_cards\output\renderer($PAGE, null);
+            $renderer = new renderer($PAGE, null);
 
             $itens[] = $header->export_for_template($renderer);
         }

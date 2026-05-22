@@ -76,7 +76,7 @@ class public_config extends external_api {
         $sitesupportavailable = (isset($CFG->supportavailability) && $CFG->supportavailability == CONTACT_SUPPORT_ANYONE);
 
         $data = [
-            "sitename" => external_format_string($SITE->fullname, $context->id, true),
+            "sitename" => external_format_string($SITE->fullname, $context->id),
             "rememberusername" => $CFG->rememberusername,
             "authloginviaemail" => $CFG->authloginviaemail,
             "registerauth" => $CFG->registerauth,
@@ -99,7 +99,7 @@ class public_config extends external_api {
             "customfieldpicture" => json_encode(self::setting_customfieldpicture()),
             "block_myoverview_hidden_course" => json_encode(self::block_myoverview_hidden_course()),
 
-            "message_koperemobile" => get_config("message_koperemobile", "version") ? true : false,
+            "message_koperemobile" => (bool) get_config("message_koperemobile", "version"),
         ];
 
         return $data;
@@ -198,9 +198,9 @@ class public_config extends external_api {
         $images = [];
         foreach ($files as $file) {
             $url = moodle_url::make_pluginfile_url($file->contextid, "customfield_picture", "file",
-                $file->data_id, "/", $file->filename)->out(true);
+                $file->data_id, "/", $file->filename);
             $images[$file->couse_id] = (object)[
-                "src" => $url,
+                "src" => $url->out(),
                 "extension" => pathinfo($file->filename, PATHINFO_EXTENSION),
             ];
         }

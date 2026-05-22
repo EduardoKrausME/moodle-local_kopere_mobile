@@ -24,6 +24,12 @@
 
 namespace local_kopere_mobile\external;
 
+use context_module;
+use external_api;
+use external_function_parameters;
+use external_single_structure;
+use external_value;
+
 defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
@@ -33,7 +39,7 @@ require_once("{$CFG->libdir}/externallib.php");
  * Class mod_make_view
  * @package local_kopere_mobile\external
  */
-class mod_make_view extends \external_api {
+class mod_make_view extends external_api {
 
     /**
      * make_view_parameters function
@@ -41,9 +47,9 @@ class mod_make_view extends \external_api {
      * @return \external_function_parameters
      */
     public static function make_view_parameters() {
-        return new \external_function_parameters([
-            "modid" => new \external_value(PARAM_INT, 'mod instance id'),
-            "modname" => new \external_value(PARAM_TEXT, 'mod instance name'),
+        return new external_function_parameters([
+            "modid" => new external_value(PARAM_INT, 'mod instance id'),
+            "modname" => new external_value(PARAM_TEXT, 'mod instance name'),
         ]);
     }
 
@@ -66,9 +72,9 @@ class mod_make_view extends \external_api {
 
             // Request and permission validation.
             $mod = $DB->get_record($modname, ["id" => $modid], '*', MUST_EXIST);
-            list($course, $cm) = get_course_and_cm_from_instance($mod, $modname);
+            [$course, $cm] = get_course_and_cm_from_instance($mod, $modname);
 
-            $context = \context_module::instance($cm->id);
+            $context = context_module::instance($cm->id);
             self::validate_context($context);
 
             require_capability("mod/{$modname}:view", $context);
@@ -89,8 +95,8 @@ class mod_make_view extends \external_api {
      * @return \external_single_structure
      */
     public static function make_view_returns() {
-        return new \external_single_structure([
-            "status" => new \external_value(PARAM_BOOL, "Status"),
+        return new external_single_structure([
+            "status" => new external_value(PARAM_BOOL, "Status"),
         ]);
     }
 }

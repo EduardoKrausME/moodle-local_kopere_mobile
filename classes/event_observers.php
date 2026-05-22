@@ -24,8 +24,11 @@
 
 namespace local_kopere_mobile;
 
+use core\event\base;
+
 /**
  * Class event_observers
+ *
  * @package local_kopere_mobile
  */
 class event_observers {
@@ -34,6 +37,6 @@ class event_observers {
      *
      * @param \core\event\base $event
      */
-    public static function process_event(\core\event\base $event) {
+    public static function process_event(base $event) {
     }
 }

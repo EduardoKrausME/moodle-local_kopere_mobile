@@ -31,9 +31,11 @@ require_once("{$CFG->libdir}/externallib.php");
 
 use context_course;
 use external_api;
+use external_description;
 use external_function_parameters;
 use external_value;
 use external_single_structure;
+use local_kopere_dashboard\util\enroll_util;
 
 /**
  * Class mod_subcourse
@@ -60,6 +62,7 @@ class mod_subcourse extends external_api {
      * @return array
      * @throws \dml_exception
      * @throws \coding_exception
+     * @throws \Exception
      */
     public static function mobile($instanceid) {
         global $DB, $USER;
@@ -71,7 +74,7 @@ class mod_subcourse extends external_api {
             if ($refcourse) {
                 $contextcourseref = context_course::instance($refcourse->id);
                 if (!has_capability('moodle/course:view', $contextcourseref)) {
-                    \local_kopere_dashboard\util\enroll_util::enrol($refcourse, $USER, 0, 5);
+                    enroll_util::enrol($refcourse, $USER, 0, 5);
                 }
 
                 return [

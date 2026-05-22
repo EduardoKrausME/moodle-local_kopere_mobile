@@ -24,6 +24,12 @@
 
 namespace local_kopere_mobile\external;
 
+use external_api;
+use external_function_parameters;
+use external_multiple_structure;
+use external_single_structure;
+use external_value;
+
 defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
@@ -33,7 +39,7 @@ require_once("{$CFG->libdir}/externallib.php");
  * Class mod_icon
  * @package local_kopere_mobile\external
  */
-class mod_icon extends \external_api {
+class mod_icon extends external_api {
 
     /**
      * icon_parameters function
@@ -41,7 +47,7 @@ class mod_icon extends \external_api {
      * @return \external_function_parameters
      */
     public static function icon_parameters() {
-        return new \external_function_parameters([]);
+        return new external_function_parameters([]);
     }
 
     /**
@@ -115,14 +121,14 @@ class mod_icon extends \external_api {
      * @return \external_description
      */
     public static function icon_returns() {
-        return new \external_multiple_structure(new \external_single_structure([
-            "name" => new \external_value(PARAM_RAW, ""),
-            "monologo_ext" => new \external_value(PARAM_RAW, ""),
-            "monologo_url" => new \external_value(PARAM_RAW, ""),
-            "icon_ext" => new \external_value(PARAM_RAW, ""),
-            "icon_url" => new \external_value(PARAM_RAW, ""),
-            "mod_purpose" => new \external_value(PARAM_RAW, ""),
-            "courses" => new \external_value(PARAM_RAW, ""),
+        return new external_multiple_structure(new external_single_structure([
+            "name" => new external_value(PARAM_RAW, ""),
+            "monologo_ext" => new external_value(PARAM_RAW, ""),
+            "monologo_url" => new external_value(PARAM_RAW, ""),
+            "icon_ext" => new external_value(PARAM_RAW, ""),
+            "icon_url" => new external_value(PARAM_RAW, ""),
+            "mod_purpose" => new external_value(PARAM_RAW, ""),
+            "courses" => new external_value(PARAM_RAW, ""),
         ]));
     }
 }
