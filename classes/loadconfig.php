@@ -24,8 +24,11 @@
 
 namespace local_kopere_mobile;
 
+use core_useragent;
+
 /**
  * Class config
+ *
  * @package local_kopere_mobile
  */
 class loadconfig {
@@ -57,19 +60,15 @@ class loadconfig {
             set_config("setuplink", "{$CFG->wwwroot}/local/kopere_mobile/download.php", "tool_mobile");
         }
 
-        $usertest = $DB->get_record("user", ["username" => 'usuario-app'],
-            'id,auth,confirmed,deleted,suspended,firstname,lastname');
-
         $externalservicesmoodlemobileapp = $DB->get_field("external_services", "enabled", ["shortname" => "moodle_mobile_app"]);
 
-        return (object)[
+        return (object) [
             "is_moodle_cookie_secure" => is_moodle_cookie_secure(),
-            "enablemobilewebservice" => @$CFG->enablemobilewebservice ? true : false,
-            "allowframembedding" => @$CFG->allowframembedding ? true : false,
-            "external_services_moodle_mobile_app" => $externalservicesmoodlemobileapp ? true : false,
-            "is_chrome" => \core_useragent::is_chrome(),
-            "check_chrome_version_78" => \core_useragent::check_chrome_version("78"),
-            "user" => $usertest,
+            "enablemobilewebservice" => (bool) @$CFG->enablemobilewebservice,
+            "allowframembedding" => (bool) @$CFG->allowframembedding,
+            "external_services_moodle_mobile_app" => (bool) $externalservicesmoodlemobileapp,
+            "is_chrome" => core_useragent::is_chrome(),
+            "check_chrome_version_78" => core_useragent::check_chrome_version("78"),
             "message_koperemobile_version" => intval(get_config("message_koperemobile", "version")),
             "local_kopere_mobile_version" => intval(get_config("local_kopere_mobile", "version")),
         ];
@@ -85,37 +84,15 @@ class loadconfig {
      * @throws \moodle_exception
      */
     public static function test_to_string() {
-        global $CFG, $OUTPUT;
+        global $OUTPUT;
 
         $returnjson = self::test();
-        $returnjson->userapp = "";
-        $returnjson->userapp_status = 0;
-
-        if ($returnjson->user) {
-            $returnjson->userapp_url = "{$CFG->wwwroot}/user/editadvanced.php?id={$returnjson->user->id}";
-            if ($returnjson->user->auth != "manual") {
-                $returnjson->userapp_url = "{$CFG->wwwroot}/user/editadvanced.php?id={$returnjson->user->id}";
-                $returnjson->userapp = get_string("config_not_manual", "local_kopere_mobile");
-            } else if ($returnjson->user->confirmed == 0) {
-                $returnjson->userapp = get_string("config_not_confirmed", "local_kopere_mobile");
-            } else if ($returnjson->user->deleted == 1) {
-                $returnjson->userapp = get_string("config_deleted", "local_kopere_mobile");
-            } else if ($returnjson->user->suspended == 1) {
-                $returnjson->userapp = get_string("config_suspended", "local_kopere_mobile");
-            } else {
-                $returnjson->userapp_status = 1;
-            }
-        } else {
-            $returnjson->userapp_url = "{$CFG->wwwroot}/user/editadvanced.php?id=-1";
-            $returnjson->userapp = get_string("config_not_user", "local_kopere_mobile");
-        }
 
         $returnjson->show =
             !$returnjson->is_moodle_cookie_secure +
             !$returnjson->allowframembedding +
             !$returnjson->enablemobilewebservice +
-            !$returnjson->external_services_moodle_mobile_app +
-            $returnjson->userapp_status;
+            !$returnjson->external_services_moodle_mobile_app;
 
         if ($returnjson->show) {
             $retorno = $OUTPUT->render_from_template('local_kopere_mobile/config_test', $returnjson);

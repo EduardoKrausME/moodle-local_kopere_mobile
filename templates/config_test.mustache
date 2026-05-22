@@ -22,9 +22,7 @@
       "is_moodle_cookie_secure": true,
       "allowframembedding": true,
       "enablemobilewebservice": true,
-      "external_services_moodle_mobile_app": true,
-      "userapp": "aaa bbb",
-      "userapp_url": "http://ssss"
+      "external_services_moodle_mobile_app": true
     }
 }}
 <div style="padding: 0 0 20px 19px">
@@ -61,13 +59,4 @@
                target="_blank">{{#str}}config_test_correct,local_kopere_mobile{{/str}}</a>
         </div>
     {{/external_services_moodle_mobile_app}}
-
-    {{#userapp}}
-        <div>
-            <strong>user-validate_login</strong>:
-            <a style="color:#E91E63"
-               href="{{{userapp_url}}}"
-               target="_blank">{{{userapp}}}</a>
-        </div>
-    {{/userapp}}
 </div>
