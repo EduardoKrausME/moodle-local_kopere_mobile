@@ -125,4 +125,3 @@ class core_hook_output {
         }
     }
 }
-
