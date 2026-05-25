@@ -23,7 +23,6 @@
  */
 
 require("../../config.php");
-require("../kopere_dashboard/autoload.php");
 require("{$CFG->libdir}/adminlib.php");
 global $DB, $PAGE, $OUTPUT;
 

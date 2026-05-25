@@ -25,7 +25,6 @@
 use local_kopere_dashboard\util\release;
 
 require("../../config.php");
-require("../kopere_dashboard/autoload.php");
 global $DB, $PAGE, $OUTPUT, $COURSE;
 
 $PAGE->set_context(context_system::instance());
