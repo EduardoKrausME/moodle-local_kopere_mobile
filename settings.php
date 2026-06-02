@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use local_kopere_mobile\loadconfig;
+
 defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) {
@@ -29,7 +31,7 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage("local_kopere_mobile", get_string("setting_title", "local_kopere_mobile"));
     $ADMIN->add("localplugins", $settings);
 
-    $test = \local_kopere_mobile\loadconfig::test_to_string();
+    $test = loadconfig::test_to_string();
     if ($test) {
         $setting = new admin_setting_heading("local_kopere_mobile/name",
             get_string("status_app", "local_kopere_mobile"), $test);
