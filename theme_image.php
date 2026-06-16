@@ -25,8 +25,6 @@
 define("ABORT_AFTER_CONFIG", true);
 require("../../config.php"); // This stops immediately at the beginning of lib/setup.php.
 
-$PAGE->set_context(null);
-
 if ($slashargument = min_get_slash_argument()) {
     $slashargument = ltrim($slashargument, "/");
     if (substr_count($slashargument, "/") < 3) {
