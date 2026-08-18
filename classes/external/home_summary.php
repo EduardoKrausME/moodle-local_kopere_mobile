@@ -17,7 +17,9 @@
 /**
  * Home summary external service.
  *
- * @package local_kopere_mobile
+ * @package    local_kopere_mobile
+ * @copyright  2024 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_kopere_mobile\external;
