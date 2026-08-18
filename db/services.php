@@ -37,6 +37,15 @@ $functions = [
         "loginrequired" => false,
     ],
 
+    "local_kopere_mobile_home_summary" => [
+        "classname" => "\\local_kopere_mobile\\external\\home_summary",
+        "classpath" => "local/kopere_mobile/classes/external/home_summary.php",
+        "methodname" => "execute",
+        "description" => "Returns the authenticated user's learning journey summary for the mobile home.",
+        "type" => "read",
+        "services" => [MOODLE_OFFICIAL_MOBILE_SERVICE],
+    ],
+
     "format_card_get_structure" => [
         "classname" => "\\local_kopere_mobile\\external\\format_card",
         "classpath" => "local/kopere_mobile/classes/external/format_card.php",
