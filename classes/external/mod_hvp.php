@@ -24,6 +24,7 @@
 
 namespace local_kopere_mobile\external;
 
+use context_module;
 use external_api;
 use external_function_parameters;
 use external_single_structure;
@@ -67,6 +68,11 @@ class mod_hvp extends external_api {
     public static function mobile($cmid) {
         global $DB, $CFG, $OUTPUT, $USER;
 
+        $params = self::validate_parameters(self::mobile_parameters(), [
+            "cmid" => $cmid,
+        ]);
+        $cmid = $params["cmid"];
+
         if (file_exists("{$CFG->dirroot}/mod/hvp/classes/output/mobile.php")) {
             require_once("{$CFG->dirroot}/mod/hvp/classes/mobile_auth.php");
 
@@ -75,6 +81,7 @@ class mod_hvp extends external_api {
             if (!$cm) {
                 return ["html" => "invalidcoursemodule"];
             }
+            self::validate_context(context_module::instance($cm->id));
             $course = $DB->get_record("course", ["id" => $cm->course]);
             if (!$course) {
                 return ["html" => "coursemisconf"];

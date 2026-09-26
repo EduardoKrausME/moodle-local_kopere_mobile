@@ -24,6 +24,7 @@
 
 namespace local_kopere_mobile\external;
 
+use context_system;
 use external_api;
 use external_function_parameters;
 use external_multiple_structure;
@@ -58,6 +59,9 @@ class mod_icon extends external_api {
      */
     public static function icon() {
         global $DB, $CFG, $PAGE;
+
+        self::validate_parameters(self::icon_parameters(), []);
+        self::validate_context(context_system::instance());
 
         $themerev = theme_get_revision();
         $modules = $DB->get_records_sql("SELECT id, name FROM {modules} WHERE id IN(SELECT DISTINCT module FROM {course_modules})");

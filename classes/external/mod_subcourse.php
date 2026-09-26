@@ -67,9 +67,15 @@ class mod_subcourse extends external_api {
     public static function mobile($instanceid) {
         global $DB, $USER;
 
+        $params = self::validate_parameters(self::mobile_parameters(), [
+            "instanceid" => $instanceid,
+        ]);
+        $instanceid = $params["instanceid"];
+
         $subcourse = $DB->get_record("subcourse", ["id" => $instanceid]);
 
         if ($subcourse) {
+            self::validate_context(context_course::instance($subcourse->course));
             $refcourse = $DB->get_record("course", ["id" => $subcourse->refcourse]);
             if ($refcourse) {
                 $contextcourseref = context_course::instance($refcourse->id);

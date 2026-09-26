@@ -67,7 +67,9 @@ class public_config extends external_api {
         global $CFG, $SITE, $PAGE;
         require_once("{$CFG->libdir}/authlib.php");
 
+        self::validate_parameters(self::settings_parameters(), []);
         $context = context_system::instance();
+        self::validate_context($context);
 
         // We need this to make work the format text functions.
         $PAGE->set_context($context);

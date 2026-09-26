@@ -67,6 +67,13 @@ class mod_make_view extends external_api {
     public static function make_view($modid, $modname) {
         global $DB, $CFG;
 
+        $params = self::validate_parameters(self::make_view_parameters(), [
+            "modid" => $modid,
+            "modname" => $modname,
+        ]);
+        $modid = $params["modid"];
+        $modname = $params["modname"];
+
         if (file_exists("{$CFG->dirroot}/mod/{$modname}/lib.php")) {
             require_once("{$CFG->dirroot}/mod/{$modname}/lib.php");
 

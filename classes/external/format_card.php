@@ -63,9 +63,16 @@ class format_card extends external_api {
     public static function get_structure($courseid) {
         global $PAGE, $CFG;
 
+        $params = self::validate_parameters(self::get_structure_parameters(), [
+            "courseid" => $courseid,
+        ]);
+        $courseid = $params["courseid"];
+
         require_once("{$CFG->dirroot}/course/format/cards/lib.php");
 
-        $PAGE->set_context(context_course::instance($courseid));
+        $context = context_course::instance($courseid);
+        self::validate_context($context);
+        $PAGE->set_context($context);
 
         if (file_exists("{$CFG->dirroot}/course/format/cards/classes/output/courseformat/content/section/header.php")) {
 

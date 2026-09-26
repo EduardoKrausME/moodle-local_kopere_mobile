@@ -65,6 +65,7 @@ class home_summary extends external_api {
     public static function execute() {
         global $DB, $USER;
 
+        self::validate_parameters(self::execute_parameters(), []);
         require_login();
         self::validate_context(context_system::instance());
 

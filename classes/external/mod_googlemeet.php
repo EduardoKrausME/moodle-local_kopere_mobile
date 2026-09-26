@@ -24,6 +24,7 @@
 
 namespace local_kopere_mobile\external;
 
+use context_module;
 use external_api;
 use external_function_parameters;
 use external_single_structure;
@@ -65,12 +66,18 @@ class mod_googlemeet extends external_api {
     public static function mobile($cmid) {
         global $CFG, $OUTPUT, $DB;
 
+        $params = self::validate_parameters(self::mobile_parameters(), [
+            "cmid" => $cmid,
+        ]);
+        $cmid = $params["cmid"];
+
         if (file_exists("{$CFG->dirroot}/mod/googlemeet/classes/output/mobile.php")) {
             require_once("{$CFG->dirroot}/mod/googlemeet/classes/output/mobile.php");
             require_once("{$CFG->dirroot}/mod/googlemeet/lib.php");
             require_once("{$CFG->dirroot}/mod/googlemeet/locallib.php");
 
-            $cm = get_coursemodule_from_id("googlemeet", $cmid);
+            $cm = get_coursemodule_from_id("googlemeet", $cmid, 0, false, MUST_EXIST);
+            self::validate_context(context_module::instance($cm->id));
             $googlemeet = $DB->get_record("googlemeet", ["id" => $cm->instance], '*', MUST_EXIST);
 
             $recordings = googlemeet_list_recordings(["googlemeetid" => $googlemeet->id, "visible" => true]);
