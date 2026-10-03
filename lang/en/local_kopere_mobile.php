@@ -70,7 +70,6 @@ $string['lgpd_text_msgdefault'] = '<p>In compliance with international data prot
 <h2>Data Deletion Request Form:</h2>
 <p>To request the deletion of your data, please complete the form below. Upon receiving your request, we will review and respond as promptly as possible to ensure legal compliance.</p>';
 $string['lgpd_title'] = 'Information about Data Protection (GDPR)';
-
 $string['logologin'] = 'PNG/SVG logo for login screen';
 $string['logologin_desc'] = 'Upload the logo in PNG or SVG format to be displayed on the login screen. The logo should be clear and representative of your institution or company\'s visual identity, ensuring a professional and consistent login experience for users.';
 $string['modulename'] = 'Kopere Mobile';
