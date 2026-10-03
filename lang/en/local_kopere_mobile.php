@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die;
+
 $string['androidappfile'] = 'File to download the Android app';
 $string['androidappfile_desc'] = 'Leave this setting blank unless you have an Android app hosted on your server.';
 $string['androidappid'] = 'The unique identifier of the Android app';
