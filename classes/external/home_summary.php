@@ -66,7 +66,8 @@ class home_summary extends external_api {
         global $DB, $USER;
 
         self::validate_parameters(self::execute_parameters(), []);
-        require_login();
+        // Authentication is enforced by the web service layer, not by a browser session.
+        // require_login() fails for token-authenticated requests without a web session.
         self::validate_context(context_system::instance());
 
         $courses = enrol_get_my_courses(null, "sortorder ASC");
