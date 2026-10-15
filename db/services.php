@@ -44,6 +44,7 @@ $functions = [
         "description" => "Returns the authenticated user's learning journey summary for the mobile home.",
         "type" => "read",
         "services" => [MOODLE_OFFICIAL_MOBILE_SERVICE],
+        "loginrequired" => true,
     ],
 
     "format_card_get_structure" => [
