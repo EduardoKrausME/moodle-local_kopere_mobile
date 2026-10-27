@@ -31,5 +31,5 @@ $plugin->component = "local_kopere_mobile";
 $plugin->maturity = MATURITY_STABLE;
 
 $plugin->dependencies = [
-    "local_kopere_dashboard" => 2026101900,
+    "local_kopere_dashboard" => 2026102700,
 ];
