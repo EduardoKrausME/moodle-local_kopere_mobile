@@ -2,6 +2,13 @@
 
 This changelog covers only the two latest published releases of the main `local_kopere_mobile` plugin, verified on October 24, 2026. Each entry is based on its published Git tag compared with the preceding release tag. The October 19, 2026 `Dependencies Kopere` commit occurred after release `1.4.5` and is deliberately excluded.
 
+## 1.4.6 - 2026-10-27
+
+- Updated Kopere dependency and release metadata declarations.
+- Updated release workflow configuration and historical release documentation; no additional plugin runtime source changes were identified.
+
+**Full comparison:** [1.4.5...1.4.6](https://github.com/EduardoKrausME/moodle-local_kopere_mobile/compare/1.4.5...1.4.6)
+
 ## [1.4.5] - 2026-10-15
 
 ### Fixed
