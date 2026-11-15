@@ -8,24 +8,27 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Tests for public mobile branding.
  *
  * @package local_kopere_mobile
+ * @copyright 2026 Eduardo Kraus
+ * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_kopere_mobile;
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Verify graceful fallback when LearnLingo is not in use.
+ *
+ * @covers \\local_kopere_mobile\\branding
  */
 final class branding_test extends \advanced_testcase {
     public function test_fallback_when_theme_is_not_learnlingo(): void {

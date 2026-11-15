@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Public brand information for the Moodle Mobile app and its build panel.
@@ -24,13 +24,14 @@
 
 namespace local_kopere_mobile;
 
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Read branding from the active LearnLingo theme, if available.
  */
 final class branding {
     /**
+     * Returns only public branding data.
+     *
      * @return array Public branding; no authentication tokens or private options.
      */
     public static function export(): array {

@@ -97,7 +97,7 @@ class public_config extends external_api {
             "customizationapptopo" => self::setting_customizationapptopo(),
             "logologin" => self::setting_logologin(),
             "customizationappcss" => get_config("local_kopere_mobile", "customizationappcss"),
-            "themebranding" => json_encode(\\local_kopere_mobile\\branding::export(),
+            "themebranding" => json_encode(\local_kopere_mobile\branding::export(),
                 JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
             "htmllogin" => get_config("local_kopere_mobile", "htmllogin"),
             "customfieldpicture" => json_encode(self::setting_customfieldpicture()),

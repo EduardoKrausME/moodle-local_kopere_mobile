@@ -70,7 +70,7 @@ try {
             die;
         case "app-branding":
             // Public visual identity is safe for the build panel and mobile clients.
-            die(json_encode(\\local_kopere_mobile\\branding::export(),
+            die(json_encode(\local_kopere_mobile\branding::export(),
                 JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
         case "test-config":
