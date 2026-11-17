@@ -37,6 +37,17 @@ $functions = [
         "loginrequired" => false,
     ],
 
+    "local_kopere_mobile_create_external_link" => [
+        "classname" => "\\local_kopere_mobile\\external\\create_external_link",
+        "classpath" => "local/kopere_mobile/classes/external/create_external_link.php",
+        "methodname" => "execute",
+        "description" => "Issue a one-time, 60-second JWT for secure browser navigation.",
+        "type" => "write",
+        "services" => [MOODLE_OFFICIAL_MOBILE_SERVICE],
+        "ajax" => false,
+        "loginrequired" => true,
+    ],
+
     "local_kopere_mobile_home_summary" => [
         "classname" => "\\local_kopere_mobile\\external\\home_summary",
         "classpath" => "local/kopere_mobile/classes/external/home_summary.php",
