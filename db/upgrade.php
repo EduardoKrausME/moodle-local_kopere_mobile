@@ -36,5 +36,24 @@ function xmldb_local_kopere_mobile_upgrade($oldversion) {
 
         upgrade_plugin_savepoint(true, 2024020400, "local", "kopere_mobile");
     }
+    if ($oldversion < 2026111700) {
+        global $DB;
+        $dbman = $DB->get_manager();
+        $table = new xmldb_table('local_kopere_mobile_links');
+        if (!$dbman->table_exists($table)) {
+            $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+            $table->add_field('jti', XMLDB_TYPE_CHAR, '64', null, XMLDB_NOTNULL);
+            $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
+            $table->add_field('target', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL);
+            $table->add_field('expires', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
+            $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
+            $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+            $table->add_key('user', XMLDB_KEY_FOREIGN, ['userid'], 'user', ['id']);
+            $table->add_index('jtiunique', XMLDB_INDEX_UNIQUE, ['jti']);
+            $table->add_index('expires', XMLDB_INDEX_NOTUNIQUE, ['expires']);
+            $dbman->create_table($table);
+        }
+        upgrade_plugin_savepoint(true, 2026111700, 'local', 'kopere_mobile');
+    }
     return true;
 }
