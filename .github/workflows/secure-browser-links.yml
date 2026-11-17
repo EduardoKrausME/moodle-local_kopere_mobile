@@ -1,0 +1,85 @@
+name: Secure mobile browser links
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-syntax:
+    name: PHP and XMLDB syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, intl, xml, dom
+          coverage: none
+      - name: Lint PHP source and PHPUnit tests
+        run: find . -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Check XMLDB XML is well formed
+        run: |
+          php -r '$d=new DOMDocument(); if (!$d->load("db/install.xml")) {exit(1);} echo "XML valid\n";'
+      - name: Check token-based loadpage is retired
+        run: |
+          ! grep -Eq 'validate_token\(|action=loadpage&.*token=' index.php
+          grep -q 'http_response_code(410)' index.php
+          grep -q 'local_kopere_mobile_create_external_link' db/services.php
+          grep -q 'loginrequired.*true' db/services.php
+
+  moodle-phpunit:
+    name: Moodle 4.5 PHPUnit / PostgreSQL
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DB: pgsql
+      MOODLE_BRANCH: MOODLE_405_STABLE
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: plugin
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pgsql, pdo_pgsql, mbstring, xml, zip, gd, intl, soap
+          ini-values: max_input_vars=5000
+          coverage: none
+      - name: Install Moodle plugin test runner
+        run: |
+          composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci "^4"
+          echo "$(pwd)/ci/bin" >> "$GITHUB_PATH"
+          echo "$(pwd)/ci/vendor/bin" >> "$GITHUB_PATH"
+          sudo locale-gen en_AU.UTF-8
+      - name: Fetch required Kopere Dashboard dependency
+        run: |
+          mkdir -p extra-plugins
+          git clone --depth=1 --branch master \
+            https://github.com/EduardoKrausME/moodle-local-kopere_dashboard.git \
+            extra-plugins/local_kopere_dashboard
+      - name: Install Moodle with the plugin and its dependency
+        run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1 --extra-plugins ./extra-plugins
+      - name: Validate plugin DB structure and upgrade savepoints
+        run: |
+          moodle-plugin-ci validate
+          moodle-plugin-ci savepoints
+      - name: Execute plugin PHPUnit, including JWT security regressions
+        run: moodle-plugin-ci phpunit
