@@ -44,30 +44,12 @@ try {
 
     switch ($action) {
         case "loadpage":
-            validate_token();
-
-            $redirectpage = optional_param("webpage", false, PARAM_TEXT);
-
-            $mobile = optional_param("local_kopere_mobile_mobile", false, PARAM_INT);
-            if ($mobile) {
-                $USER->local_kopere_mobile_mobile = 1;
-            }
-            $preservepage = optional_param("local_kopere_mobile_preserve_page", false, PARAM_TEXT);
-            if ($preservepage) {
-                $USER->local_kopere_mobile_preserve_page = $preservepage;
-                $USER->kopere_mobile_redirect_page = $redirectpage;
-            }
-
-            $platform = optional_param("local_kopere_mobile_platform", false, PARAM_TEXT);
-            if ($platform) {
-                $USER->local_kopere_mobile_platform = $platform;
-            }
-
-            $sessionid = session_id();
-            header("Set-Cookie: MoodleSession={$sessionid}; path=/; SameSite=None; Secure");
-            header("Location: {$redirectpage}");
-
-            die;
+            // Old flow accepted permanent Moodle tokens in URLs and permitted
+            // unvalidated redirects. It has been permanently retired.
+            http_response_code(410);
+            header("Cache-Control: no-store");
+            header("Content-Type: text/plain; charset=utf-8");
+            die("This link format is no longer supported. Update the mobile app.");
         case "app-branding":
             // Public visual identity is safe for the build panel and mobile clients.
             die(json_encode(\local_kopere_mobile\branding::export(),
@@ -83,41 +65,3 @@ try {
     echo $e->getMessage();
 }
 
-/**
- * validate token function
- *
- * @throws coding_exception
- * @throws dml_exception
- */
-function validate_token() {
-    global $DB, $USER;
-
-    if (isloggedin()) {
-        @header("kopere-status:isloggedin");
-        return true;
-    }
-
-    $token = optional_param("token", false, PARAM_TEXT);
-    if (!$token) {
-        @header("kopere-status:no-token");
-        return false;
-    }
-
-    $sessao = $DB->get_record("external_tokens", ["token" => $token]);
-    if (!$sessao) {
-        @header("kopere-status:no-session");
-        return false;
-    }
-
-    $user = $DB->get_record("user", ["id" => $sessao->userid]);
-    if (!$user) {
-        @header("kopere-status:no-user");
-        return false;
-    }
-
-    \core\session\manager::login_user($user);
-    unset($USER->preference);
-    check_user_preferences_loaded($USER);
-
-    return true;
-}
