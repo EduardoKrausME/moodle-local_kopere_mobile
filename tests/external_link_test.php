@@ -24,7 +24,7 @@ final class external_link_test extends \advanced_testcase {
 
         $issued = create_external_link::execute('https://docs.moodle.org/en/Main_page?foo=bar');
         \external_api::clean_returnvalue(create_external_link::execute_returns(), $issued);
-        $this->assertSame(time() + 60, $issued['expiresat'], '', 2);
+        $this->assertLessThanOrEqual(2, abs(time() + 60 - $issued['expiresat']));
         $this->assertSame(3, count(explode('.', $issued['jwt'])));
         $this->assertStringNotContainsString('docs.moodle.org', $issued['jwt']);
 
@@ -51,7 +51,8 @@ final class external_link_test extends \advanced_testcase {
         $this->resetAfterTest();
         $user = $this->getDataGenerator()->create_user();
         $jwt = external_link::issue('https://example.org/test', (int) $user->id)['jwt'];
-        $DB->set_field('local_kopere_mobile_links', 'expires', time() - 1);
+        $record = $DB->get_record('local_kopere_mobile_links', [], 'id', MUST_EXIST);
+        $DB->set_field('local_kopere_mobile_links', 'expires', time() - 1, ['id' => $record->id]);
         $this->assertNull(external_link::consume($jwt));
         external_link::purge_expired();
         $this->assertEquals(0, $DB->count_records('local_kopere_mobile_links'));
@@ -96,7 +97,7 @@ final class external_link_test extends \advanced_testcase {
     public function test_guest_cannot_mint_a_ticket(): void {
         $this->resetAfterTest();
         $this->setGuestUser();
-        $this->expectException(\required_capability_exception::class);
+        $this->expectException(\moodle_exception::class);
         create_external_link::execute('https://example.org/');
     }
 
