@@ -37,8 +37,7 @@ final class create_external_link extends external_api {
         $params = self::validate_parameters(self::execute_parameters(), ['url' => $url]);
         self::validate_context(context_system::instance());
         if (empty($USER->id) || isguestuser() || !empty($USER->deleted) || !empty($USER->suspended)) {
-            throw new \required_capability_exception(context_system::instance(),
-                'moodle/site:accessallgroups', 'nopermissions', '');
+            throw new \moodle_exception('nopermissions', 'error');
         }
         return external_link::issue($params['url'], (int) $USER->id);
     }
