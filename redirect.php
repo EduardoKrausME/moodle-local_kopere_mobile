@@ -19,6 +19,7 @@ header('Referrer-Policy: no-referrer');
 header('X-Content-Type-Options: nosniff');
 header('Content-Security-Policy: default-src ' . "'none'" . '; frame-ancestors ' . "'none'");
 header('Cross-Origin-Resource-Policy: same-origin');
+header('X-Robots-Tag: noindex, nofollow, noarchive');
 
 $jwt = optional_param('jwt', '', PARAM_RAW);
 try {
