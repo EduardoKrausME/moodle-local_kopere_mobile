@@ -1,6 +1,14 @@
 # Changelog
 
-This changelog covers only the two latest published releases of the main `local_kopere_mobile` plugin, verified on October 24, 2026. Each entry is based on its published Git tag compared with the preceding release tag. The October 19, 2026 `Dependencies Kopere` commit occurred after release `1.4.5` and is deliberately excluded.
+This changelog documents published releases of the main `local_kopere_mobile` plugin using changes verified between consecutive published tags.
+
+## 1.5.0 - 2026-11-15
+
+- Added a public branding exporter that reads the active LearnLingo theme's mobile branding when available and otherwise returns default public colors without exposing private settings.
+- Exposed branding data through the mobile application configuration response and the `app-branding` JSON endpoint.
+- Added a regression test for branding fallback and refreshed the built picture AMD module.
+
+**Full comparison:** [1.4.6...1.5.0](https://github.com/EduardoKrausME/moodle-local_kopere_mobile/compare/1.4.6...1.5.0)
 
 ## 1.4.6 - 2026-10-27
 
