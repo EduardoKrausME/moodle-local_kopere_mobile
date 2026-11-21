@@ -8,15 +8,37 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Regression tests for short-lived single-use browser navigation.
+ *
+ * @package    local_kopere_mobile
+ * @copyright  2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace local_kopere_mobile;
 
 use local_kopere_mobile\external\create_external_link;
 
-/** @covers \local_kopere_mobile\external_link */
+/**
+ * Verify secure browser tickets and rejection of unsafe destinations.
+ *
+ * @package local_kopere_mobile
+ * @covers \local_kopere_mobile\external_link
+ */
 final class external_link_test extends \advanced_testcase {
 
+    /**
+     * Confirm the API creates a valid single-use JWT for a signed-in user.
+     *
+     * @runInSeparateProcess
+     */
     public function test_issue_and_single_use(): void {
         $this->resetAfterTest();
         $user = $this->getDataGenerator()->create_user();
@@ -81,6 +103,11 @@ final class external_link_test extends \advanced_testcase {
             external_link::validate_target('https://example.org/a?b=c'));
     }
 
+    /**
+     * Confirm web service requests use the authenticated identity.
+     *
+     * @runInSeparateProcess
+     */
     public function test_different_users_have_distinct_authenticated_tickets(): void {
         $this->resetAfterTest();
         $first = $this->getDataGenerator()->create_user();
@@ -94,6 +121,11 @@ final class external_link_test extends \advanced_testcase {
         $this->assertSame((int) $second->id, external_link::consume($b['jwt'])['userid']);
     }
 
+    /**
+     * Ensure unauthenticated users cannot create a browser ticket.
+     *
+     * @runInSeparateProcess
+     */
     public function test_guest_cannot_mint_a_ticket(): void {
         $this->resetAfterTest();
         $this->setGuestUser();

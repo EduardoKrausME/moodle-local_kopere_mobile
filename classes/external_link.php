@@ -8,11 +8,21 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU GPL for more details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Short-lived signed browser navigation tickets.
+ *
+ * @package    local_kopere_mobile
+ * @copyright  2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace local_kopere_mobile;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Issue and consume single-use, 60-second redirect JWTs.
@@ -20,10 +30,23 @@ defined('MOODLE_INTERNAL') || die();
  * The target URL is kept in Moodle's database, never in a JWT claim or in a
  * token-bearing query string sent to the destination. No permanent WS token
  * is accepted here. All JWT verification and redemption happens server-side.
+ *
+ * @package local_kopere_mobile
  */
 final class external_link {
+    /**
+     * Lifetime of the redirect ticket, in seconds.
+     */
     public const TTL = 60;
+
+    /**
+     * Database table containing unredeemed ticket identifiers.
+     */
     private const TABLE = 'local_kopere_mobile_links';
+
+    /**
+     * Expected audience claim in every browser ticket.
+     */
     private const AUDIENCE = 'local_kopere_mobile/redirect';
 
     /**
@@ -67,7 +90,12 @@ final class external_link {
         return $target;
     }
 
-    /** True only for URLs under the configured Moodle installation. */
+    /**
+     * Check that a URL belongs to this Moodle installation, not a lookalike host.
+     *
+     * @param string $target URL to inspect.
+     * @return bool Whether the URL belongs to Moodle.
+     */
     public static function is_internal(string $target): bool {
         global $CFG;
         $root = parse_url($CFG->wwwroot);
@@ -83,10 +111,22 @@ final class external_link {
         return $base === '' || $path === $base || strpos($path, $base . '/') === 0;
     }
 
+    /**
+     * Encode raw data using URL-safe Base64 without padding.
+     *
+     * @param string $text Bytes to encode.
+     * @return string Base64URL-encoded data.
+     */
     private static function encode(string $text): string {
         return rtrim(strtr(base64_encode($text), '+/', '-_'), '=');
     }
 
+    /**
+     * Decode a strictly validated URL-safe Base64 value.
+     *
+     * @param string $text Encoded value.
+     * @return string|null Decoded bytes, or null if invalid.
+     */
     private static function decode(string $text): ?string {
         if ($text === '' || !preg_match('/^[A-Za-z0-9_-]+$/D', $text)) {
             return null;
@@ -124,7 +164,13 @@ final class external_link {
         }
     }
 
-    /** Create a signed ticket; caller must already be authenticated by Moodle WS. */
+    /**
+     * Create a signed ticket for a user already authenticated by Moodle web services.
+     *
+     * @param string $target HTTPS destination.
+     * @param int $userid Authenticated Moodle user ID.
+     * @return array Signed JWT and expiration timestamp.
+     */
     public static function issue(string $target, int $userid): array {
         global $CFG, $DB;
 
@@ -217,7 +263,11 @@ final class external_link {
         }
     }
 
-    /** Remove unredeemed expired records, without ever revealing their URLs. */
+    /**
+     * Remove unredeemed expired records without revealing their destinations.
+     *
+     * @return void
+     */
     public static function purge_expired(): void {
         global $DB;
         $DB->delete_records_select(self::TABLE, 'expires <= :now', ['now' => time()]);

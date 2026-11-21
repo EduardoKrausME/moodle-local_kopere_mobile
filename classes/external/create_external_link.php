@@ -8,7 +8,19 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Moodle external service for issuing short-lived browser tickets.
+ *
+ * @package    local_kopere_mobile
+ * @copyright  2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace local_kopere_mobile\external;
 
@@ -24,14 +36,29 @@ use external_single_structure;
 use external_value;
 use local_kopere_mobile\external_link;
 
-/** Mint a one-minute, single-use JWT for browser navigation. */
+/**
+ * Mint a one-minute, single-use JWT for browser navigation.
+ *
+ * @package local_kopere_mobile
+ */
 final class create_external_link extends external_api {
+    /**
+     * Define the external function input parameters.
+     *
+     * @return external_function_parameters
+     */
     public static function execute_parameters() {
         return new external_function_parameters([
             'url' => new external_value(PARAM_RAW, 'Validated HTTPS target URL'),
         ]);
     }
 
+    /**
+     * Issue a ticket for the current authenticated Moodle user.
+     *
+     * @param string $url Valid HTTPS destination.
+     * @return array JWT and expiration timestamp.
+     */
     public static function execute(string $url): array {
         global $USER;
 
@@ -43,6 +70,11 @@ final class create_external_link extends external_api {
         return external_link::issue($params['url'], (int) $USER->id);
     }
 
+    /**
+     * Describe the issued ticket returned to the authenticated caller.
+     *
+     * @return external_single_structure
+     */
     public static function execute_returns() {
         return new external_single_structure([
             'jwt' => new external_value(PARAM_RAW, 'One-use HS256 JWT, valid for 60 seconds'),
