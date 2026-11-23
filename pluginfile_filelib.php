@@ -46,7 +46,8 @@ function localpluginfile_file_pluginfile($relativepath, $forcedownload, $preview
     // Extract relative path components.
     $args = explode("/", ltrim($relativepath, "/"));
 
-    if (count($args) < 3) { // Always at least context, component and filearea.
+    // The path must contain at least context, component and filearea.
+    if (count($args) < 3) {
         throw new moodle_exception("invalidarguments");
     }
 

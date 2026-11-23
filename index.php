@@ -22,9 +22,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// No login check is expected here bacause token validation.
-// @codingStandardsIgnoreLine
-require ("../../config.php");
+// Public routes allow unauthenticated branding requests; protected operations validate their own tokens.
+// phpcs:ignore moodle.Files.RequireLogin.Missing -- Session login is not required by these API routes.
+require("../../config.php");
 
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");

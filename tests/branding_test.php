@@ -24,7 +24,6 @@
 
 namespace local_kopere_mobile;
 
-
 /**
  * Verify graceful fallback when LearnLingo is not in use.
  *

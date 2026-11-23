@@ -24,7 +24,6 @@
 
 namespace local_kopere_mobile;
 
-
 /**
  * Read branding from the active LearnLingo theme, if available.
  */
