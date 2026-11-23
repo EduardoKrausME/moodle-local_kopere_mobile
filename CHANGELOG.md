@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.1 - 2026-11-21
+
+- Added secure external browser links with redirect handling and a cleanup task.
+- Added persistence, web service integration, documentation and regression tests for external links.
+
+**Comparison:** [1.5.0...1.5.1](https://github.com/EduardoKrausME/moodle-local_kopere_mobile/compare/1.5.0...1.5.1)
+
 This changelog documents published releases of the main `local_kopere_mobile` plugin using changes verified between consecutive published tags.
 
 ## 1.5.0 - 2026-11-15
